@@ -5,4 +5,11 @@
 
 # env
 .env
+.env.local
 .vercel
+
+# Next.js
+.next/
+node_modules/
+next-env.d.ts
+out/
