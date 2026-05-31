@@ -11,46 +11,65 @@ const BADGE_CLASS: Record<string, string> = {
   'lab': 'badge--purple', 'ai-news': 'badge--blue',
 }
 
-// Markdownの簡易レンダリング（ヘッディング・コードブロック・テーブル・リスト・太字）
-function renderContent(content: string): string {
-  // コードブロックを先に処理してエスケープ
-  const codeBlocks: string[] = []
-  let html = content.replace(/```(\w*)\n([\s\S]*?)```/g, (_m, _lang, code) => {
-    const idx = codeBlocks.length
-    codeBlocks.push(`<pre style="background:#1e1e1e;color:#d4d4d4;padding:1.25rem;border-radius:6px;overflow-x:auto;font-size:0.85rem;line-height:1.6;margin:1.5rem 0"><code>${code.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></pre>`)
-    return `%%CODE_${idx}%%`
-  })
+// Markdownを行単位で処理してHTMLへ変換
+function renderContent(raw: string): string {
+  const TH = 'padding:10px 14px;border:1px solid #e5e7eb;background:#f9fafb;font-weight:700;text-align:left'
+  const TD = 'padding:10px 14px;border:1px solid #e5e7eb;vertical-align:top'
+  const isSepRow = (s: string) => /^\|[\s|:\-]+\|$/.test(s)
+  const parseRow = (s: string, tag: 'th' | 'td') =>
+    '<tr>' + s.replace(/^\||\|$/g, '').split('|').map(c =>
+      `<${tag} style="${tag === 'th' ? TH : TD}">${c.trim()}</${tag}>`).join('') + '</tr>'
 
-  // テーブルブロックをまとめてパース
-  html = html.replace(/((?:^\|[^\n]+\n?)+)/gm, (block) => {
-    const lines = block.trim().split('\n').filter(l => l.trim().startsWith('|'))
-    const isSep = (l: string) => /^\|[\s\-:|]+\|$/.test(l.trim())
-    const hasHeader = lines.some(isSep)
-    let headerSeen = false
-    const rows = lines.map((line) => {
-      if (isSep(line)) { headerSeen = true; return null }
-      const cells = line.replace(/^\||\|$/g, '').split('|').map(c => c.trim())
-      const isHeader = hasHeader && !headerSeen
-      const tag = isHeader ? 'th' : 'td'
-      const style = isHeader
-        ? 'padding:10px 14px;border:1px solid #e5e7eb;background:#f9fafb;font-weight:700;text-align:left;white-space:nowrap'
-        : 'padding:10px 14px;border:1px solid #e5e7eb;vertical-align:top'
-      return `<tr>${cells.map(c => `<${tag} style="${style}">${c}</${tag}>`).join('')}</tr>`
-    }).filter(Boolean)
-    return `<div style="overflow-x:auto;margin:1.5rem 0"><table style="width:100%;border-collapse:collapse;font-size:0.9rem">${rows.join('')}</table></div>`
-  })
+  // コードブロックを退避
+  const saved: string[] = []
+  let text = raw.replace(/```[\s\S]*?```/g, m => { saved.push(
+    `<pre style="background:#1e1e1e;color:#d4d4d4;padding:1.25rem;border-radius:6px;overflow-x:auto;font-size:0.85rem;line-height:1.6;margin:1.5rem 0"><code>${
+      m.replace(/```\w*\n?/, '').replace(/```$/, '').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    }</code></pre>`); return `\x00CODE${saved.length - 1}\x00` })
 
-  return html
+  // 行単位でテーブルブロックを検出・変換
+  const lines = text.split('\n')
+  const out: string[] = []
+  let tableLines: string[] = []
+
+  const flushTable = () => {
+    if (!tableLines.length) return
+    const hasSep = tableLines.some(isSepRow)
+    let isHeader = hasSep
+    const rows: string[] = []
+    for (const l of tableLines) {
+      if (isSepRow(l)) { isHeader = false; continue }
+      rows.push(parseRow(l, isHeader ? 'th' : 'td'))
+      if (isHeader) isHeader = false
+    }
+    out.push(`<div style="overflow-x:auto;margin:1.5rem 0"><table style="width:100%;border-collapse:collapse;font-size:0.9rem">${rows.join('')}</table></div>`)
+    tableLines = []
+  }
+
+  for (const line of lines) {
+    if (line.trimStart().startsWith('|')) {
+      tableLines.push(line)
+    } else {
+      flushTable()
+      out.push(line)
+    }
+  }
+  flushTable()
+  text = out.join('\n')
+
+  // インライン変換
+  return text
     .replace(/^### (.+)$/gm, '<h3 style="font-size:1.15rem;font-weight:700;margin:2rem 0 0.75rem">$1</h3>')
     .replace(/^## (.+)$/gm, '<h2 style="font-size:1.35rem;font-weight:700;margin:2.5rem 0 1rem;padding-bottom:0.5rem;border-bottom:2px solid #e5e7eb">$1</h2>')
     .replace(/^# (.+)$/gm, '<h1 style="font-size:1.75rem;font-weight:700;margin:2rem 0 1rem">$1</h1>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/`(.+?)`/g, '<code style="background:#f3f4f6;padding:2px 6px;border-radius:3px;font-size:0.875em">$1</code>')
-    .replace(/^- (.+)$/gm, '<li style="margin:0.35rem 0">$1</li>')
-    .replace(/(<li[^>]*>[\s\S]*?<\/li>)\n(?!<li)/g, '<ul style="list-style:disc;padding-left:1.5rem;margin:1rem 0">$1</ul>\n')
+    .replace(/`([^`]+)`/g, '<code style="background:#f3f4f6;padding:2px 6px;border-radius:3px;font-size:0.875em">$1</code>')
+    .replace(/^[-*] (.+)$/gm, '<li style="margin:0.35rem 0">$1</li>')
     .replace(/^\d+\. (.+)$/gm, '<li style="margin:0.35rem 0">$1</li>')
+    .replace(/(<\/li>\n)(?=<li)/g, '$1')
+    .replace(/(<li[\s\S]+?<\/li>)(\n(?!<li))/g, '<ul style="list-style:disc;padding-left:1.5rem;margin:1rem 0">$1</ul>$2')
     .replace(/\n\n/g, '</p><p style="margin:1rem 0">')
-    .replace(/%%CODE_(\d+)%%/g, (_m, idx) => codeBlocks[Number(idx)])
+    .replace(/\x00CODE(\d+)\x00/g, (_m, i) => saved[Number(i)])
 }
 
 export default function ArticlePage({ theme, slug }: { theme: Theme; slug: string }) {
