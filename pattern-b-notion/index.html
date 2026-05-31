@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIビジネスメディア — Pattern B: Notion Style</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Noto+Serif+JP:wght@600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header__inner">
+    <a href="#" class="logo">
+      <div class="logo__icon">AI</div>
+      <div>
+        <div class="logo__name">AIビジネスメディア</div>
+        <div class="logo__tagline">AIで、ビジネスはもっと進化する。</div>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="#" class="nav__link">記事を探す ▾</a>
+      <a href="#" class="nav__link">カテゴリー ▾</a>
+      <a href="#" class="nav__link">導入事例</a>
+      <a href="#" class="nav__link">セミナー</a>
+      <a href="#" class="nav__link">会社情報</a>
+    </nav>
+    <div class="header__actions">
+      <button class="btn btn--ghost" id="loginBtn">ログイン</button>
+      <button class="btn btn--primary" id="signupBtn">会員登録（無料）</button>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__content">
+      <div class="hero__badge">✨ 最新のAI活用術とDX事例が毎日わかる！</div>
+      <h1 class="hero__title">毎日の業務に、<br><span>AIという味方を。</span></h1>
+      <p class="hero__desc">中小企業や1人社長のために、実践的なAI活用術とDX情報を毎日お届け。最新ツールの使い方から業務自動化のノウハウ、導入事例まで、ビジネスの成長につながる情報がここに。</p>
+      <div class="hero__cta">
+        <button class="btn btn--primary btn--lg">
+          無料で会員登録する
+          <span class="btn__badge">かんたん1分！</span>
+        </button>
+        <button class="btn btn--outline btn--lg">🔍 記事を探す</button>
+      </div>
+    </div>
+    <div class="hero__illustration">
+      <div class="hero__card hero__card--1">
+        <span>💡</span>
+        <div><strong>今日から使える</strong><br>AI活用アイデアが<br>見つかる！</div>
+      </div>
+      <div class="hero__card hero__card--2">
+        <span>🎁</span>
+        <div><strong>会員限定の<br>特典もたくさん！</strong></div>
+      </div>
+      <div class="hero__card hero__card--3">
+        <span>📊</span>
+        <div>DX・自動化の<br>事例が豊富</div>
+      </div>
+      <div class="hero__avatar">
+        <div class="hero__avatar-circle">👨‍💻</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Value Props -->
+<section class="values">
+  <div class="values__inner">
+    <div class="value">
+      <div class="value__icon">📗</div>
+      <strong>最新情報を毎日お届け</strong>
+      <p>AIニュースや活用ノウハウを毎日わかりやすく解説</p>
+    </div>
+    <div class="value">
+      <div class="value__icon">💡</div>
+      <strong>すぐに使える実践ノウハウ</strong>
+      <p>初心者でもカンタンに使えるテクニックやプロンプトを紹介</p>
+    </div>
+    <div class="value">
+      <div class="value__icon">📈</div>
+      <strong>DX・自動化の事例が豊富</strong>
+      <p>中小企業のリアルな成功事例であなたのヒントが見つかる</p>
+    </div>
+    <div class="value">
+      <div class="value__icon">🎁</div>
+      <strong>会員限定コンテンツ</strong>
+      <p>登録者限定の資料やテンプレートを無料でプレゼント！</p>
+    </div>
+  </div>
+</section>
+
+<!-- Main -->
+<main class="main">
+  <div class="main__inner">
+    <div class="main__content">
+      <!-- New Articles -->
+      <div class="section-header">
+        <h2 class="section-title">新着記事</h2>
+        <div class="category-tabs" id="categoryTabs">
+          <button class="tab tab--active" data-cat="all">すべて</button>
+          <button class="tab" data-cat="ai-guide">AI活用術</button>
+          <button class="tab" data-cat="dx-improvement">DX・業務改善</button>
+          <button class="tab" data-cat="tools">ツール紹介</button>
+          <button class="tab" data-cat="solo-business">事例・インタビュー</button>
+        </div>
+        <a href="#" class="link-more">すべて見る →</a>
+      </div>
+
+      <div class="articles-grid" id="articlesGrid">
+        <article class="article-card">
+          <a href="#" class="article-card__img-wrap">
+            <img src="https://placehold.co/400x240/f0f7ff/4f86f7?text=ChatGPT+4o" alt="" class="article-card__img">
+          </a>
+          <div class="article-card__body">
+            <span class="badge badge--blue">AI活用術</span>
+            <h3 class="article-card__title"><a href="#">ChatGPT-4oの新機能まとめ！業務で使える7つの活用例</a></h3>
+            <p class="article-card__excerpt">OpenAIが発表したGPT-4oの最新機能を徹底解説。すぐに試せるプロンプト例付きで紹介します。</p>
+            <div class="article-card__meta"><span>📅 2024.05.20</span><span>⏱ 8分</span></div>
+          </div>
+        </article>
+        <article class="article-card">
+          <a href="#" class="article-card__img-wrap">
+            <img src="https://placehold.co/400x240/f0fff7/4fba87?text=DX" alt="" class="article-card__img">
+          </a>
+          <div class="article-card__body">
+            <span class="badge badge--green">DX・業務改善</span>
+            <h3 class="article-card__title"><a href="#">中小企業のDXとは？成功するための3つのステップと具体例</a></h3>
+            <p class="article-card__excerpt">DX推進を始めたい経営者向けに、現場で使える実践ステップを解説します。</p>
+            <div class="article-card__meta"><span>📅 2024.05.19</span><span>⏱ 6分</span></div>
+          </div>
+        </article>
+        <article class="article-card">
+          <a href="#" class="article-card__img-wrap">
+            <img src="https://placehold.co/400x240/fdf0ff/b47fba?text=Notion+AI" alt="" class="article-card__img">
+          </a>
+          <div class="article-card__body">
+            <span class="badge badge--gray">ツール紹介</span>
+            <h3 class="article-card__title"><a href="#">Notion AIの使い方完全ガイド｜議事録作成を10倍効率化する方法</a></h3>
+            <p class="article-card__excerpt">Notion AIの全機能を使いこなして、会議の生産性を一気に上げる方法を紹介します。</p>
+            <div class="article-card__meta"><span>📅 2024.05.18</span><span>⏱ 7分</span></div>
+          </div>
+        </article>
+        <article class="article-card">
+          <a href="#" class="article-card__img-wrap">
+            <img src="https://placehold.co/400x240/fff7f0/ba8f4f?text=DX+Case" alt="" class="article-card__img">
+          </a>
+          <div class="article-card__body">
+            <span class="badge badge--orange">事例・インタビュー</span>
+            <h3 class="article-card__title"><a href="#">在庫管理を自動化し、在庫ロスを80%削減した小売業のDX事例</a></h3>
+            <p class="article-card__excerpt">AIを活用した在庫自動化で劇的な改善を実現した実例をご紹介します。</p>
+            <div class="article-card__meta"><span>📅 2024.05.17</span><span>⏱ 5分</span></div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Members CTA -->
+      <div class="members-cta">
+        <div class="members-cta__left">
+          <span class="members-cta__emoji">🚀</span>
+          <div>
+            <p class="members-cta__label">まずは無料で試してみよう！</p>
+            <h3 class="members-cta__title">会員登録すると、すべての機能が使えます！</h3>
+          </div>
+        </div>
+        <div class="members-cta__features">
+          <div class="feature-check">✅ 会員限定記事が読み放題</div>
+          <div class="feature-check">✅ AI活用チェックリストをプレゼント</div>
+          <div class="feature-check">✅ 便利なプロンプト集を無料配布</div>
+          <div class="feature-check">✅ セミナー・イベントに優先ご招待</div>
+        </div>
+        <button class="btn btn--primary btn--lg" id="signupCta">無料で会員登録する →</button>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar__block sidebar__ranking">
+        <h3 class="sidebar__title">今、みんなが読んでる！ 🔥</h3>
+        <ol class="ranking">
+          <li class="ranking__item">
+            <span class="ranking__num ranking__num--gold">1</span>
+            <a href="#">おすすめAIツール30選【2024年最新版】</a>
+          </li>
+          <li class="ranking__item">
+            <span class="ranking__num ranking__num--silver">2</span>
+            <a href="#">AIで資料作成を時短するテクニック</a>
+          </li>
+          <li class="ranking__item">
+            <span class="ranking__num ranking__num--bronze">3</span>
+            <a href="#">1人社長がAIを使って時間を生み出す方法</a>
+          </li>
+          <li class="ranking__item">
+            <span class="ranking__num">4</span>
+            <a href="#">ChatGPTのプロンプト完全ガイド</a>
+          </li>
+          <li class="ranking__item">
+            <span class="ranking__num">5</span>
+            <a href="#">業務自動化ツール比較5選</a>
+          </li>
+        </ol>
+        <a href="#" class="sidebar__link">ランキングをもっと見る →</a>
+      </div>
+
+      <div class="sidebar__block sidebar__newsletter">
+        <div class="sidebar__newsletter-icon">📬</div>
+        <h3 class="sidebar__title">最新情報をメールでお届け！</h3>
+        <p>AI活用のヒントや限定資料を定期配信中</p>
+        <form class="newsletter-form" id="newsletterFormSidebar">
+          <input type="email" placeholder="メールアドレスを入力" class="input" required>
+          <button type="submit" class="btn btn--primary btn--block">無料で登録する</button>
+        </form>
+        <p class="form-note">いつでも配信停止できます。</p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- Newsletter Banner -->
+<section class="newsletter-banner">
+  <div class="newsletter-banner__inner">
+    <div class="newsletter-banner__content">
+      <div class="newsletter-banner__icon">📬</div>
+      <div>
+        <h2>最新のAI活用情報をメールで受け取る</h2>
+        <p>週1回、最新ニュースやおすすめツール、実務ノウハウをまとめてお届けします。</p>
+      </div>
+    </div>
+    <form class="newsletter-form newsletter-form--inline" id="newsletterFormMain">
+      <input type="email" placeholder="メールアドレスを入力" class="input" required>
+      <button type="submit" class="btn btn--primary">無料で登録する</button>
+    </form>
+  </div>
+  <p class="newsletter-banner__note">いつでも配信停止できます。<a href="#">プライバシーポリシーはこちら</a></p>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <div class="logo">
+        <div class="logo__icon">AI</div>
+        <div class="logo__name">AIビジネスメディア</div>
+      </div>
+      <p>AIを味方に、すべてのビジネスに<br>挑戦の選択肢を増やす。</p>
+    </div>
+    <div class="footer__links">
+      <div><strong>コンテンツ</strong><a href="#">AI活用ガイド</a><a href="#">DX・業務改善</a><a href="#">実験室・開発ブログ</a><a href="#">ツール比較</a></div>
+      <div><strong>サービス</strong><a href="#">システム開発</a><a href="#">DX支援</a><a href="#">無料相談</a><a href="#">セミナー</a></div>
+      <div><strong>その他</strong><a href="#">会社情報</a><a href="#">プライバシーポリシー</a><a href="#">お問い合わせ</a></div>
+    </div>
+  </div>
+  <div class="footer__bottom"><p>© 2024 AIビジネスメディア / ZIRAKU Inc.</p></div>
+</footer>
+
+<!-- Auth Modal -->
+<div class="modal" id="authModal">
+  <div class="modal__overlay" id="modalOverlay"></div>
+  <div class="modal__box">
+    <button class="modal__close" id="modalClose">✕</button>
+    <div id="modalLoginView">
+      <h2 class="modal__title">ログイン 👋</h2>
+      <form id="loginForm">
+        <label class="label">メールアドレス</label>
+        <input type="email" class="input" id="loginEmail" required>
+        <label class="label">パスワード</label>
+        <input type="password" class="input" id="loginPassword" required>
+        <button type="submit" class="btn btn--primary btn--block">ログイン</button>
+      </form>
+      <p class="modal__switch">アカウントをお持ちでない方は<button class="link-btn" id="toSignup">会員登録（無料）</button></p>
+    </div>
+    <div id="modalSignupView" style="display:none">
+      <h2 class="modal__title">会員登録（無料）✨</h2>
+      <form id="signupForm">
+        <label class="label">お名前</label>
+        <input type="text" class="input" id="signupName" required>
+        <label class="label">メールアドレス</label>
+        <input type="email" class="input" id="signupEmail" required>
+        <label class="label">パスワード</label>
+        <input type="password" class="input" id="signupPassword" required>
+        <button type="submit" class="btn btn--primary btn--block">無料で登録する 🚀</button>
+      </form>
+      <p class="modal__switch">すでにアカウントをお持ちの方は<button class="link-btn" id="toLogin">ログイン</button></p>
+    </div>
+    <div id="modalSuccessView" style="display:none">
+      <p class="modal__success">✅ 登録が完了しました！ようこそ！</p>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { supabase, subscribeNewsletter, signUp, signIn } from '../shared/supabase-client.js'
+
+  const modal = document.getElementById('authModal')
+  document.getElementById('loginBtn').onclick = () => { showView('login'); modal.classList.add('modal--open') }
+  document.getElementById('signupBtn').onclick = () => { showView('signup'); modal.classList.add('modal--open') }
+  document.getElementById('signupCta').onclick = () => { showView('signup'); modal.classList.add('modal--open') }
+  document.getElementById('modalClose').onclick = () => modal.classList.remove('modal--open')
+  document.getElementById('modalOverlay').onclick = () => modal.classList.remove('modal--open')
+  document.getElementById('toSignup').onclick = () => showView('signup')
+  document.getElementById('toLogin').onclick = () => showView('login')
+
+  function showView(v) {
+    document.getElementById('modalLoginView').style.display = v === 'login' ? '' : 'none'
+    document.getElementById('modalSignupView').style.display = v === 'signup' ? '' : 'none'
+    document.getElementById('modalSuccessView').style.display = 'none'
+  }
+
+  document.getElementById('loginForm').onsubmit = async (e) => {
+    e.preventDefault()
+    const { error } = await signIn(loginEmail.value, loginPassword.value)
+    if (!error) { document.getElementById('modalSuccessView').style.display = ''; document.getElementById('modalLoginView').style.display = 'none' }
+  }
+
+  document.getElementById('signupForm').onsubmit = async (e) => {
+    e.preventDefault()
+    const { error } = await signUp(signupEmail.value, signupPassword.value, signupName.value)
+    if (!error) { document.getElementById('modalSuccessView').style.display = ''; document.getElementById('modalSignupView').style.display = 'none' }
+  }
+
+  async function handleNewsletter(formId) {
+    const form = document.getElementById(formId)
+    form.onsubmit = async (e) => {
+      e.preventDefault()
+      const email = form.querySelector('input[type=email]').value
+      const { error } = await subscribeNewsletter(email)
+      if (!error) { form.innerHTML = '<p style="color:#4f86f7;font-weight:bold;text-align:center">✅ 登録しました！</p>' }
+    }
+  }
+  handleNewsletter('newsletterFormSidebar')
+  handleNewsletter('newsletterFormMain')
+
+  document.getElementById('categoryTabs').addEventListener('click', (e) => {
+    if (!e.target.classList.contains('tab')) return
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab--active'))
+    e.target.classList.add('tab--active')
+  })
+</script>
+</body>
+</html>

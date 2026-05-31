@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIビジネスメディア — Pattern C: Zapier Style</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header__inner">
+    <a href="#" class="logo">
+      <div class="logo__icon">⚡</div>
+      <div class="logo__name">AIビジネスメディア</div>
+    </a>
+    <nav class="nav">
+      <a href="#" class="nav__link">記事を探す</a>
+      <a href="#" class="nav__link">カテゴリー</a>
+      <a href="#" class="nav__link">導入事例</a>
+      <a href="#" class="nav__link">セミナー</a>
+    </nav>
+    <div class="header__actions">
+      <button class="btn btn--ghost" id="loginBtn">ログイン</button>
+      <button class="btn btn--primary" id="signupBtn">無料で始める →</button>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__content">
+      <div class="hero__tag">🚀 中小企業・1人社長のためのAIメディア</div>
+      <h1 class="hero__title">
+        AIを使えば、<br>
+        <span class="hero__title-highlight">あなたの仕事は<br>もっと速くなる。</span>
+      </h1>
+      <p class="hero__desc">ChatGPT・Claude・Notion AIなどの最新ツールを使った実務ノウハウを毎日配信。難しい説明ゼロで、明日からすぐ使えます。</p>
+      <div class="hero__cta">
+        <button class="btn btn--primary btn--xl" id="heroSignup">無料で会員登録する →</button>
+        <p class="hero__cta-note">✓ 登録1分 &nbsp; ✓ 完全無料 &nbsp; ✓ いつでも解除OK</p>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <div class="hero__blob"></div>
+      <div class="hero__tools">
+        <div class="tool-chip">🤖 ChatGPT</div>
+        <div class="tool-chip tool-chip--accent">⚡ Claude</div>
+        <div class="tool-chip">📝 Notion AI</div>
+        <div class="tool-chip tool-chip--accent">🎨 Canva AI</div>
+        <div class="tool-chip">📊 Copilot</div>
+        <div class="tool-chip">🔧 Zapier</div>
+      </div>
+      <div class="hero__result-card">
+        <div class="result-card__header">
+          <span class="result-card__dot result-card__dot--red"></span>
+          <span class="result-card__dot result-card__dot--yellow"></span>
+          <span class="result-card__dot result-card__dot--green"></span>
+          <span class="result-card__title">AIで業務改善した結果…</span>
+        </div>
+        <div class="result-card__body">
+          <div class="result-row"><span class="result-label">資料作成時間</span><span class="result-before">3時間</span><span class="result-arrow">→</span><span class="result-after">20分</span></div>
+          <div class="result-row"><span class="result-label">営業メール作成</span><span class="result-before">30分</span><span class="result-arrow">→</span><span class="result-after">3分</span></div>
+          <div class="result-row"><span class="result-label">議事録まとめ</span><span class="result-before">1時間</span><span class="result-arrow">→</span><span class="result-after">即完了</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stats-bar__inner">
+    <div class="stats-bar__item"><strong>82%</strong><span>の中小企業がAIを導入済み</span></div>
+    <div class="stats-bar__divider"></div>
+    <div class="stats-bar__item"><strong>45%</strong><span>平均生産性向上</span></div>
+    <div class="stats-bar__divider"></div>
+    <div class="stats-bar__item"><strong>10,000+</strong><span>人のビジネスパーソンが読む</span></div>
+    <div class="stats-bar__divider"></div>
+    <div class="stats-bar__item"><strong>毎日更新</strong><span>新鮮な情報をお届け</span></div>
+  </div>
+</div>
+
+<!-- Value Props -->
+<section class="values">
+  <div class="values__inner">
+    <h2 class="values__title">このメディアでできること</h2>
+    <div class="values__grid">
+      <div class="value-card">
+        <div class="value-card__icon">🛠️</div>
+        <h3>すぐ使えるノウハウ</h3>
+        <p>ChatGPT・Claude・Notion AIなどを使った実務テクニックを、初心者でもわかるように解説。明日の仕事から使えます。</p>
+      </div>
+      <div class="value-card value-card--accent">
+        <div class="value-card__icon">⚡</div>
+        <h3>実際に作ってみた</h3>
+        <p>「AIで営業ツールを作ってみた」「30分でチャットボット完成」など、実装動画つきで紹介。見て納得できます。</p>
+      </div>
+      <div class="value-card">
+        <div class="value-card__icon">📈</div>
+        <h3>中小企業のリアル事例</h3>
+        <p>大企業ではなく、あなたと似た規模のビジネスのDX・AI活用事例を中心に紹介。「うちでもできそう」がわかります。</p>
+      </div>
+      <div class="value-card">
+        <div class="value-card__icon">🎯</div>
+        <h3>DX・相談窓口</h3>
+        <p>記事を読んで「自社に取り入れたい」と思ったら、そのままシステム開発やDX支援を相談できます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Articles -->
+<main class="main">
+  <div class="main__inner">
+    <div class="main__content">
+      <div class="section-header">
+        <h2 class="section-title">新着記事</h2>
+        <div class="category-tabs" id="categoryTabs">
+          <button class="tab tab--active">すべて</button>
+          <button class="tab">AI活用術</button>
+          <button class="tab">DX・業務改善</button>
+          <button class="tab">ツール紹介</button>
+          <button class="tab">実験室</button>
+        </div>
+        <a href="#" class="link-more">全部見る →</a>
+      </div>
+
+      <div class="articles-grid" id="articlesGrid">
+        <article class="article-card article-card--big">
+          <a href="#" class="article-card__img-wrap">
+            <img src="https://placehold.co/600x300/ff6b35/fff?text=ChatGPT+4o" alt="" class="article-card__img">
+            <span class="article-card__new">NEW</span>
+          </a>
+          <div class="article-card__body">
+            <span class="badge badge--orange">AI活用術</span>
+            <h3 class="article-card__title"><a href="#">ChatGPT-4oの新機能まとめ！業務で使える7つの活用例とプロンプト付き</a></h3>
+            <p class="article-card__excerpt">実際に使って試した結果をレポート。コピペで使えるプロンプト付きです。</p>
+            <div class="article-card__footer">
+              <div class="article-card__meta"><span>📅 2024.05.20</span><span>⏱ 8分</span></div>
+              <a href="#" class="article-card__link">読む →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <a href="#" class="article-card__img-wrap">
+            <img src="https://placehold.co/400x220/2563eb/fff?text=DX" alt="" class="article-card__img">
+          </a>
+          <div class="article-card__body">
+            <span class="badge badge--blue">DX・業務改善</span>
+            <h3 class="article-card__title"><a href="#">中小企業のDX入門｜まず何からやればいい？3ステップで解説</a></h3>
+            <div class="article-card__footer">
+              <div class="article-card__meta"><span>2024.05.19</span><span>6分</span></div>
+              <a href="#" class="article-card__link">読む →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <a href="#" class="article-card__img-wrap">
+            <img src="https://placehold.co/400x220/7c3aed/fff?text=Notion+AI" alt="" class="article-card__img">
+          </a>
+          <div class="article-card__body">
+            <span class="badge badge--purple">ツール紹介</span>
+            <h3 class="article-card__title"><a href="#">Notion AIで議事録を自動化する方法｜設定から使い方まで全解説</a></h3>
+            <div class="article-card__footer">
+              <div class="article-card__meta"><span>2024.05.18</span><span>7分</span></div>
+              <a href="#" class="article-card__link">読む →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card article-card--lab">
+          <div class="article-card__lab-badge">🧪 実験室</div>
+          <a href="#" class="article-card__img-wrap">
+            <img src="https://placehold.co/400x220/059669/fff?text=作ってみた" alt="" class="article-card__img">
+          </a>
+          <div class="article-card__body">
+            <span class="badge badge--green">実験室・開発ブログ</span>
+            <h3 class="article-card__title"><a href="#">AIで営業メール自動生成ツールを30分で作ってみた【コード公開】</a></h3>
+            <div class="article-card__footer">
+              <div class="article-card__meta"><span>2024.05.17</span><span>10分</span></div>
+              <a href="#" class="article-card__link">読む →</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar__cta">
+        <p class="sidebar__cta-label">📬 無料で受け取る</p>
+        <h3>最新AI情報を<br>メールでお届け</h3>
+        <p>週1回、使えるノウハウをまとめて配信</p>
+        <form class="newsletter-form" id="newsletterFormSidebar">
+          <input type="email" placeholder="メールアドレス" class="input" required>
+          <button type="submit" class="btn btn--primary btn--block">無料で登録 →</button>
+        </form>
+        <p class="form-note">いつでも解除できます</p>
+      </div>
+
+      <div class="sidebar__block">
+        <h3 class="sidebar__title">🔥 よく読まれています</h3>
+        <ol class="ranking">
+          <li class="ranking__item"><span class="ranking__num">01</span><a href="#">おすすめAIツール30選【2024年】</a></li>
+          <li class="ranking__item"><span class="ranking__num">02</span><a href="#">AIで資料作成を10倍速にする方法</a></li>
+          <li class="ranking__item"><span class="ranking__num">03</span><a href="#">1人社長がAIで時間を生み出す方法</a></li>
+          <li class="ranking__item"><span class="ranking__num">04</span><a href="#">ChatGPTプロンプト完全ガイド</a></li>
+          <li class="ranking__item"><span class="ranking__num">05</span><a href="#">業務自動化ツール比較5選</a></li>
+        </ol>
+      </div>
+
+      <div class="sidebar__consult">
+        <p class="sidebar__consult-icon">💬</p>
+        <h3>AIやDXについて<br>無料で相談する</h3>
+        <p>「自社に合うAI活用法を知りたい」「システム開発を検討している」など、お気軽にどうぞ。</p>
+        <button class="btn btn--primary btn--block">無料相談はこちら →</button>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- Newsletter Banner -->
+<section class="newsletter-banner">
+  <div class="newsletter-banner__inner">
+    <div class="newsletter-banner__content">
+      <h2>📬 最新のAI活用情報、受け取りますか？</h2>
+      <p>週1回、今すぐ使えるノウハウ・ツール・事例をまとめてお届け。登録は1分、解除もワンクリック。</p>
+    </div>
+    <form class="newsletter-form newsletter-form--inline" id="newsletterFormMain">
+      <input type="email" placeholder="メールアドレスを入力" class="input" required>
+      <button type="submit" class="btn btn--white">無料で登録 →</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <div class="logo"><div class="logo__icon">⚡</div><div class="logo__name" style="color:#fff">AIビジネスメディア</div></div>
+      <p>AIを味方に、すべてのビジネスに<br>挑戦の選択肢を増やす。</p>
+    </div>
+    <div class="footer__links">
+      <div><strong>コンテンツ</strong><a href="#">AI活用ガイド</a><a href="#">DX・業務改善</a><a href="#">実験室</a><a href="#">ツール比較</a></div>
+      <div><strong>サービス</strong><a href="#">システム開発</a><a href="#">DX支援</a><a href="#">無料相談</a><a href="#">セミナー</a></div>
+      <div><strong>その他</strong><a href="#">会社情報</a><a href="#">プライバシー</a><a href="#">お問い合わせ</a></div>
+    </div>
+  </div>
+  <div class="footer__bottom"><p>© 2024 AIビジネスメディア / ZIRAKU Inc.</p></div>
+</footer>
+
+<!-- Auth Modal -->
+<div class="modal" id="authModal">
+  <div class="modal__overlay" id="modalOverlay"></div>
+  <div class="modal__box">
+    <button class="modal__close" id="modalClose">✕</button>
+    <div id="modalLoginView">
+      <h2 class="modal__title">ログイン</h2>
+      <form id="loginForm">
+        <label class="label">メールアドレス</label>
+        <input type="email" class="input" id="loginEmail" required>
+        <label class="label">パスワード</label>
+        <input type="password" class="input" id="loginPassword" required>
+        <button type="submit" class="btn btn--primary btn--block">ログイン →</button>
+      </form>
+      <p class="modal__switch">アカウントがない方は<button class="link-btn" id="toSignup">無料登録 →</button></p>
+    </div>
+    <div id="modalSignupView" style="display:none">
+      <h2 class="modal__title">無料で始める 🚀</h2>
+      <form id="signupForm">
+        <label class="label">お名前</label>
+        <input type="text" class="input" id="signupName" required>
+        <label class="label">メールアドレス</label>
+        <input type="email" class="input" id="signupEmail" required>
+        <label class="label">パスワード</label>
+        <input type="password" class="input" id="signupPassword" required>
+        <button type="submit" class="btn btn--primary btn--block">無料で登録する →</button>
+      </form>
+      <p class="modal__switch">すでにアカウントがある方は<button class="link-btn" id="toLogin">ログイン</button></p>
+    </div>
+    <div id="modalSuccessView" style="display:none">
+      <p class="modal__success">🎉 登録完了！ようこそ！</p>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { supabase, subscribeNewsletter, signUp, signIn } from '../shared/supabase-client.js'
+
+  const modal = document.getElementById('authModal')
+  document.getElementById('loginBtn').onclick = () => { showView('login'); modal.classList.add('modal--open') }
+  document.getElementById('signupBtn').onclick = () => { showView('signup'); modal.classList.add('modal--open') }
+  document.getElementById('heroSignup').onclick = () => { showView('signup'); modal.classList.add('modal--open') }
+  document.getElementById('modalClose').onclick = () => modal.classList.remove('modal--open')
+  document.getElementById('modalOverlay').onclick = () => modal.classList.remove('modal--open')
+  document.getElementById('toSignup').onclick = () => showView('signup')
+  document.getElementById('toLogin').onclick = () => showView('login')
+
+  function showView(v) {
+    document.getElementById('modalLoginView').style.display = v === 'login' ? '' : 'none'
+    document.getElementById('modalSignupView').style.display = v === 'signup' ? '' : 'none'
+    document.getElementById('modalSuccessView').style.display = 'none'
+  }
+
+  document.getElementById('loginForm').onsubmit = async (e) => {
+    e.preventDefault()
+    const { error } = await signIn(loginEmail.value, loginPassword.value)
+    if (!error) { document.getElementById('modalSuccessView').style.display = ''; document.getElementById('modalLoginView').style.display = 'none' }
+  }
+  document.getElementById('signupForm').onsubmit = async (e) => {
+    e.preventDefault()
+    const { error } = await signUp(signupEmail.value, signupPassword.value, signupName.value)
+    if (!error) { document.getElementById('modalSuccessView').style.display = ''; document.getElementById('modalSignupView').style.display = 'none' }
+  }
+
+  async function handleNewsletter(formId) {
+    document.getElementById(formId).onsubmit = async (e) => {
+      e.preventDefault()
+      const email = e.target.querySelector('input[type=email]').value
+      const { error } = await subscribeNewsletter(email)
+      if (!error) { e.target.innerHTML = '<p style="color:#ff6b35;font-weight:bold">🎉 登録しました！</p>' }
+    }
+  }
+  handleNewsletter('newsletterFormSidebar')
+  handleNewsletter('newsletterFormMain')
+
+  document.getElementById('categoryTabs').addEventListener('click', (e) => {
+    if (!e.target.classList.contains('tab')) return
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab--active'))
+    e.target.classList.add('tab--active')
+  })
+</script>
+</body>
+</html>
