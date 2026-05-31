@@ -11,27 +11,46 @@ const BADGE_CLASS: Record<string, string> = {
   'lab': 'badge--purple', 'ai-news': 'badge--blue',
 }
 
-// Markdownの簡易レンダリング（ヘッディング・コードブロック・リスト・太字）
+// Markdownの簡易レンダリング（ヘッディング・コードブロック・テーブル・リスト・太字）
 function renderContent(content: string): string {
-  return content
-    .replace(/```(\w*)\n([\s\S]*?)```/g, (_m, _lang, code) =>
-      `<pre style="background:#1e1e1e;color:#d4d4d4;padding:1.25rem;border-radius:6px;overflow-x:auto;font-size:0.85rem;line-height:1.6;margin:1.5rem 0"><code>${code.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></pre>`)
+  // コードブロックを先に処理してエスケープ
+  const codeBlocks: string[] = []
+  let html = content.replace(/```(\w*)\n([\s\S]*?)```/g, (_m, _lang, code) => {
+    const idx = codeBlocks.length
+    codeBlocks.push(`<pre style="background:#1e1e1e;color:#d4d4d4;padding:1.25rem;border-radius:6px;overflow-x:auto;font-size:0.85rem;line-height:1.6;margin:1.5rem 0"><code>${code.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></pre>`)
+    return `%%CODE_${idx}%%`
+  })
+
+  // テーブルブロックをまとめてパース
+  html = html.replace(/((?:^\|[^\n]+\n?)+)/gm, (block) => {
+    const lines = block.trim().split('\n').filter(l => l.trim().startsWith('|'))
+    const isSep = (l: string) => /^\|[\s\-:|]+\|$/.test(l.trim())
+    const hasHeader = lines.some(isSep)
+    let headerSeen = false
+    const rows = lines.map((line) => {
+      if (isSep(line)) { headerSeen = true; return null }
+      const cells = line.replace(/^\||\|$/g, '').split('|').map(c => c.trim())
+      const isHeader = hasHeader && !headerSeen
+      const tag = isHeader ? 'th' : 'td'
+      const style = isHeader
+        ? 'padding:10px 14px;border:1px solid #e5e7eb;background:#f9fafb;font-weight:700;text-align:left;white-space:nowrap'
+        : 'padding:10px 14px;border:1px solid #e5e7eb;vertical-align:top'
+      return `<tr>${cells.map(c => `<${tag} style="${style}">${c}</${tag}>`).join('')}</tr>`
+    }).filter(Boolean)
+    return `<div style="overflow-x:auto;margin:1.5rem 0"><table style="width:100%;border-collapse:collapse;font-size:0.9rem">${rows.join('')}</table></div>`
+  })
+
+  return html
     .replace(/^### (.+)$/gm, '<h3 style="font-size:1.15rem;font-weight:700;margin:2rem 0 0.75rem">$1</h3>')
     .replace(/^## (.+)$/gm, '<h2 style="font-size:1.35rem;font-weight:700;margin:2.5rem 0 1rem;padding-bottom:0.5rem;border-bottom:2px solid #e5e7eb">$1</h2>')
     .replace(/^# (.+)$/gm, '<h1 style="font-size:1.75rem;font-weight:700;margin:2rem 0 1rem">$1</h1>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/`(.+?)`/g, '<code style="background:#f3f4f6;padding:2px 6px;border-radius:3px;font-size:0.875em">$1</code>')
-    .replace(/^\| (.+) \|$/gm, (m) => {
-      if (m.includes('---')) return ''
-      const cells = m.slice(2,-2).split(' | ').map(c => `<td style="padding:8px 12px;border:1px solid #e5e7eb">${c}</td>`).join('')
-      return `<tr>${cells}</tr>`
-    })
-    .replace(/(<tr>[\s\S]*?<\/tr>)/g, '<table style="width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:0.9rem"><tbody>$1</tbody></table>')
     .replace(/^- (.+)$/gm, '<li style="margin:0.35rem 0">$1</li>')
     .replace(/(<li[^>]*>[\s\S]*?<\/li>)\n(?!<li)/g, '<ul style="list-style:disc;padding-left:1.5rem;margin:1rem 0">$1</ul>\n')
     .replace(/^\d+\. (.+)$/gm, '<li style="margin:0.35rem 0">$1</li>')
     .replace(/\n\n/g, '</p><p style="margin:1rem 0">')
-    .replace(/^(?!<[h|u|o|l|t|p|c])/gm, '')
+    .replace(/%%CODE_(\d+)%%/g, (_m, idx) => codeBlocks[Number(idx)])
 }
 
 export default function ArticlePage({ theme, slug }: { theme: Theme; slug: string }) {
@@ -175,28 +194,47 @@ export default function ArticlePage({ theme, slug }: { theme: Theme; slug: strin
 
         {/* CTA */}
         <div style={{
-          background: theme === 'zapier' ? '#ff6b35' : theme === 'notion' ? '#f7f6f3' : '#0d2b6b',
+          background: theme === 'zapier'
+            ? 'linear-gradient(135deg, #ff6b35 0%, #ff4a00 100%)'
+            : theme === 'notion'
+            ? 'linear-gradient(135deg, #f7f6f3 0%, #edecea 100%)'
+            : 'linear-gradient(135deg, #0d2b6b 0%, #1a4090 100%)',
           color: theme === 'notion' ? '#37352f' : '#fff',
-          padding: '2rem',
-          borderRadius: theme === 'notion' ? '12px' : '4px',
+          padding: '2.5rem 2rem',
+          borderRadius: theme === 'notion' ? '16px' : '8px',
           marginTop: '3rem',
-          textAlign: 'center'
+          textAlign: 'center',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+          position: 'relative',
+          overflow: 'hidden',
         }}>
-          <p style={{ fontSize: '0.9rem', marginBottom: '0.75rem', opacity: 0.85 }}>{cta.text}</p>
+          {/* 背景装飾 */}
+          <div style={{ position: 'absolute', top: '-30px', right: '-30px', width: '120px', height: '120px', borderRadius: '50%', background: 'rgba(255,255,255,0.06)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: '-20px', left: '10%', width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', pointerEvents: 'none' }} />
+          {/* アイコン */}
+          <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>
+            {article.categories?.slug === 'dx-improvement' ? '🏢' : article.categories?.slug === 'lab' ? '⚗️' : article.categories?.slug === 'solo-business' ? '🚀' : '📬'}
+          </div>
+          <p style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem', opacity: 0.95, lineHeight: 1.6 }}>{cta.text}</p>
+          <p style={{ fontSize: '0.82rem', marginBottom: '1.5rem', opacity: 0.7 }}>無料・登録不要でご利用いただけます</p>
           <a
             href="/contact"
             style={{
-              display: 'inline-block',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
               background: theme === 'notion' ? '#37352f' : '#fff',
-              color: theme === 'zapier' ? '#ff6b35' : theme === 'notion' ? '#fff' : '#0d2b6b',
-              padding: '0.75rem 2rem',
-              borderRadius: theme === 'notion' ? '8px' : '4px',
-              fontWeight: 700,
+              color: theme === 'zapier' ? '#ff4a00' : theme === 'notion' ? '#fff' : '#0d2b6b',
+              padding: '0.875rem 2.25rem',
+              borderRadius: '999px',
+              fontWeight: 800,
               fontSize: '0.95rem',
-              textDecoration: 'none'
+              textDecoration: 'none',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+              transition: 'transform 0.15s',
             }}
           >
-            {cta.label}
+            {cta.label} →
           </a>
         </div>
 
