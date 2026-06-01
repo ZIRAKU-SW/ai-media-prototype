@@ -65,6 +65,12 @@ from (values
    'tools', 15, 8920, '2026-05-20T09:00:00Z'),
 
   -- ▼ 参考発信者調査PDFから追加（2026-06-01）
+  -- ▼ ENTERPRISE_WEB_AGENT_COST.md を記事化（2026-06-01）
+  ('席課金 vs 社内Webエージェント｜企業AIコストを最大97%削減する方法【2026年試算】',
+   'enterprise-ai-cost-web-agent-vs-seat',
+   'ChatGPT・Claude・Cursor Teamsなど席課金型との比較試算。社内WebにCursor APIを1本通すだけで、5〜100人規模のAIコストを65〜97%削減できる理由を徹底解説します。',
+   'https://picsum.photos/seed/ai012/800/450',
+   'lab', 10, 980, '2026-06-01T12:00:00Z'),
   ('無料AIツールだけで営業資料・SNS投稿・議事録を作る方法【コスト0円】',
    'free-ai-tools-sales-content',
    'ChatGPT・Canva AI・Notion AIなど無料プランのみで、営業資料・SNS投稿・議事録の3つを全部作る実践ガイド。月額0円でも十分すぎるほど使えます。',

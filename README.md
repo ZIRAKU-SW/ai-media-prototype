@@ -159,8 +159,10 @@ ai-media-prototype/
 | 9 | 無料AIツールだけで営業資料・SNS投稿・議事録を作る方法 ★新着 | AI活用ガイド | free-ai-tools-sales-content |
 | 10 | 社長がAIを使うと最初に手放せる業務5つ ★新着 | 1人社長・副業 | president-ai-first-tasks |
 | 11 | 中小企業がAI導入で最初にやるべき3つの業務改善 ★新着 | DX・業務改善 | sme-ai-adoption-first-steps |
+| 12 | 席課金 vs 社内Webエージェント｜企業AIコストを最大97%削減 ★新着 | 実験室 | enterprise-ai-cost-web-agent-vs-seat |
 
-> ★新着3本は参考発信者調査PDFのアイデアをもとに追加。Supabaseへの本番追加は `supabase/seeds/articles.sql` を実行してください（管理者権限が必要）。
+> ★新着記事は参考発信者調査PDF・社内試算資料（`docs/ENTERPRISE_WEB_AGENT_COST.md`）をもとに追加。  
+> Supabaseへの本番追加は `supabase/seeds/articles.sql` をダッシュボードのSQL Editorで実行してください（管理者権限が必要）。
 
 ---
 
