@@ -3,6 +3,8 @@
 AIでビジネスを加速する実践メディアのサイトデザイン比較用プロトタイプです。
 [getdesign.md](https://getdesign.md/) のデザインシステムを参考に、3パターンのUIを実装・比較します。
 
+> 📄 参考発信者・参考メディアの調査まとめは **[docs/参考発信者メディア調査まとめ.pdf](./docs/参考発信者メディア調査まとめ.pdf)** を参照。
+
 ---
 
 ## 背景・目的
@@ -130,11 +132,35 @@ ai-media-prototype/
 ## 開発ステップ
 
 - [x] README・コンセプト整理
-- [ ] Pattern A (WIRED) — index.html / article.html
-- [ ] Pattern B (Notion) — index.html / article.html
-- [ ] Pattern C (Zapier) — index.html / article.html
+- [x] Pattern A (WIRED) — トップ・記事詳細実装
+- [x] Pattern B (Notion) — トップ・記事詳細実装
+- [x] Pattern C (Zapier) — トップ・記事詳細実装
+- [x] Supabase DB連携（9テーブル・RLS設定済み）
+- [x] Vercel公開
 - [ ] ブラウザ確認・スマホ表示チェック
 - [ ] 3パターン比較・最終デザイン選定
+
+---
+
+## 記事コンテンツ
+
+### 現在の記事一覧（Supabase + DUMMY）
+
+| # | タイトル | カテゴリ | slug |
+|---|---------|---------|------|
+| 1 | 【2026年最新】生成AIをビジネスで活用する方法 | AI活用ガイド | generative-ai-business-guide-2026 |
+| 2 | ChatGPT・Claude・Gemini 徹底比較 | ツール比較 | chatgpt-claude-gemini-comparison |
+| 3 | 議事録作成をAIで完全自動化する方法 | AI活用ガイド | ai-meeting-minutes-automation |
+| 4 | 在庫管理を自動化して在庫ロスを80%削減した小売業のDX事例 | DX・業務改善 | retail-dx-inventory-automation |
+| 5 | 1人社長がChatGPTだけで月商100万を達成した全手順 | 1人社長・副業 | solo-president-chatgpt-100man |
+| 6 | 営業メール作成ツールを30分で作ってみた | 実験室 | lab-sales-email-tool-30min |
+| 7 | AIが変える意外な世界｜匂い生成・犬語翻訳 | AIニュース | ai-surprising-usecases-2026 |
+| 8 | おすすめAIツール30選【2026年最新版】 | ツール比較 | best-ai-tools-2026 |
+| 9 | 無料AIツールだけで営業資料・SNS投稿・議事録を作る方法 ★新着 | AI活用ガイド | free-ai-tools-sales-content |
+| 10 | 社長がAIを使うと最初に手放せる業務5つ ★新着 | 1人社長・副業 | president-ai-first-tasks |
+| 11 | 中小企業がAI導入で最初にやるべき3つの業務改善 ★新着 | DX・業務改善 | sme-ai-adoption-first-steps |
+
+> ★新着3本は参考発信者調査PDFのアイデアをもとに追加。Supabaseへの本番追加は `supabase/seeds/articles.sql` を実行してください（管理者権限が必要）。
 
 ---
 
