@@ -435,19 +435,46 @@ graph TD
 
 ---
 
-## 📊 現在の進捗
+## 📊 現在の進捗（2026-06-01 時点）
 
 | 項目 | 状態 | 詳細 |
 |-----|------|------|
-| デザインプロトタイプ（3パターン） | ✅ 完了 | WIRED / Notion / Zapier |
+| デザインプロトタイプ（3パターン） | ✅ 完了 | WIRED / Notion / Zapier — Vercel公開済み |
 | Supabase DBスキーマ | ✅ 完了 | 9テーブル・RLS・ポリシー設定済み |
-| Supabase 初期データ | ✅ 完了 | 6カテゴリ投入済み |
+| Supabase カテゴリデータ | ✅ 完了 | 6カテゴリ投入済み |
 | GitHubリポジトリ | ✅ 完了 | ZIRAKU-SW/ai-media-prototype |
 | Vercel公開 | ✅ 完了 | project-7bhii.vercel.app |
-| デザイン確定 | ⬜ 未着手 | 3パターンから選択が必要 |
-| サイト名確定 | ⬜ 未着手 | 要意思決定 |
-| Next.js本番コード | ⬜ 未着手 | Phase 1で実装 |
-| 初期記事 | ⬜ 未着手 | Phase 1で作成 |
+| Next.js本番コード（3テーマ） | ✅ 完了 | App Router + TypeScript + Supabase連携 |
+| 初期記事（Supabase） | ✅ 完了 | **12本**投入済み（詳細は下記） |
+| 記事詳細ページ（Markdownレンダリング） | ✅ 完了 | テーブル・コードブロック・リスト対応 |
+| 記事カードUIリデザイン | ✅ 完了 | カテゴリアイコン・グラデーション・「記事を読む」ボタン |
+| サムネイル画像 | ✅ 完了 | 全記事 picsum.photos に更新済み |
+| 参考発信者調査PDF | ✅ 完了 | `docs/参考発信者メディア調査まとめ.pdf` |
+| 企業AIコスト比較資料 | ✅ 完了 | `docs/ENTERPRISE_WEB_AGENT_COST.md` + 記事化 |
+| デザイン確定 | ⬜ 未着手 | **要意思決定** — 3パターンから選択 |
+| サイト名確定 | ⬜ 未着手 | **要意思決定** |
+| 記事管理UI | ⬜ 未着手 | `/admin` は構造のみ。入力UIは未実装 |
+| ニュースレター配信（Resend） | ⬜ 未着手 | Phase 3 |
+| お問い合わせフォーム動作 | ⬜ 未着手 | DBは存在するが送信処理未実装 |
+| 会員登録・ログイン動作 | ⬜ 未着手 | Supabase Auth の実装未着手 |
+| SEO / OGP | ⬜ 未着手 | Phase 3 |
+
+### 現在の記事一覧（Supabase 12本）
+
+| # | slug | カテゴリ | 備考 |
+|---|------|---------|------|
+| 1 | generative-ai-business-guide-2026 | AI活用ガイド | |
+| 2 | chatgpt-claude-gemini-comparison | ツール比較 | 本文あり |
+| 3 | ai-meeting-minutes-automation | AI活用ガイド | |
+| 4 | retail-dx-inventory-automation | DX・業務改善 | 本文あり（Before/After表） |
+| 5 | solo-president-chatgpt-100man | 1人社長・副業 | |
+| 6 | lab-sales-email-tool-30min | 実験室 | |
+| 7 | ai-surprising-usecases-2026 | AIニュース | |
+| 8 | best-ai-tools-2026 | ツール比較 | |
+| 9 | free-ai-tools-sales-content | AI活用ガイド | 本文あり ★新着 |
+| 10 | president-ai-first-tasks | 1人社長・副業 | 本文あり ★新着 |
+| 11 | sme-ai-adoption-first-steps | DX・業務改善 | 本文あり ★新着 |
+| 12 | enterprise-ai-cost-web-agent-vs-seat | 実験室 | 本文あり ★新着・コスト比較表 |
 
 ---
 
@@ -493,9 +520,11 @@ graph TD
 | GitHub | https://github.com/ZIRAKU-SW/ai-media-prototype |
 | Vercel（公開中プロトタイプ） | https://project-7bhii.vercel.app |
 | Supabase ダッシュボード | https://supabase.com/dashboard/project/wqlelowutbxplrzforcc |
-| Pattern A (WIRED) | https://project-7bhii.vercel.app/pattern-a-wired/ |
-| Pattern B (Notion) | https://project-7bhii.vercel.app/pattern-b-notion/ |
-| Pattern C (Zapier) | https://project-7bhii.vercel.app/pattern-c-zapier/ |
+| Pattern A (WIRED) | https://project-7bhii.vercel.app/wired |
+| Pattern B (Notion) | https://project-7bhii.vercel.app/notion |
+| Pattern C (Zapier) | https://project-7bhii.vercel.app/zapier |
+| 記事例（Notion） | https://project-7bhii.vercel.app/notion/articles/chatgpt-claude-gemini-comparison |
+| 記事例（Zapier） | https://project-7bhii.vercel.app/zapier/articles/enterprise-ai-cost-web-agent-vs-seat |
 
 ---
 
