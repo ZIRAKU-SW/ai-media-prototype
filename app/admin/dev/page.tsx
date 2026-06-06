@@ -1,5 +1,6 @@
+'use client'
+
 import { DevConsole } from '@oceanos/dev-console'
-import '@oceanos/dev-console/styles.css'
 
 export default function AdminDevPage() {
   return (

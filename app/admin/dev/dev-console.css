@@ -1,0 +1,5 @@
+/* dev-console 専用: ライブラリ README 通り Tailwind をホスト PostCSS で処理する */
+@import "tailwindcss";
+@source "../../../packages/dev-console/src/**/*.{tsx,ts}";
+
+@import "@oceanos/dev-console/styles.css";
