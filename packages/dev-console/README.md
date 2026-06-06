@@ -9,7 +9,7 @@ Cursor SDK 開発コンソールの共有ライブラリ。**Sensor `/sensor/dev
 ```json
 {
   "dependencies": {
-    "@oceanos/dev-console": "file:../ai-agent-platform/packages/dev-console"
+    "@oceanos/dev-console": "file:./packages/dev-console"
   }
 }
 ```
@@ -19,6 +19,22 @@ Cursor SDK 開発コンソールの共有ライブラリ。**Sensor `/sensor/dev
 ```ts
 transpilePackages: ["@oceanos/dev-console"],
 ```
+
+**重要 — Tailwind（必須）:** コンポーネントは Tailwind ユーティリティ前提。ホスト側で dev-console 用 CSS を用意する:
+
+```css
+/* app/admin/dev/dev-console.css */
+@import "tailwindcss";
+@source "../../../packages/dev-console/src/**/*.{tsx,ts}";
+@import "@oceanos/dev-console/styles.css";
+```
+
+```tsx
+/* app/admin/dev/layout.tsx */
+import "./dev-console.css";
+```
+
+`dev-console.css` 単体の `@import styles.css` だけではレイアウトが崩れる。
 
 ### 2. 環境変数（`.env`）
 

@@ -193,8 +193,8 @@ function DevConsoleClientInner() {
   const [deploy, setDeploy] = useState<DeployStatus>({ phase: "idle", message: "", updated_at: null });
   const [needAuth, setNeedAuth] = useState(false);
   const [pwInput, setPwInput] = useState("");
-  const [rightWidth, setRightWidth] = useState(420);
-  const [leftWidth, setLeftWidth] = useState(208);
+  const [rightWidth, setRightWidth] = useState(360);
+  const [leftWidth, setLeftWidth] = useState(240);
   const [leftVisible, setLeftVisible] = useState(true);
   const [autoDeploy, setAutoDeploy] = useState(true);
   const [hydrated, setHydrated] = useState(false);
@@ -216,13 +216,13 @@ function DevConsoleClientInner() {
     const leftVis = localStorage.getItem(keys.leftVisible) !== "false";
     const lwRaw = localStorage.getItem(keys.leftWidth);
     const lw = lwRaw
-      ? Math.min(LEFT_WIDTH_MAX, Math.max(LEFT_WIDTH_MIN, Number(lwRaw) || 208))
-      : 208;
+      ? Math.min(LEFT_WIDTH_MAX, Math.max(LEFT_WIDTH_MIN, Number(lwRaw) || 240))
+      : 240;
     setLeftVisible(leftVis);
     setLeftWidth(lw);
     const vw = window.innerWidth;
     const rw = localStorage.getItem(keys.rightWidth);
-    const rwNum = rw ? Number(rw) || 420 : 420;
+    const rwNum = rw ? Number(rw) || 360 : 360;
     setRightWidth(clampRightPanelWidth(rwNum, vw, leftVis, lw));
     const autoKey = keys.autoDeploy;
     const storedAuto = localStorage.getItem(autoKey);
@@ -763,7 +763,7 @@ function DevConsoleClientInner() {
 
   return (
     <div className="cl-shell flex h-screen flex-col bg-[var(--cl-canvas)] text-[var(--cl-text)]">
-      <header className="flex shrink-0 items-center justify-between border-b border-[var(--cl-border)] bg-[var(--cl-sidebar)] px-5 py-3">
+      <header className="cl-header flex shrink-0 items-center justify-between border-b border-[var(--cl-border)] bg-[var(--cl-sidebar)] px-5 py-3">
         <div className="flex items-center gap-3">
           <button
             type="button"
@@ -776,9 +776,9 @@ function DevConsoleClientInner() {
           </button>
           <div>
             <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--cl-muted)]">
-              Sensor-Data-AI · Dev
+              {branding.eyebrow}
             </p>
-            <h1 className="font-serif text-lg text-[var(--cl-text)]">開発コンソール</h1>
+            <h1 className="font-serif text-lg text-[var(--cl-text)]">{branding.title}</h1>
           </div>
           <label className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-[var(--cl-border)] bg-[var(--cl-input)] px-2.5 py-1.5 text-[11px] text-[var(--cl-muted)]">
             <input
@@ -897,7 +897,7 @@ function DevConsoleClientInner() {
 
         {/* 中央: チャット */}
         <section className="flex min-h-0 min-w-0 flex-1 flex-col">
-          <div ref={scrollRef} className="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5">
+          <div ref={scrollRef} className="cl-chat-scroll min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5">
             {messages.map((m, i) => (
               <DevConsoleChatBubble key={i} message={m} />
             ))}
@@ -928,7 +928,7 @@ function DevConsoleClientInner() {
             </div>
           )}
 
-          <div className="border-t border-[var(--cl-border)] bg-[var(--cl-sidebar)]/50 p-4">
+          <div className="cl-input-dock border-t border-[var(--cl-border)] bg-[var(--cl-sidebar)]/80 p-4 backdrop-blur-sm">
             {active.retryContext && !sending && (
               <div className="dev-retry-bar mb-3 flex flex-wrap items-center justify-center gap-3">
                 <span className="text-xs text-[var(--cl-muted)]">
@@ -978,10 +978,10 @@ function DevConsoleClientInner() {
                     void send();
                   }
                 }}
-                rows={2}
+                rows={3}
                 disabled={sending}
                 placeholder="依頼を入力（⌘/Ctrl+Enter・画像 Ctrl+V）"
-                className="flex-1 resize-none rounded-xl border border-[var(--cl-border)] bg-[var(--cl-input)] px-3 py-2.5 text-sm text-[var(--cl-text)] placeholder:text-[var(--cl-muted)] outline-none focus:border-[var(--cl-accent)] disabled:opacity-50"
+                className="flex-1 resize-none rounded-xl border border-[var(--cl-border)] bg-[var(--cl-input)] px-4 py-3 text-[15px] leading-relaxed text-[var(--cl-text)] placeholder:text-[var(--cl-muted)] outline-none focus:border-[var(--cl-accent)] focus:ring-2 focus:ring-[var(--cl-accent)]/20 disabled:opacity-50"
               />
               <button
                 onClick={() => void send()}
