@@ -193,8 +193,8 @@ function DevConsoleClientInner() {
   const [deploy, setDeploy] = useState<DeployStatus>({ phase: "idle", message: "", updated_at: null });
   const [needAuth, setNeedAuth] = useState(false);
   const [pwInput, setPwInput] = useState("");
-  const [rightWidth, setRightWidth] = useState(360);
-  const [leftWidth, setLeftWidth] = useState(240);
+  const [rightWidth, setRightWidth] = useState(420);
+  const [leftWidth, setLeftWidth] = useState(208);
   const [leftVisible, setLeftVisible] = useState(true);
   const [autoDeploy, setAutoDeploy] = useState(true);
   const [hydrated, setHydrated] = useState(false);
@@ -216,13 +216,13 @@ function DevConsoleClientInner() {
     const leftVis = localStorage.getItem(keys.leftVisible) !== "false";
     const lwRaw = localStorage.getItem(keys.leftWidth);
     const lw = lwRaw
-      ? Math.min(LEFT_WIDTH_MAX, Math.max(LEFT_WIDTH_MIN, Number(lwRaw) || 240))
-      : 240;
+      ? Math.min(LEFT_WIDTH_MAX, Math.max(LEFT_WIDTH_MIN, Number(lwRaw) || 208))
+      : 208;
     setLeftVisible(leftVis);
     setLeftWidth(lw);
     const vw = window.innerWidth;
     const rw = localStorage.getItem(keys.rightWidth);
-    const rwNum = rw ? Number(rw) || 360 : 360;
+    const rwNum = rw ? Number(rw) || 420 : 420;
     setRightWidth(clampRightPanelWidth(rwNum, vw, leftVis, lw));
     const autoKey = keys.autoDeploy;
     const storedAuto = localStorage.getItem(autoKey);
