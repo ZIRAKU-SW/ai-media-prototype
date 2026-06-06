@@ -97,7 +97,7 @@ function newSession(welcome: ChatMsg): DevSession {
   return {
     id: crypto.randomUUID(),
     title: "新しい会話",
-    messages: [welcome],
+    messages: welcome.text?.trim() ? [welcome] : [],
     lastResult: null,
     updatedAt: Date.now(),
     retryContext: null,
