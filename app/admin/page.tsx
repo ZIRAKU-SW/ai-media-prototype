@@ -46,7 +46,26 @@ export default function AdminPage() {
           <span style={{ fontWeight: 700, fontSize: '1rem', color: '#111' }}>管理画面</span>
           <span style={{ fontSize: '0.8rem', color: '#888', padding: '0.2rem 0.5rem', background: '#f3f4f6', borderRadius: '0.25rem' }}>AIビジネスメディア</span>
         </div>
-        <a href="/" style={{ fontSize: '0.85rem', color: '#888', textDecoration: 'none' }}>← サイトに戻る</a>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <a
+            href="/admin/dev"
+            style={{
+              fontSize: '0.85rem',
+              color: '#fff',
+              background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+              textDecoration: 'none',
+              padding: '0.45rem 1rem',
+              borderRadius: '0.5rem',
+              fontWeight: 600,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+            }}
+          >
+            🤖 AI開発コンソール
+          </a>
+          <a href="/" style={{ fontSize: '0.85rem', color: '#888', textDecoration: 'none' }}>← サイトに戻る</a>
+        </div>
       </header>
 
       <div style={{ maxWidth: '960px', margin: '0 auto', padding: '2rem 1.5rem' }}>

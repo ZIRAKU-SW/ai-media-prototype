@@ -42,3 +42,17 @@ UIのバグ修正・見た目の変更・新機能追加を行ったら、**必�
 | `app/(wired)/wired/...` | wired のみ |
 | `app/(notion)/notion/...` | notion のみ |
 | `app/(zapier)/zapier/...` | zapier のみ |
+
+## Vercel デプロイ（必須・作業完了の条件）
+
+**ローカルで動いただけでは完了としない。** 変更後は必ず本番へデプロイする。
+
+| 本番 | https://project-7bhii.vercel.app |
+| 管理 | https://project-7bhii.vercel.app/admin |
+
+```
+npm run build → git commit → git push origin main → 本番URLで3テーマ確認
+```
+
+- 報告・共有は `localhost` ではなく **本番URL** を使う
+- UI変更後は wired / notion / zapier すべて本番で確認

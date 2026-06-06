@@ -1,0 +1,39 @@
+---
+description: 変更後は必ず Vercel 本番へ git push デプロイする
+alwaysApply: true
+---
+
+# Vercel デプロイ（必須）
+
+機能追加・バグ修正・UI変更を完了したら、**必ず本番へデプロイする**。ローカルで動いただけでは完了としない。
+
+## 本番URL
+
+| 項目 | URL |
+|------|-----|
+| トップ | https://project-7bhii.vercel.app |
+| 管理画面 | https://project-7bhii.vercel.app/admin |
+| WIRED | https://project-7bhii.vercel.app/wired |
+| Notion | https://project-7bhii.vercel.app/notion |
+| Zapier | https://project-7bhii.vercel.app/zapier |
+
+## デプロイ手順（毎回）
+
+```
+1. npm run build          … ローカルでビルド確認
+2. git add / commit       … ユーザーが依頼した場合、または作業完了時に提案
+3. git push origin main   … Vercel 自動デプロイ（1〜2分）
+4. 本番URLで3テーマ確認   … wired / notion / zapier
+```
+
+## 完了の定義
+
+- `git push` 済み
+- Vercel デプロイが Ready
+- 変更したページを **本番URL** で確認済み
+
+## 注意
+
+- `localhost:3000` はローカル専用。ユーザーへの報告は本番URLを使う
+- 環境変数変更は Vercel ダッシュボードでも設定が必要
+- AI開発コンソール（`/admin/dev`）の Python エージェントは Vercel 上では動作しない（UI のみ）

@@ -1,0 +1,32 @@
+{
+  "name": "@oceanos/dev-console",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cursor SDK 開発コンソール — UI・API・操作仕様を共通化（Sensor 版と同一 UX）",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./styles.css": "./src/styles/dev-console.css",
+    "./server/job": "./src/server/job.ts",
+    "./server/chat": "./src/server/chat.ts",
+    "./server/upload": "./src/server/upload.ts",
+    "./server/deploy": "./src/server/deploy.ts",
+    "./content/usage.md": "./src/content/usage.md",
+    "./content/welcome.md": "./src/content/welcome.md"
+  },
+  "dependencies": {
+    "react-markdown": "^10.1.0",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "peerDependencies": {
+    "next": ">=14",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5"
+  }
+}

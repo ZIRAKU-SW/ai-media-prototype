@@ -8,8 +8,14 @@
 .env.local
 .vercel
 
+# dev-console runtime
+run/
+logs/
+data/dev-console/
+
 # Next.js
 .next/
 node_modules/
 next-env.d.ts
 out/
+tsconfig.tsbuildinfo
