@@ -43,20 +43,14 @@
 
 ### 環境変数（POC）
 
-**秘密情報は `config/env.b64` / `config/env.local.b64` に base64 で Git 管理。** push 後に復元:
+**`.env` / `.env.local` を Git 管理。** clone / pull 後そのまま使える。
 
-```bash
-bash scripts/vm/install-poc-env.sh   # → .env / .env.local を生成
-```
-
-| 復元後ファイル | 用途 |
+| ファイル | 用途 |
 |----------|------|
 | `.env` | Vercel / Supabase DB |
-| `.env.local` | Next.js + AI開発コンソール（**VM パス設定済み**） |
+| `.env.local` | Next.js + AI開発コンソール（VM パス設定済み） |
 
 Mac ローカル dev 時は `DEV_CONSOLE_PROJECT_ROOT` / `DEV_CONSOLE_PYTHON` を Mac パスに差し替える。
-
-> ⚠️ 本番サービス化時は b64 を削除し、キーをローテーションすること。
 
 ---
 

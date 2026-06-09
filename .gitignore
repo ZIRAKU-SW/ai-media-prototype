@@ -3,9 +3,7 @@
 .DS_Store
 .AppleDouble
 
-# env（.env / .env.local は install-poc-env.sh で復元 — config/*.b64 を Git 管理）
-.env
-.env.local
+# env（POC: .env / .env.local は Git 管理）
 .vercel
 
 # dev-console runtime

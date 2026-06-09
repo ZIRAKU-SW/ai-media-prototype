@@ -28,11 +28,9 @@ ssh gcp-vm
 # Cursor: Remote-SSH → gcp-vm → /home/powerpass7/ai-media-prototype
 ```
 
-### git pull 後（初回・env 更新時）
+### git pull 後
 
-```bash
-bash scripts/vm/install-poc-env.sh   # config/*.b64 → .env / .env.local
-```
+`.env` / `.env.local` はリポジトリに含まれる。追加作業不要。
 
 ---
 

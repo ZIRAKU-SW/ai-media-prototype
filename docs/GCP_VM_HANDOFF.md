@@ -154,13 +154,9 @@ pm2 save
 
 ## 6. 環境変数
 
-**POC:** `config/env.b64` + `config/env.local.b64` を Git 管理。復元:
+**`.env` / `.env.local` を Git 管理（POC）。** VM では `git pull` でそのまま取得。
 
-```bash
-bash scripts/vm/install-poc-env.sh
-```
-
-| 生成ファイル | 内容 |
+| ファイル | 内容 |
 |----------|------|
 | `.env` | Vercel トークン、Supabase DB |
 | `.env.local` | Next.js、Cursor API、dev console（VM パス） |
@@ -168,10 +164,8 @@ bash scripts/vm/install-poc-env.sh
 ### VM 引き継ぎ
 
 ```bash
-cd ~/ai-media-prototype
-git pull
-bash scripts/vm/install-poc-env.sh
-pm2 restart ai-media-dev   # PM2 利用時のみ
+cd ~/ai-media-prototype && git pull
+# .env / .env.local はリポジトリから取得済み
 ```
 
 ### Python デフォルトモデル
@@ -242,6 +236,6 @@ pm2 restart ai-media-dev   # PM2 利用時のみ
 
 ## 10. セキュリティ
 
-- **POC 段階:** `.env` / `.env.local` を Git 管理（demo 引き継ぎ優先）
+- **POC:** `.env` / `.env.local` を Git 管理（demo 引き継ぎ優先）
 - **本番化時:** `.gitignore` に戻し、全キーをローテーション
 - VM の 3000 番を公開しない方針で、攻撃面を SSH のみに限定
