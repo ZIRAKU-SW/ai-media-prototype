@@ -16,6 +16,7 @@ data/dev-console/
 # Next.js
 .next/
 node_modules/
+venv/
 next-env.d.ts
 out/
 tsconfig.tsbuildinfo

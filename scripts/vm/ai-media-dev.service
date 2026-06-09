@@ -1,0 +1,16 @@
+[Unit]
+Description=AI Media Next.js (dev console + Cursor SDK)
+After=network.target
+
+[Service]
+Type=simple
+User=powerpass7
+WorkingDirectory=/home/powerpass7/ai-media-prototype
+Environment=NODE_ENV=production
+Environment=PORT=3000
+ExecStart=/usr/bin/npm run start
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

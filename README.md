@@ -4,7 +4,8 @@ AIでビジネスを加速する実践メディアのサイトデザイン比較
 [getdesign.md](https://getdesign.md/) のデザインシステムを参考に、3パターンのUIを実装・比較します。
 
 > 📄 参考発信者・参考メディアの調査まとめは **[docs/参考発信者メディア調査まとめ.pdf](./docs/参考発信者メディア調査まとめ.pdf)** を参照。  
-> 🤖 Cursor Agent / 新しいAIエージェントへの引き継ぎは **[CURSOR_HANDOFF.md](./CURSOR_HANDOFF.md)** を参照。
+> 🤖 Cursor Agent / 新しいAIエージェントへの引き継ぎは **[CURSOR_HANDOFF.md](./CURSOR_HANDOFF.md)** を参照。  
+> 🖥️ GCP VM・SSH・AI 開発環境は **[docs/GCP_VM_HANDOFF.md](./docs/GCP_VM_HANDOFF.md)** を参照。
 
 ---
 

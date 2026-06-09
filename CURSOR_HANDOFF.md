@@ -4,7 +4,7 @@
 > Claude Codeで進めてきた開発をCursor Agentに移行するための完全な引き継ぎ資料。  
 > 「何を作ったか」「何が動いているか」「何が残っているか」を全部ここに書く。
 
-最終更新: 2026-06-01
+最終更新: 2026-06-09
 
 ---
 
@@ -38,6 +38,7 @@
 | スタイリング | CSS Variables（テーマ別CSS） | Tailwind CSS補助 |
 | DB / Auth | Supabase (PostgreSQL + RLS) | Pro plan |
 | デプロイ | Vercel | GitHub連携・自動デプロイ |
+| AI 開発（Cursor Agent） | GCP VM + SSH | Remote SSH（22番） |
 | パッケージ管理 | npm | Node.js v20+ |
 
 ### 環境変数（.env.local）
@@ -46,6 +47,13 @@
 NEXT_PUBLIC_SUPABASE_URL=https://wqlelowutbxplrzforcc.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_...   # .env.local を参照
 SUPABASE_SERVICE_ROLE_KEY=sb_secret_...            # .env.local を参照（絶対公開禁止）
+
+# AI開発コンソール（/admin/dev）— ローカル Mac または VM のみ
+CURSOR_API_KEY=...                                 # Cursor API キー
+DEV_CONSOLE_PROJECT_ROOT=/absolute/path/to/repo
+DEV_CONSOLE_PYTHON=/path/to/python3
+DEV_CONSOLE_PYTHON_MODULE=ai_media_agent.dev_agent
+# CURSOR_SDK_MODEL=composer-2.5                   # composer-2.5-fast は非対応
 ```
 
 > ⚠️ 実際のキー値は `.env.local` に記載。`sb_secret_` はサーバーサイド専用・フロントコード禁止。  
@@ -88,8 +96,15 @@ ai-media-prototype/
 │
 ├── docs/
 │   ├── concept.md              ← メディアコンセプト・要件定義
+│   ├── GCP_VM_HANDOFF.md       ← GCP VM・SSH・AI開発環境（重要）
 │   ├── 参考発信者メディア調査まとめ.pdf
 │   └── ENTERPRISE_WEB_AGENT_COST.md  ← 企業AIコスト比較（記事化済み）
+│
+├── scripts/vm/                 ← VM セットアップ（検証用・README 参照）
+│
+├── app/admin/dev/              ← AI開発コンソール UI（Vercel では Python 不可）
+├── packages/dev-console/       ← 開発コンソール共有パッケージ
+├── ai_media_agent/dev_agent.py ← Cursor SDK Python エージェント
 │
 ├── ROADMAP.md                  ← フェーズ計画・タスク管理
 ├── CONTRIBUTING.md             ← 開発ルール・デプロイ手順
@@ -323,8 +338,41 @@ npm run dev  # → http://localhost:3000
 ## 12. Cursor Agentへの申し送り事項
 
 1. **このファイル（CURSOR_HANDOFF.md）と CLAUDE.md を最初に読むこと**
-2. **3パターン全対応ルールは絶対** — 1パターンだけ直して終わりにしない
-3. **新記事追加は service_role key で INSERT** — anon key では弾かれる
-4. **Zapierページは独自コンポーネント** — TopPage.tsx を使っていないので別途対応
-5. **記事の content は Markdown 記法** — renderContent() でHTMLに変換している
-6. **Vercel デプロイは git push で自動発火** — 手動デプロイ不要
+2. **GCP VM で AI 開発する場合は [`docs/GCP_VM_HANDOFF.md`](./docs/GCP_VM_HANDOFF.md) を読むこと**
+3. **3パターン全対応ルールは絶対** — 1パターンだけ直して終わりにしない
+4. **新記事追加は service_role key で INSERT** — anon key では弾かれる
+5. **Zapierページは独自コンポーネント** — TopPage.tsx を使っていないので別途対応
+6. **記事の content は Markdown 記法** — renderContent() でHTMLに変換している
+7. **Vercel デプロイは git push で自動発火** — 手動デプロイ不要
+8. **`/admin/dev` の Web エージェントは Vercel では動かない** — 本番 AI 作業は **Remote SSH → gcp-vm**
+
+---
+
+## 13. GCP VM・AI 開発環境（2026-06-09）
+
+> 詳細は **[docs/GCP_VM_HANDOFF.md](./docs/GCP_VM_HANDOFF.md)** に集約。
+
+### 採用方針
+
+| 用途 | 場所 |
+|------|------|
+| 公開サイト | Vercel（`git push`） |
+| Cursor Agent によるコード変更 | **GCP VM + SSH（Remote SSH）** |
+| ブラウザ `/admin/dev` | ローカル Mac のみ（任意） |
+
+**VM の 3000 番公開・Web UI 経由 Cursor SDK は不要**（SSH 22 番のみ）。
+
+### 接続
+
+```
+Host gcp-vm → 34.146.146.150 / powerpass7 / ~/.ssh/id_ed25519_gcp
+```
+
+Cursor: **Remote-SSH: Connect to Host → gcp-vm** → `/home/powerpass7/ai-media-prototype`
+
+### AI開発コンソール（参考）
+
+- パッケージ: `@oceanos/dev-console`（`packages/dev-console/`）
+- API: `/api/dev/chat` → Python `ai_media_agent/dev_agent.py` → Cursor SDK
+- Vercel: UI のみ。Python エージェントは **サーバーレスでは不可**
+- モデル: `CURSOR_SDK_MODEL=composer-2.5`（`composer-2.5-fast` は API エラー）

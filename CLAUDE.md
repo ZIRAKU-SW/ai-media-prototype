@@ -43,6 +43,12 @@ UIのバグ修正・見た目の変更・新機能追加を行ったら、**必�
 | `app/(notion)/notion/...` | notion のみ |
 | `app/(zapier)/zapier/...` | zapier のみ |
 
+## GCP VM・AI 開発（Remote SSH）
+
+- 詳細: **`docs/GCP_VM_HANDOFF.md`**
+- 公開サイトは Vercel、AI Agent 作業は **SSH → gcp-vm**（22番のみ、3000番公開不要）
+- `/admin/dev` Web UI はローカル Mac 用（Vercel では Python 不可）
+
 ## Vercel デプロイ（必須・作業完了の条件）
 
 **ローカルで動いただけでは完了としない。** 変更後は必ず本番へデプロイする。

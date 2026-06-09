@@ -19,7 +19,7 @@ from cursor_sdk import Agent, AgentOptions, CursorAgentError, LocalAgentOptions
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 JOB_FILE = PROJECT_ROOT / "run" / "dev-console-chat.json"
 ENV_FILE = PROJECT_ROOT / ".env.local"
-DEFAULT_MODEL = os.environ.get("CURSOR_SDK_MODEL", "composer-2.5-fast")
+DEFAULT_MODEL = os.environ.get("CURSOR_SDK_MODEL", "composer-2.5")
 
 DIFF_SCOPE = [
     "app",

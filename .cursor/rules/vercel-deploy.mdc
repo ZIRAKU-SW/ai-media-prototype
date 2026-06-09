@@ -37,3 +37,5 @@ alwaysApply: true
 - `localhost:3000` はローカル専用。ユーザーへの報告は本番URLを使う
 - 環境変数変更は Vercel ダッシュボードでも設定が必要
 - AI開発コンソール（`/admin/dev`）の Python エージェントは Vercel 上では動作しない（UI のみ）
+- AI によるコード変更は **GCP VM + Cursor Remote SSH** — 詳細は `docs/GCP_VM_HANDOFF.md`
+- VM の **3000 番公開は不要**（SSH 22 番のみ）
