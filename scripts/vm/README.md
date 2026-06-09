@@ -28,6 +28,12 @@ ssh gcp-vm
 # Cursor: Remote-SSH → gcp-vm → /home/powerpass7/ai-media-prototype
 ```
 
+### git pull 後（初回・env 更新時）
+
+```bash
+bash scripts/vm/install-poc-env.sh   # config/*.b64 → .env / .env.local
+```
+
 ---
 
 ## 検証用: VM 上で Next.js + dev console を動かす

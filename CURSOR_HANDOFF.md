@@ -41,23 +41,22 @@
 | AI 開発（Cursor Agent） | GCP VM + SSH | Remote SSH（22番） |
 | パッケージ管理 | npm | Node.js v20+ |
 
-### 環境変数（.env.local）
+### 環境変数（POC）
 
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://wqlelowutbxplrzforcc.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_...   # .env.local を参照
-SUPABASE_SERVICE_ROLE_KEY=sb_secret_...            # .env.local を参照（絶対公開禁止）
+**秘密情報は `config/env.b64` / `config/env.local.b64` に base64 で Git 管理。** push 後に復元:
 
-# AI開発コンソール（/admin/dev）— ローカル Mac または VM のみ
-CURSOR_API_KEY=...                                 # Cursor API キー
-DEV_CONSOLE_PROJECT_ROOT=/absolute/path/to/repo
-DEV_CONSOLE_PYTHON=/path/to/python3
-DEV_CONSOLE_PYTHON_MODULE=ai_media_agent.dev_agent
-# CURSOR_SDK_MODEL=composer-2.5                   # composer-2.5-fast は非対応
+```bash
+bash scripts/vm/install-poc-env.sh   # → .env / .env.local を生成
 ```
 
-> ⚠️ 実際のキー値は `.env.local` に記載。`sb_secret_` はサーバーサイド専用・フロントコード禁止。  
-> ⚠️ キーをこのファイルに直書きしないこと（GitHub Push Protectionで弾かれる）。
+| 復元後ファイル | 用途 |
+|----------|------|
+| `.env` | Vercel / Supabase DB |
+| `.env.local` | Next.js + AI開発コンソール（**VM パス設定済み**） |
+
+Mac ローカル dev 時は `DEV_CONSOLE_PROJECT_ROOT` / `DEV_CONSOLE_PYTHON` を Mac パスに差し替える。
+
+> ⚠️ 本番サービス化時は b64 を削除し、キーをローテーションすること。ーテーションすること。
 
 ---
 

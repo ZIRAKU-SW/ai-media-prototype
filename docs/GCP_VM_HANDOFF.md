@@ -154,28 +154,25 @@ pm2 save
 
 ## 6. 環境変数
 
-### ローカル Mac（`.env.local`）
+**POC:** `config/env.b64` + `config/env.local.b64` を Git 管理。復元:
 
-`.env.example` を参照。最低限:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=...
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-SUPABASE_SERVICE_ROLE_KEY=...
-
-CURSOR_API_KEY=...
-DEV_CONSOLE_PROJECT_ROOT=/absolute/path/to/ai-media-prototype
-DEV_CONSOLE_PYTHON=/path/to/venv/bin/python3
-DEV_CONSOLE_PYTHON_MODULE=ai_media_agent.dev_agent
+```bash
+bash scripts/vm/install-poc-env.sh
 ```
 
-### VM（`~/ai-media-prototype/.env.local`）
+| 生成ファイル | 内容 |
+|----------|------|
+| `.env` | Vercel トークン、Supabase DB |
+| `.env.local` | Next.js、Cursor API、dev console（VM パス） |
 
-テンプレ: `scripts/vm/env.local.template`
+### VM 引き継ぎ
 
-- `DEV_CONSOLE_PROJECT_ROOT=/home/powerpass7/ai-media-prototype`
-- `DEV_CONSOLE_PYTHON=/usr/bin/python3`（venv ではなく `--user` インストール）
-- `CURSOR_SDK_MODEL=composer-2.5`（**`composer-2.5-fast` は API 非対応**だった）
+```bash
+cd ~/ai-media-prototype
+git pull
+bash scripts/vm/install-poc-env.sh
+pm2 restart ai-media-dev   # PM2 利用時のみ
+```
 
 ### Python デフォルトモデル
 
@@ -245,7 +242,6 @@ DEV_CONSOLE_PYTHON_MODULE=ai_media_agent.dev_agent
 
 ## 10. セキュリティ
 
-- **`.env.local` / API キーは Git にコミットしない**
-- VM の `.env.local` に `DEV_CONSOLE_PASSWORD` を設定している場合、Web API POST に `x-dev-token` が必要
-- チャット等で API キーを貼った場合は **ローテーション推奨**
-- 3000 番を公開しない方針で、攻撃面を SSH のみに限定
+- **POC 段階:** `.env` / `.env.local` を Git 管理（demo 引き継ぎ優先）
+- **本番化時:** `.gitignore` に戻し、全キーをローテーション
+- VM の 3000 番を公開しない方針で、攻撃面を SSH のみに限定
