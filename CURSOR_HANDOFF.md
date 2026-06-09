@@ -56,7 +56,7 @@ bash scripts/vm/install-poc-env.sh   # → .env / .env.local を生成
 
 Mac ローカル dev 時は `DEV_CONSOLE_PROJECT_ROOT` / `DEV_CONSOLE_PYTHON` を Mac パスに差し替える。
 
-> ⚠️ 本番サービス化時は b64 を削除し、キーをローテーションすること。ーテーションすること。
+> ⚠️ 本番サービス化時は b64 を削除し、キーをローテーションすること。
 
 ---
 
