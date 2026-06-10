@@ -13,13 +13,10 @@ const SIGNUP: Record<SiteTheme, string> = {
 function themeLogo(theme: SiteTheme): ReactNode {
   if (theme === 'wired') {
     return (
-      <>
-        <span className="logo__mark">✕</span>
-        <div>
-          <div className="logo__name">AIビジネスメディア</div>
-          <div className="logo__tagline">AIで、ビジネスはもっと進化する。</div>
-        </div>
-      </>
+      <div>
+        <div className="logo__name">AIビジネスメディア</div>
+        <div className="logo__tagline">AIで、ビジネスはもっと進化する。</div>
+      </div>
     )
   }
   if (theme === 'zapier') {
