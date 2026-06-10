@@ -26,7 +26,8 @@ cat data/ziraku-backend-url.txt
 bash scripts/oceanosfleet/print-tunnel-update.sh
 ```
 
-oceanosfleet VM（Mac の `dify-vm` / Cursor Remote SSH）で `bash scripts/oceanosfleet/update-ziraku-proxy.sh` を実行 → `npm run verify:sites`
+ZIRAKU VM から: `npm run dify:update-proxy`（ssh dify-vm で nginx 更新）  
+未接続時は Mac で `scp ~/.ssh/google_compute_engine* gcp-vm:~/.ssh/` → `npm run dify:ssh-setup`
 
 ## 確認コマンド
 

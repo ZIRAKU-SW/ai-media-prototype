@@ -48,12 +48,9 @@ https://oceanosfleet.com/Ziraku/wired
 
 ---
 
-## 4. oceanosfleet VM への接続（Mac Cursor のみ）
+## 4. gcp-vm → dify-vm SSH（ZIRAKU VM から oceanosfleet へ）
 
-oceanosfleet VM（35.192.37.133）の nginx 更新は **Mac の Cursor Remote SSH** で行う。  
-**ZIRAKU VM の `~/.ssh/config` は変更しない。**
-
-Mac の `~/.ssh/config` 例（参考・Cursor 上の設定）:
+Mac の Cursor と **同じ** `~/.ssh/config` を ZIRAKU VM に置く（gcp-vm から dify-vm へ SSH）:
 
 ```
 Host dify-vm
@@ -62,11 +59,21 @@ Host dify-vm
     IdentityFile ~/.ssh/google_compute_engine
 ```
 
-Cursor: **Remote-SSH → dify-vm** で oceanosfleet VM に接続し、以下を実行:
+### 初回のみ（Mac で鍵を ZIRAKU VM にコピー）
+
+Mac で `ssh dify-vm` が通る状態で:
 
 ```bash
-bash scripts/oceanosfleet/update-ziraku-proxy.sh
-# または print-tunnel-update.sh の手順どおり nginx を更新
+scp ~/.ssh/google_compute_engine ~/.ssh/google_compute_engine.pub gcp-vm:~/.ssh/
+```
+
+### ZIRAKU VM で
+
+```bash
+chmod 600 ~/.ssh/google_compute_engine
+npm run dify:ssh-setup
+npm run dify:ssh-test          # hostname が返れば OK
+npm run dify:update-proxy      # nginx 更新 + verify:sites
 ```
 
 ---
