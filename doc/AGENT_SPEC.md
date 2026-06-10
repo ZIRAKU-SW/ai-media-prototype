@@ -91,7 +91,15 @@ git commit & push origin main   # ユーザー依頼時または作業完了時
 
 ---
 
-## 5. 過去バグの参照方法
+## 5. バグ台帳（全エージェント必須）
+
+直したトラブルは **必ず** SQLite に登録する。詳細手順は `.cursor/rules/bug-registration.mdc`。
+
+- 修正したのに台帳未登録 → **作業未完了**（`git push` 前に登録まで終える）
+- 過去セッションで直したが未登録のもの → 会話履歴・コミットログから漏れを埋める
+- 一覧: `/admin/operations`（運用タブ） / `data/platform-bugs.json`
+
+### 過去バグの参照方法
 
 ```bash
 # SQLite 直接
@@ -118,6 +126,11 @@ python3 platform_meta/seed.py --register-bug \
 
 | 日付 | 区分 | 内容 |
 |------|------|------|
+| 2026-06-10 | fix | Vercelビルド失敗 — `ThemeSiteHeader.tsx` 未コミットを追加 |
+| 2026-06-10 | fix | Zapier記事カード画像のみ — `ZapierArticleCard` + モバイルリスト |
+| 2026-06-10 | fix | Wiredモバイルカテゴリタブ縦書き — `wired.css` grid 化 |
+| 2026-06-10 | fix | Notion記事リスト重なり — `.notion-root` スコープ Flexbox |
+| 2026-06-10 | fix | メルマガバナー縦書き崩れ — 3テーマ共通 CSS |
 | 2026-06-10 | fix | モバイル記事リストでタイトルが消える問題 — Grid→Flexbox（`mobile-shared.css`） |
 | 2026-06-10 | fix | カテゴリタブの縦書き崩れ — section-header を grid 化 |
 | 2026-06-09 | feat | Notion モック準拠 UI + モバイルレスポンシブ |
