@@ -63,7 +63,7 @@ export async function proxyDevRequest(
     return NextResponse.json(
       {
         error: message,
-        hint: "GCP VM の Next.js (PM2) とファイアウォール tcp:3000 を確認してください",
+        hint: "GCP VM の PM2 (ai-media-dev + dev-console-tunnel) と DEV_CONSOLE_BACKEND_URL を確認してください",
       },
       { status: 502 },
     );

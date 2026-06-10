@@ -34,6 +34,17 @@ ssh gcp-vm
 
 ---
 
+## 本番用: Cloudflare Tunnel（Cloud Shell 不要）
+
+```bash
+bash scripts/vm/setup-cloudflared-tunnel.sh
+cat run/dev-console-tunnel-url.txt   # Vercel の DEV_CONSOLE_BACKEND_URL に設定
+```
+
+ファイアウォール tcp:3000 の開放は不要。トンネル再起動で URL が変わる場合は Vercel を更新。
+
+---
+
 ## 検証用: VM 上で Next.js + dev console を動かす
 
 ```bash

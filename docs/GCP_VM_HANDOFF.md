@@ -234,18 +234,23 @@ cd ~/ai-media-prototype && git pull
 
 ---
 
-## 10. 本番で `/admin/dev` を有効化する手順
+## 10. 本番で `/admin/dev` を有効化する手順（Cloud Shell 不要）
 
-1. **GCP Cloud Shell** でファイアウォール開放:
+**GCP ファイアウォールを開けずに** Cloudflare Tunnel で VM:3000 を公開する。
+
+1. **GCP VM（SSH）** でトンネル起動:
    ```bash
-   bash scripts/vm/open-firewall-cloudshell.sh
+   bash scripts/vm/setup-cloudflared-tunnel.sh
    ```
-2. **Vercel** プロジェクトの Environment Variables に追加:
-   - `DEV_CONSOLE_BACKEND_URL` = `http://34.146.146.150:3000`
+   表示された `https://….trycloudflare.com` を控える（`run/dev-console-tunnel-url.txt` にも保存）。
+2. **Vercel** Environment Variables に追加:
+   - `DEV_CONSOLE_BACKEND_URL` = 上記トンネル URL（末尾スラッシュなし）
    - `DEV_CONSOLE_PASSWORD` = VM の `.env.local` と同じ値
 3. Vercel を **Redeploy**
-4. https://project-7bhii.vercel.app/admin/dev を開き、トークン欄に `DEV_CONSOLE_PASSWORD` を入力
-5. 動作確認: `GET /api/dev/health` が `mode: "proxy"` + `backend.ok: true` を返すこと
+4. https://project-7bhii.vercel.app/admin/dev → トークン欄に `DEV_CONSOLE_PASSWORD` を入力
+5. 確認: `curl -s $TUNNEL_URL/api/dev/health` が `mode: "backend", ok: true`
+
+トンネル再起動で URL が変わる場合は Vercel の `DEV_CONSOLE_BACKEND_URL` を更新して Redeploy。
 
 ---
 
@@ -253,4 +258,4 @@ cd ~/ai-media-prototype && git pull
 
 - **POC:** `.env` / `.env.local` を Git 管理（demo 引き継ぎ優先）
 - **本番化時:** `.gitignore` に戻し、全キーをローテーション
-- VM の 3000 番を公開しない方針で、攻撃面を SSH のみに限定
+- VM の 3000 番はインターネット直公開しない（Cloudflare Tunnel 経由 + `DEV_CONSOLE_PASSWORD`）

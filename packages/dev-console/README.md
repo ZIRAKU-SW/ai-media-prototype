@@ -86,7 +86,7 @@ Vercel では Python エージェントが動かないため、**API を VM に�
 | Vercel | `DEV_CONSOLE_BACKEND_URL=http://VM_IP:3000` |
 | GCP VM（PM2） | `CURSOR_API_KEY`, `DEV_CONSOLE_PASSWORD`（`DEV_CONSOLE_BACKEND_URL` は未設定） |
 
-VM で `bash scripts/vm/open-dev-console-firewall.sh`（または Cloud Shell 版）で tcp:3000 を開放。
+VM で `bash scripts/vm/setup-cloudflared-tunnel.sh`（Cloudflare Tunnel・ファイアウォール不要）。
 
 ### 5. API ルート（各1ファイル）
 
