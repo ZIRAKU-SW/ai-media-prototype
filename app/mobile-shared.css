@@ -87,7 +87,9 @@
   .notion-root .articles-grid--home,
   .notion-root .articles-grid--related,
   .wired-root .articles-grid--home,
-  .wired-root .articles-grid--related {
+  .wired-root .articles-grid--related,
+  .ziraku-root .articles-grid--home,
+  .ziraku-root .articles-grid--related {
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -97,7 +99,9 @@
   .notion-root .articles-grid--home .article-card,
   .notion-root .articles-grid--related .article-card,
   .wired-root .articles-grid--home .article-card,
-  .wired-root .articles-grid--related .article-card {
+  .wired-root .articles-grid--related .article-card,
+  .ziraku-root .articles-grid--home .article-card,
+  .ziraku-root .articles-grid--related .article-card {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -135,7 +139,9 @@
   .notion-root .articles-grid--home .article-card__img-wrap,
   .notion-root .articles-grid--related .article-card__img-wrap,
   .wired-root .articles-grid--home .article-card__img-wrap,
-  .wired-root .articles-grid--related .article-card__img-wrap {
+  .wired-root .articles-grid--related .article-card__img-wrap,
+  .ziraku-root .articles-grid--home .article-card__img-wrap,
+  .ziraku-root .articles-grid--related .article-card__img-wrap {
     flex: 0 0 96px;
     width: 96px;
     height: 96px;
@@ -150,7 +156,9 @@
   .notion-root .articles-grid--home .article-card__img,
   .notion-root .articles-grid--related .article-card__img,
   .wired-root .articles-grid--home .article-card__img,
-  .wired-root .articles-grid--related .article-card__img {
+  .wired-root .articles-grid--related .article-card__img,
+  .ziraku-root .articles-grid--home .article-card__img,
+  .ziraku-root .articles-grid--related .article-card__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -162,7 +170,9 @@
   .notion-root .articles-grid--home .article-card__body,
   .notion-root .articles-grid--related .article-card__body,
   .wired-root .articles-grid--home .article-card__body,
-  .wired-root .articles-grid--related .article-card__body {
+  .wired-root .articles-grid--related .article-card__body,
+  .ziraku-root .articles-grid--home .article-card__body,
+  .ziraku-root .articles-grid--related .article-card__body {
     flex: 1;
     min-width: 0;
     padding: 0 4px 0 0;
@@ -174,7 +184,9 @@
   .notion-root .articles-grid--home .article-card__title,
   .notion-root .articles-grid--related .article-card__title,
   .wired-root .articles-grid--home .article-card__title,
-  .wired-root .articles-grid--related .article-card__title {
+  .wired-root .articles-grid--related .article-card__title,
+  .ziraku-root .articles-grid--home .article-card__title,
+  .ziraku-root .articles-grid--related .article-card__title {
     font-size: 0.84rem;
     line-height: 1.45;
     color: var(--text, #37352f);
@@ -188,9 +200,12 @@
   .notion-root .articles-grid--home .article-card__excerpt,
   .notion-root .articles-grid--related .article-card__excerpt,
   .wired-root .articles-grid--home .article-card__excerpt,
-  .wired-root .articles-grid--related .article-card__excerpt { display: none; }
+  .wired-root .articles-grid--related .article-card__excerpt,
+  .ziraku-root .articles-grid--home .article-card__excerpt,
+  .ziraku-root .articles-grid--related .article-card__excerpt { display: none; }
   .notion-root .articles-grid--home .article-card__meta-time,
-  .wired-root .articles-grid--home .article-card__meta-time { display: none; }
+  .wired-root .articles-grid--home .article-card__meta-time,
+  .ziraku-root .articles-grid--home .article-card__meta-time { display: none; }
   .notion-root .articles-grid--home .badge,
   .notion-root .articles-grid--related .badge,
   .wired-root .articles-grid--home .badge,

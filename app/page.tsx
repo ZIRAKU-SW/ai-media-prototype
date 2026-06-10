@@ -2,6 +2,14 @@ import Link from 'next/link'
 
 const themes = [
   {
+    href: '/ziraku',
+    label: '本番想定',
+    name: 'ZIRAKUデザイン',
+    desc: 'モック準拠の統合UI\nPC・モバイル対応',
+    bg: '#2563eb',
+    accent: '#ffffff',
+  },
+  {
     href: '/wired',
     label: 'Pattern A',
     name: 'WIRED風',
