@@ -21,6 +21,7 @@ if [[ ! "$TUNNEL" =~ ^https://[a-zA-Z0-9-]+\.trycloudflare\.com$ ]]; then
   echo "ERROR: 不正な Tunnel URL: $TUNNEL" >&2
   exit 1
 fi
+TUNNEL_HOST="${TUNNEL#https://}"
 
 if [[ ! -f "$NGINX_SNIPPET" ]]; then
   echo "ERROR: $NGINX_SNIPPET が見つかりません" >&2
@@ -33,10 +34,15 @@ echo "==> 更新: $NGINX_SNIPPET"
 cp "$NGINX_SNIPPET" "${NGINX_SNIPPET}.bak.$(date +%Y%m%d%H%M%S)"
 sed -i "s|proxy_pass https://[a-zA-Z0-9-]*\.trycloudflare\.com;|proxy_pass $TUNNEL;|g" "$NGINX_SNIPPET"
 sed -i "s|proxy_pass https://[a-zA-Z0-9-]*\.trycloudflare\.com/|proxy_pass $TUNNEL/|g" "$NGINX_SNIPPET"
+sed -i "s|proxy_set_header Host [a-zA-Z0-9-]*\.trycloudflare\.com;|proxy_set_header Host $TUNNEL_HOST;|g" "$NGINX_SNIPPET"
 
-NGINX="${NGINX:-$HOME/.local/bin/nginx}"
-"$NGINX" -t
-"$NGINX" -s reload
+NGINX_BIN="${NGINX_BIN:-$HOME/.local/bin/nginx}"
+if [[ ! -x "$NGINX_BIN" ]]; then
+  echo "ERROR: nginx が見つかりません: $NGINX_BIN" >&2
+  exit 1
+fi
+"$NGINX_BIN" -t -c "$HOME/ai-agent-platform/deploy/nginx/nginx.conf"
+"$NGINX_BIN" -s reload -c "$HOME/ai-agent-platform/deploy/nginx/nginx.conf"
 
 echo "==> 確認"
 for path in /Ziraku/admin /Ziraku/wired /Ziraku/notion; do
