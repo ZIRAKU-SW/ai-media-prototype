@@ -1,0 +1,24 @@
+---
+description: AIビジネスメディアの UI・3テーマ・デプロイの統一仕様（必読）
+alwaysApply: true
+---
+
+# AIビジネスメディア — エージェント向け仕様
+
+**作業開始前に [`doc/AGENT_SPEC.md`](doc/AGENT_SPEC.md) を読む。**
+
+## 鉄則
+
+- **3テーマ** → wired / notion / zapier すべてに適用し本番URLで確認（`CLAUDE.md`）
+- **Notion モバイル記事リスト** → 1024px以下は左サムネ96px + 右テキスト（`app/mobile-shared.css`）。Grid 単独レイアウトに戻さない
+- **記事 Markdown** → `lib/render-markdown.ts` を使う。テーブルは行単位パーサー
+- **UI 変更後** → `npm run build` → `git push origin main` → 本番3テーマ確認（`.cursor/rules/vercel-deploy.mdc`）
+
+## データの置き場
+
+| 種別 | 置き場 |
+|:---|:---|
+| 仕様・変更履歴要約 | `doc/AGENT_SPEC.md` §6 |
+| バグ・再発・インシデント | SQLite `data/platform.db` + **運用**タブ `/admin/operations` |
+
+仕様を変えたら `doc/AGENT_SPEC.md` §6 と `platform_meta/seed.py` の `CHANGELOG_ENTRIES` を両方更新する。

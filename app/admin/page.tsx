@@ -48,6 +48,21 @@ export default function AdminPage() {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <a
+            href="/admin/operations"
+            style={{
+              fontSize: '0.85rem',
+              color: '#0369a1',
+              background: '#f0f9ff',
+              textDecoration: 'none',
+              padding: '0.45rem 1rem',
+              borderRadius: '0.5rem',
+              fontWeight: 600,
+              border: '1px solid #bae6fd',
+            }}
+          >
+            🛠️ 運用（過去トラブル）
+          </a>
+          <a
             href="/admin/dev"
             style={{
               fontSize: '0.85rem',

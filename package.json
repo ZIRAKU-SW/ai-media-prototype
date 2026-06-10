@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "platform:seed": "python3 platform_meta/seed.py"
   },
   "dependencies": {
     "@oceanos/dev-console": "file:./packages/dev-console",

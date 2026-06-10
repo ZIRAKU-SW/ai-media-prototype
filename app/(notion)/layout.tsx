@@ -1,4 +1,6 @@
 import './notion.css'
+import '../article-shared.css'
+import '../company-shared.css'
 import '../mobile-shared.css'
 
 export default function NotionLayout({ children }: { children: React.ReactNode }) {

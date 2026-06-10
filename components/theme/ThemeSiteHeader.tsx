@@ -1,13 +1,8 @@
 import type { ReactNode } from 'react'
 import SiteHeader from '@/components/SiteHeader'
+import { themeNavLinks } from '@/lib/theme-links'
 
 export type SiteTheme = 'wired' | 'notion' | 'zapier'
-
-const NAV: Record<SiteTheme, string[]> = {
-  wired: ['記事を探す', 'カテゴリー', '導入事例', 'セミナー', '会社情報'],
-  notion: ['記事を探す ▾', 'カテゴリー ▾', '導入事例', 'セミナー', '会社情報'],
-  zapier: ['記事を探す', 'カテゴリー', '導入事例', 'セミナー'],
-}
 
 const SIGNUP: Record<SiteTheme, string> = {
   wired: '会員登録（無料）',
@@ -58,7 +53,7 @@ export default function ThemeSiteHeader({ theme }: { theme: SiteTheme }) {
   return (
     <SiteHeader
       homeHref={`/${theme}`}
-      navItems={NAV[theme]}
+      navItems={themeNavLinks(theme)}
       signupLabel={SIGNUP[theme]}
       logo={themeLogo(theme)}
     />

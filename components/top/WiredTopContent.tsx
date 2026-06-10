@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import ThemeSiteHeader from '@/components/theme/ThemeSiteHeader'
+import { themeCompanyHref, ZIRAKU_CONTACT_URL } from '@/lib/theme-links'
 import type { TopContentProps } from './types'
 
 const BADGE_CLASS: Record<string, string> = {
@@ -20,26 +22,7 @@ export default function WiredTopContent({ articles, email, setEmail, subscribed,
         </div>
       </div>
 
-      <header className="header">
-        <div className="header__inner">
-          <Link href="/wired" className="logo">
-            <span className="logo__mark">✕</span>
-            <div>
-              <div className="logo__name">AIビジネスメディア</div>
-              <div className="logo__tagline">AIで、ビジネスはもっと進化する。</div>
-            </div>
-          </Link>
-          <nav className="nav">
-            {['記事を探す','カテゴリー','導入事例','セミナー','会社情報'].map(n => (
-              <a key={n} href="#" className="nav__link">{n}</a>
-            ))}
-          </nav>
-          <div className="header__actions">
-            <button className="btn btn--ghost">ログイン</button>
-            <button className="btn btn--primary">会員登録（無料）</button>
-          </div>
-        </div>
-      </header>
+      <ThemeSiteHeader theme="wired" />
 
       <section className="hero">
         <div className="hero__inner">
@@ -88,7 +71,7 @@ export default function WiredTopContent({ articles, email, setEmail, subscribed,
               <a href="#" className="link-more">一覧を見る →</a>
             </div>
 
-            <div className="articles-grid">
+            <div className="articles-grid articles-grid--home">
               {featured && (
                 <article className="article-card article-card--featured">
                   <Link href={`/wired/articles/${featured.slug}`} className="article-card__img-wrap">
@@ -175,7 +158,7 @@ export default function WiredTopContent({ articles, email, setEmail, subscribed,
           <div className="footer__links">
             <div><strong>コンテンツ</strong><a href="#">AI活用ガイド</a><a href="#">DX・業務改善</a><a href="#">実験室・開発ブログ</a><a href="#">ツール比較</a></div>
             <div><strong>サービス</strong><a href="#">システム開発</a><a href="#">DX支援</a><a href="#">無料相談</a><a href="#">セミナー</a></div>
-            <div><strong>その他</strong><a href="#">会社情報</a><a href="#">プライバシーポリシー</a><a href="#">お問い合わせ</a></div>
+            <div><strong>その他</strong><a href={themeCompanyHref('wired')}>会社情報</a><a href="#">プライバシーポリシー</a><a href={ZIRAKU_CONTACT_URL} target="_blank" rel="noopener noreferrer">お問い合わせ</a></div>
           </div>
         </div>
         <div className="footer__bottom"><p>© 2026 AIビジネスメディア / ZIRAKU Inc.</p></div>

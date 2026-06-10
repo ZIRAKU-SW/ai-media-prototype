@@ -1,7 +1,7 @@
-import ArticlePage from '@/components/pages/ArticlePage'
+import ThemeArticlePage from '@/components/pages/ThemeArticlePage'
 import { use } from 'react'
 
 export default function ZapierArticle({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params)
-  return <ArticlePage theme="zapier" slug={slug} />
+  return <ThemeArticlePage theme="zapier" slug={slug} />
 }

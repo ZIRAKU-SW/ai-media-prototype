@@ -3,10 +3,12 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import Link from 'next/link'
 
+export type NavLink = { label: string; href: string }
+
 export type SiteHeaderProps = {
   homeHref: string
   logo: ReactNode
-  navItems: string[]
+  navItems: NavLink[]
   loginLabel?: string
   signupLabel: string
 }
@@ -35,7 +37,7 @@ export default function SiteHeader({
           </Link>
           <nav className="nav nav--desktop" aria-label="メインナビゲーション">
             {navItems.map((n) => (
-              <a key={n} href="#" className="nav__link">{n}</a>
+              <Link key={n.label} href={n.href} className="nav__link">{n.label}</Link>
             ))}
           </nav>
           <div className="header__actions header__actions--desktop">
@@ -101,7 +103,7 @@ export default function SiteHeader({
             </div>
             <nav className="mobile-drawer__nav">
               {navItems.map((n) => (
-                <a key={n} href="#" className="mobile-drawer__link" onClick={() => setMenuOpen(false)}>{n}</a>
+                <Link key={n.label} href={n.href} className="mobile-drawer__link" onClick={() => setMenuOpen(false)}>{n.label}</Link>
               ))}
             </nav>
             <div className="mobile-drawer__actions">

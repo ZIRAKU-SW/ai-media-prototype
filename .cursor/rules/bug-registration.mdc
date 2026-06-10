@@ -1,0 +1,44 @@
+---
+description: バグ発見・修正時の SQLite 登録手順（過去トラブル参照用）
+alwaysApply: true
+---
+
+# バグ登録ルール
+
+バグを直したら **コード修正 + SQLite 登録 + 仕様更新** までセットで行う。
+
+## いつ登録するか
+
+- 本番またはモバイルで再現した表示崩れ・データ不整合
+- 3テーマのうち1つだけ直って他が残る類の不具合
+- 同じ症状が再発しそうな CSS / レイアウト問題
+
+## 登録手順
+
+1. **修正を実装**し、原因と対策を1〜2文で整理
+2. **登録コマンド**（`platform_meta/seed.py`）:
+
+```bash
+python3 platform_meta/seed.py --register-bug \
+  --title "一行要約" \
+  --symptom "ユーザーが見た現象" \
+  --root-cause "技術的原因" \
+  --fix "変更ファイルと内容" \
+  --themes notion,wired,zapier \
+  --status fixed \
+  --commit <git-hash>
+```
+
+3. **エクスポート確認**: `data/platform-bugs.json` が更新されていること
+4. **仕様更新**: `doc/AGENT_SPEC.md` §6 に1行追記
+5. **コミットに含める**: `data/platform.db` と `data/platform-bugs.json` を一緒に commit
+
+## 参照
+
+- 一覧: `/admin/operations`（運用タブ）
+- ローカル: `sqlite3 data/platform.db "SELECT * FROM bugs ORDER BY id DESC;"`
+- 既知バグの初期データ: `platform_meta/seed.py` の `BUG_ENTRIES`
+
+## 再発防止
+
+修正前に `BUG_ENTRIES` / SQLite を検索し、同種の過去事例がないか確認する。

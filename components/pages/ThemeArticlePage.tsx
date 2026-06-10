@@ -2,14 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import SiteHeader from '@/components/SiteHeader'
+import ThemeSiteHeader, { THEME_BADGE, type SiteTheme } from '@/components/theme/ThemeSiteHeader'
+import { themeCompanyHref, ZIRAKU_CONTACT_URL } from '@/lib/theme-links'
 import { getArticleBySlug, getArticles, trackView, subscribeNewsletter, type Article } from '@/lib/supabase'
 import { renderMarkdown } from '@/lib/render-markdown'
-
-const BADGE: Record<string, string> = {
-  'ai-guide': 'badge--blue', 'dx-improvement': 'badge--green', 'tools': 'badge--gray',
-  'solo-business': 'badge--orange', 'lab': 'badge--purple', 'ai-news': 'badge--blue',
-}
 
 const CTA_MAP: Record<string, { text: string; label: string }> = {
   'dx-improvement': { text: '自社の業務もAIで自動化したい方は、お気軽にご相談ください', label: '無料でAI/DX相談をする' },
@@ -17,12 +13,14 @@ const CTA_MAP: Record<string, { text: string; label: string }> = {
   'solo-business': { text: '1人でもAIで事業を広げたい方は、ぜひご相談ください', label: '業務自動化について相談する' },
 }
 
-export default function NotionArticlePage({ slug }: { slug: string }) {
+export default function ThemeArticlePage({ theme, slug }: { theme: SiteTheme; slug: string }) {
   const [article, setArticle] = useState<Article | null>(null)
   const [related, setRelated] = useState<Article[]>([])
   const [loading, setLoading] = useState(true)
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
+  const base = `/${theme}`
+  const badge = THEME_BADGE[theme]
 
   useEffect(() => {
     getArticleBySlug(slug)
@@ -45,7 +43,7 @@ export default function NotionArticlePage({ slug }: { slug: string }) {
     return (
       <div className="article-page article-page--not-found">
         <p>記事が見つかりませんでした</p>
-        <Link href="/notion">← トップに戻る</Link>
+        <Link href={base}>← トップに戻る</Link>
       </div>
     )
   }
@@ -57,27 +55,14 @@ export default function NotionArticlePage({ slug }: { slug: string }) {
 
   return (
     <div className="article-page">
-      <SiteHeader
-        homeHref="/notion"
-        navItems={['記事を探す ▾', 'カテゴリー ▾', '導入事例', 'セミナー', '会社情報']}
-        signupLabel="会員登録（無料）"
-        logo={
-          <>
-            <div className="logo__icon">AI</div>
-            <div>
-              <div className="logo__name">AIビジネスメディア</div>
-              <div className="logo__tagline">AIで、ビジネスはもっと進化する。</div>
-            </div>
-          </>
-        }
-      />
+      <ThemeSiteHeader theme={theme} />
 
       <nav className="article-breadcrumb" aria-label="パンくずリスト">
-        <Link href="/notion">ホーム</Link>
+        <Link href={base}>ホーム</Link>
         <span aria-hidden>›</span>
         {article.categories && (
           <>
-            <Link href={`/notion/category/${article.categories.slug}`}>{article.categories.name}</Link>
+            <Link href={`${base}/category/${article.categories.slug}`}>{article.categories.name}</Link>
             <span aria-hidden>›</span>
           </>
         )}
@@ -88,7 +73,7 @@ export default function NotionArticlePage({ slug }: { slug: string }) {
         <article className="article-detail">
           <div className="article-detail__meta">
             {article.categories && (
-              <span className={`badge ${BADGE[article.categories.slug] ?? 'badge--blue'}`}>{article.categories.name}</span>
+              <span className={`badge ${badge[article.categories.slug] ?? 'badge--blue'}`}>{article.categories.name}</span>
             )}
             <span className="article-detail__meta-item">
               {article.published_at ? new Date(article.published_at).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) : ''}
@@ -124,7 +109,7 @@ export default function NotionArticlePage({ slug }: { slug: string }) {
           <div className="article-detail__share">
             <span>この記事を共有：</span>
             <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://project-7bhii.vercel.app/notion/articles/${slug}`)}`}
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://project-7bhii.vercel.app${base}/articles/${slug}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="article-detail__share-btn"
@@ -141,7 +126,7 @@ export default function NotionArticlePage({ slug }: { slug: string }) {
               {related.slice(0, 3).map((a, i) => (
                 <li key={a.id} className="ranking__item ranking__item--rich">
                   <span className={`ranking__num${i === 0 ? ' ranking__num--gold' : i === 1 ? ' ranking__num--silver' : ' ranking__num--bronze'}`}>{i + 1}</span>
-                  <Link href={`/notion/articles/${a.slug}`} className="ranking__link">
+                  <Link href={`${base}/articles/${a.slug}`} className="ranking__link">
                     <img src={a.thumbnail_url ?? ''} alt="" className="ranking__thumb" />
                     <span className="ranking__text">{a.title}</span>
                   </Link>
@@ -171,12 +156,12 @@ export default function NotionArticlePage({ slug }: { slug: string }) {
             <div className="articles-grid articles-grid--home articles-grid--related">
               {related.filter(a => a.slug !== slug).slice(0, 4).map(a => (
                 <article key={a.id} className="article-card">
-                  <Link href={`/notion/articles/${a.slug}`} className="article-card__img-wrap">
+                  <Link href={`${base}/articles/${a.slug}`} className="article-card__img-wrap">
                     <img src={a.thumbnail_url ?? ''} alt={a.title} className="article-card__img" />
                   </Link>
                   <div className="article-card__body">
-                    {a.categories && <span className={`badge ${BADGE[a.categories.slug] ?? 'badge--blue'}`}>{a.categories.name}</span>}
-                    <h3 className="article-card__title"><Link href={`/notion/articles/${a.slug}`}>{a.title}</Link></h3>
+                    {a.categories && <span className={`badge ${badge[a.categories.slug] ?? 'badge--blue'}`}>{a.categories.name}</span>}
+                    <h3 className="article-card__title"><Link href={`${base}/articles/${a.slug}`}>{a.title}</Link></h3>
                     <div className="article-card__meta"><span>{a.reading_time_minutes}分で読める</span></div>
                   </div>
                 </article>
@@ -207,13 +192,22 @@ export default function NotionArticlePage({ slug }: { slug: string }) {
       <footer className="footer">
         <div className="footer__inner">
           <div className="footer__brand">
-            <div className="footer__logo"><div className="logo__icon">AI</div><span className="logo__name">AIビジネスメディア</span></div>
+            {theme === 'wired' ? (
+              <>
+                <span className="logo__mark">✕</span>
+                <div className="logo__name">AIビジネスメディア</div>
+              </>
+            ) : theme === 'zapier' ? (
+              <div className="logo"><div className="logo__icon">⚡</div><div className="logo__name">AIビジネスメディア</div></div>
+            ) : (
+              <div className="footer__logo"><div className="logo__icon">AI</div><span className="logo__name">AIビジネスメディア</span></div>
+            )}
             <p>AIで、ビジネスはもっと進化する。</p>
           </div>
           <div className="footer__links">
             <div><strong>コンテンツ</strong><a href="#">AI活用ガイド</a><a href="#">DX・業務改善</a><a href="#">実験室</a><a href="#">ツール比較</a></div>
             <div><strong>サービス</strong><a href="#">システム開発</a><a href="#">DX支援</a><a href="#">無料相談</a></div>
-            <div><strong>その他</strong><a href="#">会社情報</a><a href="#">プライバシーポリシー</a><a href="#">お問い合わせ</a></div>
+            <div><strong>その他</strong><a href={themeCompanyHref(theme)}>会社情報</a><a href="#">プライバシーポリシー</a><a href={ZIRAKU_CONTACT_URL} target="_blank" rel="noopener noreferrer">お問い合わせ</a></div>
           </div>
         </div>
         <div className="footer__bottom"><p>© 2026 AIビジネスメディア / ZIRAKU Inc.</p></div>

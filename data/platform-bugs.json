@@ -1,0 +1,111 @@
+{
+  "exported_at": "2026-06-10T09:37:16.414354+00:00",
+  "bugs": [
+    {
+      "id": 5,
+      "title": "Next.js 15+ で params.slug が undefined",
+      "symptom": "記事詳細で slug が取れず 404。",
+      "root_cause": "App Router の params が Promise 化。",
+      "fix": "各 [slug]/page.tsx で const { slug } = use(params)。",
+      "affected_themes": "wired,notion,zapier",
+      "status": "fixed",
+      "severity": "high",
+      "occurred_at": "2026-05-01",
+      "fixed_at": "2026-05-01",
+      "commit_hash": null,
+      "tags": "nextjs,routing",
+      "created_at": "2026-06-10 09:37:16",
+      "updated_at": "2026-06-10 09:37:16"
+    },
+    {
+      "id": 4,
+      "title": "Zapier記事カード画像が異常に縦長",
+      "symptom": "カード画像エリアが画面を占有するほど縦長。",
+      "root_cause": "aspect-ratio:16/9 と子 height:100% の干渉。",
+      "fix": "zapier.css: article-card__img-wrap を height:190px 固定。",
+      "affected_themes": "zapier",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-05-01",
+      "fixed_at": "2026-05-01",
+      "commit_hash": null,
+      "tags": "css,zapier",
+      "created_at": "2026-06-10 09:37:16",
+      "updated_at": "2026-06-10 09:37:16"
+    },
+    {
+      "id": 3,
+      "title": "Markdownテーブルのセパレーター行がそのまま表示",
+      "symptom": "|------|--------| が本文に文字列として出る。",
+      "root_cause": "正規表現の複数行マッチが不安定。",
+      "fix": "render-markdown.ts / ArticlePage: 行単位ステートマシンに書き直し。",
+      "affected_themes": "wired,notion,zapier",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-05-01",
+      "fixed_at": "2026-05-01",
+      "commit_hash": null,
+      "tags": "markdown,article",
+      "created_at": "2026-06-10 09:37:16",
+      "updated_at": "2026-06-10 09:37:16"
+    },
+    {
+      "id": 2,
+      "title": "カテゴリタブが縦書き状に潰れる",
+      "symptom": "タブレット幅でカテゴリタブの文字が1文字ずつ縦に並ぶ。",
+      "root_cause": "section-header が flex-wrap のみでタブに flex-shrink:0 / 専用行がなかった。",
+      "fix": "section-header を grid 化。category-tabs を2行目全幅+横スクロール。commit c2259a2",
+      "affected_themes": "notion",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-06-10",
+      "fixed_at": "2026-06-10",
+      "commit_hash": "c2259a2",
+      "tags": "mobile,css,category-tabs",
+      "created_at": "2026-06-10 09:37:16",
+      "updated_at": "2026-06-10 09:37:16"
+    },
+    {
+      "id": 1,
+      "title": "モバイル新着記事が画像のみ表示（タイトルなし）",
+      "symptom": "iPhone Safari で新着記事がサムネ全幅のみ。カテゴリ・タイトル・日付が見えない。ランキングは正常。",
+      "root_cause": "640px以下の article-card が CSS Grid (96px+1fr)。Safari等でテキスト列が潰れる。641–1024px はリスト用CSS未適用。",
+      "fix": "app/mobile-shared.css: 1024px以下で Flexbox リスト（左96px+右テキスト）。overflow:visible, min-width:0。commit d1e4bc8",
+      "affected_themes": "notion",
+      "status": "fixed",
+      "severity": "high",
+      "occurred_at": "2026-06-10",
+      "fixed_at": "2026-06-10",
+      "commit_hash": "d1e4bc8",
+      "tags": "mobile,css,safari,article-card",
+      "created_at": "2026-06-10 09:37:16",
+      "updated_at": "2026-06-10 09:37:16"
+    }
+  ],
+  "changelog": [
+    {
+      "id": 2,
+      "entry_date": "2026-06-10",
+      "category": "fix",
+      "title": "カテゴリタブの縦書き崩れ",
+      "body": "section-header を grid 化しタブを横スクロール行に配置。",
+      "created_at": "2026-06-10 09:37:16"
+    },
+    {
+      "id": 1,
+      "entry_date": "2026-06-10",
+      "category": "fix",
+      "title": "モバイル記事リストでタイトルが消える",
+      "body": "Grid→Flexbox。mobile-shared.css を 1024px 以下に適用。",
+      "created_at": "2026-06-10 09:37:16"
+    },
+    {
+      "id": 3,
+      "entry_date": "2026-06-09",
+      "category": "feat",
+      "title": "Notion モック準拠 UI + モバイルレスポンシブ",
+      "body": "NotionTopContent / mobile-shared.css 追加。",
+      "created_at": "2026-06-10 09:37:16"
+    }
+  ]
+}

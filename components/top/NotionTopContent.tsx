@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
-import SiteHeader from '@/components/SiteHeader'
+import ThemeSiteHeader from '@/components/theme/ThemeSiteHeader'
+import { themeCompanyHref, ZIRAKU_CONTACT_URL } from '@/lib/theme-links'
 import type { TopContentProps } from './types'
 import type { Article } from '@/lib/supabase'
 
@@ -40,28 +41,7 @@ export default function NotionTopContent({ articles, email, setEmail, subscribed
 
   return (
     <>
-      <SiteHeader
-        homeHref="/notion"
-        navItems={['記事を探す ▾', 'カテゴリー ▾', '導入事例', 'セミナー', '会社情報']}
-        signupLabel="会員登録（無料）"
-        logo={
-          <>
-            <div className="logo__icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <circle cx="12" cy="5" r="2.5" fill="#fff" />
-                <circle cx="6" cy="14" r="2.5" fill="#fff" />
-                <circle cx="18" cy="14" r="2.5" fill="#fff" />
-                <circle cx="12" cy="19" r="2.5" fill="#fff" />
-                <path d="M12 7.5v3M8.5 12.5L10 14M15.5 12.5L14 14M12 16v2.5" stroke="#fff" strokeWidth="1.2" />
-              </svg>
-            </div>
-            <div>
-              <div className="logo__name">AIビジネスメディア</div>
-              <div className="logo__tagline">AIで、ビジネスはもっと進化する。</div>
-            </div>
-          </>
-        }
-      />
+      <ThemeSiteHeader theme="notion" />
 
       <section className="hero">
         <div className="hero__inner">
@@ -256,7 +236,7 @@ export default function NotionTopContent({ articles, email, setEmail, subscribed
           <div className="footer__links">
             <div><strong>コンテンツ</strong><a href="#">AI活用ガイド</a><a href="#">DX・業務改善</a><a href="#">実験室・開発ブログ</a><a href="#">ツール比較</a></div>
             <div><strong>サービス</strong><a href="#">システム開発</a><a href="#">DX支援</a><a href="#">無料相談</a><a href="#">セミナー</a></div>
-            <div><strong>その他</strong><a href="#">会社情報</a><a href="#">プライバシーポリシー</a><a href="#">お問い合わせ</a></div>
+            <div><strong>その他</strong><a href={themeCompanyHref('notion')}>会社情報</a><a href="#">プライバシーポリシー</a><a href={ZIRAKU_CONTACT_URL} target="_blank" rel="noopener noreferrer">お問い合わせ</a></div>
           </div>
         </div>
         <div className="footer__bottom"><p>© 2026 AIビジネスメディア / ZIRAKU Inc.</p></div>

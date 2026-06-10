@@ -523,10 +523,6 @@ button { cursor: pointer; font-family: inherit; }
 .article-related .section-title { margin-bottom: 1.25rem; }
 
 /* ---- Responsive ---- */
-@media (max-width: 1200px) {
-  .articles-grid--home { grid-template-columns: repeat(2, 1fr); }
-  .articles-grid--home .article-card__excerpt { display: block; font-size: 0.75rem; }
-}
 @media (max-width: 1024px) {
   .hero__inner { grid-template-columns: 1fr; }
   .main__inner { grid-template-columns: 1fr; }

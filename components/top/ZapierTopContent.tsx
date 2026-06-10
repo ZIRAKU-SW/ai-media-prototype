@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import ThemeSiteHeader from '@/components/theme/ThemeSiteHeader'
+import { themeCompanyHref, ZIRAKU_CONTACT_URL } from '@/lib/theme-links'
 import ZapierArticleCard from '@/components/zapier/ZapierArticleCard'
 import type { TopContentProps } from './types'
 
@@ -138,7 +139,7 @@ export default function ZapierTopContent({ articles, email, setEmail, subscribed
           <div className="footer__links">
             <div><strong>コンテンツ</strong><a href="#">AI活用ガイド</a><a href="#">DX・業務改善</a><a href="#">実験室</a><a href="#">ツール比較</a></div>
             <div><strong>サービス</strong><a href="#">システム開発</a><a href="#">DX支援</a><a href="#">無料相談</a></div>
-            <div><strong>その他</strong><a href="#">会社情報</a><a href="#">プライバシーポリシー</a><a href="#">お問い合わせ</a></div>
+            <div><strong>その他</strong><a href={themeCompanyHref('zapier')}>会社情報</a><a href="#">プライバシーポリシー</a><a href={ZIRAKU_CONTACT_URL} target="_blank" rel="noopener noreferrer">お問い合わせ</a></div>
           </div>
         </div>
         <div className="footer__bottom"><p>© 2026 AIビジネスメディア / ZIRAKU Inc.</p></div>

@@ -228,7 +228,27 @@ zapier.css で全スタイル管理。主な要素：
 
 ---
 
-## 7. これまでに修正したバグ（教訓）
+## 7. バグ台帳・過去トラブル（SQLite）
+
+> **2026-06-10 以降** — バグは SQLite + 運用タブで一元管理。以下の手動リストは `platform_meta/seed.py` の `BUG_ENTRIES` に移行済み。
+
+| 参照先 | 用途 |
+|--------|------|
+| `data/platform.db` | エージェント向け SQLite 台帳 |
+| `data/platform-bugs.json` | 本番 `/admin/operations` 表示用エクスポート |
+| `doc/AGENT_SPEC.md` | 仕様・変更履歴 §6 |
+| `.cursor/rules/bug-registration.mdc` | バグ登録手順 |
+
+```bash
+python3 platform_meta/seed.py                              # 初期化・エクスポート
+python3 platform_meta/seed.py --register-bug --title "..." ...  # 新規登録
+```
+
+管理画面: https://project-7bhii.vercel.app/admin/operations
+
+---
+
+## 7b. これまでに修正したバグ（教訓・要約）
 
 ### バグ1: テーブルのセパレーター行が表示される
 - **症状**: `|------|--------|` が文字列としてそのまま表示

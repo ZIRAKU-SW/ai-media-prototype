@@ -1,0 +1,107 @@
+/* Company page — 3テーマ共通 */
+
+.company-page { min-height: 100vh; }
+.company-breadcrumb {
+  max-width: 960px; margin: 0 auto; padding: 1rem 24px 0;
+  font-size: 0.82rem; color: var(--text-muted, #666);
+  display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;
+}
+.company-breadcrumb a:hover { opacity: 0.75; }
+.company-main {
+  max-width: 960px; margin: 0 auto; padding: 1.5rem 24px 4rem;
+}
+.company-hero { margin-bottom: 2.5rem; }
+.company-hero__eyebrow {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+  color: var(--accent, #4f86f7); text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.company-hero__title {
+  font-size: clamp(1.75rem, 4vw, 2.25rem); font-weight: 700; line-height: 1.35;
+  margin-bottom: 0.75rem;
+}
+.company-hero__lead { font-size: 0.95rem; color: var(--text-muted, #666); line-height: 1.8; }
+
+.company-section { margin-bottom: 2.5rem; }
+.company-section__label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+  color: var(--accent, #4f86f7); margin-bottom: 0.35rem;
+}
+.company-section__title {
+  font-size: 1.35rem; font-weight: 700; margin-bottom: 1rem;
+  padding-bottom: 0.5rem; border-bottom: 2px solid var(--border, #e0ddd8);
+}
+.company-mv-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem;
+}
+.company-mv-card {
+  background: var(--warm-gray, #f7f6f3);
+  border: 1px solid var(--border, #e0ddd8);
+  border-radius: 12px; padding: 1.5rem;
+}
+.company-mv-card__type {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+  color: var(--text-muted, #666); margin-bottom: 0.5rem;
+}
+.company-mv-card__text { font-size: 1.05rem; font-weight: 700; line-height: 1.55; }
+
+.company-message {
+  background: #fff; border: 1px solid var(--border, #e0ddd8);
+  border-radius: 12px; padding: 1.75rem;
+}
+.company-message__subtitle { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.5; }
+.company-message__body { font-size: 0.92rem; line-height: 1.9; color: #444; white-space: pre-line; }
+.company-message__ceo {
+  margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border, #e0ddd8);
+}
+.company-message__ceo-title { font-size: 0.78rem; color: var(--text-muted, #666); margin-bottom: 0.25rem; }
+.company-message__ceo-name { font-size: 1.1rem; font-weight: 700; }
+.company-message__ceo-en { font-size: 0.82rem; color: var(--text-muted, #666); }
+.company-message__profile {
+  margin-top: 1rem; font-size: 0.85rem; line-height: 1.8; color: #555;
+}
+
+.company-table {
+  width: 100%; border-collapse: collapse; font-size: 0.92rem;
+  background: #fff; border: 1px solid var(--border, #e0ddd8); border-radius: 12px; overflow: hidden;
+}
+.company-table th,
+.company-table td {
+  padding: 0.875rem 1.25rem; border-bottom: 1px solid var(--border, #e0ddd8);
+  vertical-align: top; text-align: left;
+}
+.company-table tr:last-child th,
+.company-table tr:last-child td { border-bottom: none; }
+.company-table th {
+  width: 28%; font-weight: 600; background: var(--warm-gray, #f7f6f3);
+  color: var(--text-muted, #555); white-space: nowrap;
+}
+
+.company-services {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;
+}
+.company-services a {
+  display: block; padding: 1rem 1.25rem; border-radius: 10px;
+  border: 1px solid var(--border, #e0ddd8); background: #fff;
+  font-weight: 600; font-size: 0.9rem; transition: border-color 0.15s, background 0.15s;
+}
+.company-services a:hover { border-color: var(--accent, #4f86f7); background: rgba(79, 134, 247, 0.04); }
+
+.company-cta {
+  text-align: center; padding: 2rem 1.5rem; border-radius: 14px;
+  background: linear-gradient(135deg, #eef3ff, #e0f2fe);
+  border: 1px solid #bae6fd;
+}
+.company-cta__text { font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.7; }
+.company-source {
+  margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted, #999);
+}
+.company-source a { color: var(--accent, #4f86f7); }
+
+@media (max-width: 640px) {
+  .company-main { padding: 1.25rem 16px 3rem; }
+  .company-breadcrumb { padding: 0.75rem 16px 0; }
+  .company-table th,
+  .company-table td { display: block; width: 100%; }
+  .company-table th { border-bottom: none; padding-bottom: 0.25rem; background: transparent; }
+  .company-table td { padding-top: 0.25rem; padding-bottom: 1rem; }
+}
