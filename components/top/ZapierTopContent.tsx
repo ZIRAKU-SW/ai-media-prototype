@@ -1,28 +1,12 @@
 import Link from 'next/link'
+import ThemeSiteHeader from '@/components/theme/ThemeSiteHeader'
+import ZapierArticleCard from '@/components/zapier/ZapierArticleCard'
 import type { TopContentProps } from './types'
-
-const BADGE: Record<string,string> = { 'ai-guide':'badge--orange','dx-improvement':'badge--blue','tools':'badge--purple','solo-business':'badge--green','lab':'badge--red','ai-news':'badge--orange' }
 
 export default function ZapierTopContent({ articles, email, setEmail, subscribed, handleNewsletter }: TopContentProps) {
   return (
     <>
-      <header className="header">
-        <div className="header__inner">
-          <Link href="/zapier" className="logo">
-            <div className="logo__icon">⚡</div>
-            <div className="logo__name">AIビジネスメディア</div>
-          </Link>
-          <nav className="nav">
-            {['記事を探す','カテゴリー','導入事例','セミナー'].map(n=>(
-              <a key={n} href="#" className="nav__link">{n}</a>
-            ))}
-          </nav>
-          <div className="header__actions">
-            <button className="btn btn--ghost">ログイン</button>
-            <button className="btn btn--primary">無料で始める →</button>
-          </div>
-        </div>
-      </header>
+      <ThemeSiteHeader theme="zapier" />
 
       <section className="hero">
         <div className="hero__inner">
@@ -102,22 +86,9 @@ export default function ZapierTopContent({ articles, email, setEmail, subscribed
               </div>
               <a href="#" className="link-more">すべて見る →</a>
             </div>
-            <div className="articles-grid">
-              {articles.slice(0,4).map(a => (
-                <article key={a.id} className="article-card">
-                  <Link href={`/zapier/articles/${a.slug}`} className="article-card__img-wrap">
-                    <img src={a.thumbnail_url ?? ''} alt={a.title} className="article-card__img" />
-                  </Link>
-                  <div className="article-card__body">
-                    {a.categories && <span className={`badge ${BADGE[a.categories.slug]??'badge--orange'}`}>{a.categories.name}</span>}
-                    <h3 className="article-card__title"><Link href={`/zapier/articles/${a.slug}`}>{a.title}</Link></h3>
-                    <p className="article-card__excerpt">{a.excerpt}</p>
-                    <div className="article-card__meta">
-                      <span>{a.published_at ? new Date(a.published_at).toLocaleDateString('ja-JP') : ''}</span>
-                      <span>⏱ {a.reading_time_minutes}分</span>
-                    </div>
-                  </div>
-                </article>
+            <div className="articles-grid articles-grid--home">
+              {articles.slice(0, 4).map((a, i) => (
+                <ZapierArticleCard key={a.id} article={a} featured={i === 0} showNew={i === 0} />
               ))}
             </div>
           </div>

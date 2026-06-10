@@ -1,15 +1,15 @@
 /* ============================================================
-   Mobile — Notion サイト共通（トップ + 記事詳細）
+   Mobile — 3テーマ共通（トップ + 記事詳細）
    ============================================================ */
 
 /* ---- Header / Drawer ---- */
-.header__mobile { display: none; align-items: center; gap: 4px; margin-left: auto; flex-shrink: 0; }
 .header__search-btn {
   display: flex; align-items: center; justify-content: center;
-  width: 40px; height: 40px; border: none; background: transparent;
+  width: 36px; height: 36px; border: none; background: transparent;
   border-radius: 8px; color: var(--text-muted, #666); cursor: pointer;
 }
-.header__search-btn:hover { background: var(--warm-gray, #f1efec); }
+.header__search-btn:hover { background: var(--warm-gray, rgba(0,0,0,0.06)); }
+.header__mobile { display: none; align-items: center; gap: 4px; margin-left: auto; flex-shrink: 0; }
 .header__icon-btn {
   display: flex; align-items: center; justify-content: center;
   width: 44px; height: 44px; border: none; background: transparent;
@@ -83,17 +83,21 @@
   .category-tabs::-webkit-scrollbar { display: none; }
   .tab { flex-shrink: 0; white-space: nowrap; }
 
-  /* 記事リスト：左サムネ・右テキスト */
-  .articles-grid--home,
-  .articles-grid--related {
+  /* 記事リスト：左サムネ・右テキスト（Notion / Wired のみ） */
+  .notion-root .articles-grid--home,
+  .notion-root .articles-grid--related,
+  .wired-root .articles-grid--home,
+  .wired-root .articles-grid--related {
     display: flex;
     flex-direction: column;
     gap: 0;
     margin-bottom: 0;
     padding: 0 16px;
   }
-  .articles-grid--home .article-card,
-  .articles-grid--related .article-card {
+  .notion-root .articles-grid--home .article-card,
+  .notion-root .articles-grid--related .article-card,
+  .wired-root .articles-grid--home .article-card,
+  .wired-root .articles-grid--related .article-card {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -106,9 +110,20 @@
     transform: none !important;
     background: #fff;
     overflow: visible;
+    grid-column: span 1;
+    grid-template-columns: unset;
   }
-  .articles-grid--home .article-card:first-child,
-  .articles-grid--related .article-card:first-child {
+  .notion-root .articles-grid--home .article-card--featured,
+  .notion-root .articles-grid--home .article-card--big,
+  .wired-root .articles-grid--home .article-card--featured,
+  .wired-root .articles-grid--home .article-card--big {
+    grid-column: span 1;
+    grid-template-columns: unset;
+  }
+  .notion-root .articles-grid--home .article-card:first-child,
+  .notion-root .articles-grid--related .article-card:first-child,
+  .wired-root .articles-grid--home .article-card:first-child,
+  .wired-root .articles-grid--related .article-card:first-child {
     border-top: 1px solid var(--border, #e0ddd8);
   }
   .articles-grid--home .article-card:hover,
@@ -117,8 +132,10 @@
     box-shadow: none;
     background: rgba(79, 134, 247, 0.04);
   }
-  .articles-grid--home .article-card__img-wrap,
-  .articles-grid--related .article-card__img-wrap {
+  .notion-root .articles-grid--home .article-card__img-wrap,
+  .notion-root .articles-grid--related .article-card__img-wrap,
+  .wired-root .articles-grid--home .article-card__img-wrap,
+  .wired-root .articles-grid--related .article-card__img-wrap {
     flex: 0 0 96px;
     width: 96px;
     height: 96px;
@@ -130,8 +147,10 @@
     overflow: hidden;
     display: block;
   }
-  .articles-grid--home .article-card__img,
-  .articles-grid--related .article-card__img {
+  .notion-root .articles-grid--home .article-card__img,
+  .notion-root .articles-grid--related .article-card__img,
+  .wired-root .articles-grid--home .article-card__img,
+  .wired-root .articles-grid--related .article-card__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -140,8 +159,10 @@
     transform: none !important;
     border-radius: 8px;
   }
-  .articles-grid--home .article-card__body,
-  .articles-grid--related .article-card__body {
+  .notion-root .articles-grid--home .article-card__body,
+  .notion-root .articles-grid--related .article-card__body,
+  .wired-root .articles-grid--home .article-card__body,
+  .wired-root .articles-grid--related .article-card__body {
     flex: 1;
     min-width: 0;
     padding: 0 4px 0 0;
@@ -150,8 +171,10 @@
     justify-content: center;
     gap: 4px;
   }
-  .articles-grid--home .article-card__title,
-  .articles-grid--related .article-card__title {
+  .notion-root .articles-grid--home .article-card__title,
+  .notion-root .articles-grid--related .article-card__title,
+  .wired-root .articles-grid--home .article-card__title,
+  .wired-root .articles-grid--related .article-card__title {
     font-size: 0.84rem;
     line-height: 1.45;
     color: var(--text, #37352f);
@@ -162,11 +185,16 @@
     display: -webkit-box;
     -webkit-line-clamp: 3;
   }
-  .articles-grid--home .article-card__excerpt,
-  .articles-grid--related .article-card__excerpt { display: none; }
-  .articles-grid--home .article-card__meta-time { display: none; }
-  .articles-grid--home .badge,
-  .articles-grid--related .badge { font-size: 0.62rem; padding: 2px 8px; }
+  .notion-root .articles-grid--home .article-card__excerpt,
+  .notion-root .articles-grid--related .article-card__excerpt,
+  .wired-root .articles-grid--home .article-card__excerpt,
+  .wired-root .articles-grid--related .article-card__excerpt { display: none; }
+  .notion-root .articles-grid--home .article-card__meta-time,
+  .wired-root .articles-grid--home .article-card__meta-time { display: none; }
+  .notion-root .articles-grid--home .badge,
+  .notion-root .articles-grid--related .badge,
+  .wired-root .articles-grid--home .badge,
+  .wired-root .articles-grid--related .badge { font-size: 0.62rem; padding: 2px 8px; }
 }
 
 /* ---- Mobile (≤640px) ---- */
@@ -288,6 +316,19 @@
   }
   .newsletter-banner__form .btn,
   .newsletter-form--inline .btn { width: 100%; }
+
+  /* Zapier CTA バナー */
+  .cta-banner { padding: 28px 16px; }
+  .cta-banner__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    text-align: center;
+  }
+  .cta-banner__inner h2 { font-size: 1.05rem; line-height: 1.45; }
+  .cta-banner__inner p { font-size: 0.82rem; line-height: 1.6; }
+  .cta-banner__actions { width: 100%; }
+  .cta-banner__actions .btn { width: 100%; }
 
   /* フッター */
   .footer { padding: 32px 16px 20px; }
