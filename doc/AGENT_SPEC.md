@@ -56,6 +56,16 @@ git commit & push origin main   # ユーザー依頼時または作業完了時
 
 手順: `.cursor/rules/vercel-deploy.mdc`
 
+### AI開発コンソール（本番）
+
+| 役割 | 設定 |
+|------|------|
+| Vercel（UI + API プロキシ） | `DEV_CONSOLE_BACKEND_URL=http://VM_IP:3000` |
+| GCP VM（PM2 `ai-media-dev`） | `CURSOR_API_KEY`, `DEV_CONSOLE_PASSWORD`（`DEV_CONSOLE_BACKEND_URL` は**未設定**） |
+| ファイアウォール | Cloud Shell で `scripts/vm/open-firewall-cloudshell.sh` |
+
+本番: https://project-7bhii.vercel.app/admin/dev — トークン欄に `DEV_CONSOLE_PASSWORD` を入力。
+
 ### 2-5. バグ・インシデント
 
 - **登録先**: SQLite `data/platform.db` の `bugs` テーブル

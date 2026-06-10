@@ -11,6 +11,7 @@
     "./server/chat": "./src/server/chat.ts",
     "./server/upload": "./src/server/upload.ts",
     "./server/deploy": "./src/server/deploy.ts",
+    "./server/proxy": "./src/server/proxy.ts",
     "./content/usage.md": "./src/content/usage.md",
     "./content/welcome.md": "./src/content/welcome.md"
   },

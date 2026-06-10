@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 
 import { resolveServerConfig, type DevConsoleServerConfig } from "../config";
 import { jobPaths } from "./job";
+import { proxyDevRequest, shouldProxyToBackend } from "./proxy";
 
 function authorized(request: Request): boolean {
   const required = process.env.DEV_CONSOLE_PASSWORD;
@@ -14,6 +15,13 @@ function authorized(request: Request): boolean {
 }
 
 export function createDevDeployHandlers(overrides?: Partial<DevConsoleServerConfig>) {
+  if (shouldProxyToBackend()) {
+    return {
+      GET: (request: Request) => proxyDevRequest(request, "deploy"),
+      POST: (request: Request) => proxyDevRequest(request, "deploy"),
+    };
+  }
+
   const cfg = () => resolveServerConfig(overrides);
 
   async function GET() {

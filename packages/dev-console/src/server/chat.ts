@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 
 import { resolveServerConfig, type DevConsoleServerConfig } from "../config";
 import { jobPaths, reconcileDevChatJob, writeDevChatJob } from "./job";
+import { proxyDevRequest, shouldProxyToBackend } from "./proxy";
 
 function authorized(request: Request): boolean {
   const required = process.env.DEV_CONSOLE_PASSWORD;
@@ -14,6 +15,14 @@ function authorized(request: Request): boolean {
 }
 
 export function createDevChatHandlers(overrides?: Partial<DevConsoleServerConfig>) {
+  if (shouldProxyToBackend()) {
+    return {
+      GET: (request: Request) => proxyDevRequest(request, "chat"),
+      POST: (request: Request) => proxyDevRequest(request, "chat"),
+      DELETE: (request: Request) => proxyDevRequest(request, "chat"),
+    };
+  }
+
   const cfg = () => resolveServerConfig(overrides);
 
   async function GET() {

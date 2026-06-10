@@ -15,7 +15,7 @@
 |------|------|------|
 | **公開サイト**（wired / notion / zapier） | **Vercel** | `git push origin main` → 自動デプロイ |
 | **AI によるコード変更** | **GCP VM** | **Cursor Remote SSH**（22番）で VM に接続し、別 Agent で実行 |
-| **ブラウザの `/admin/dev`** | ローカル Mac のみ（任意） | Vercel 上では **UI のみ**（Python エージェント不可） |
+| **ブラウザの `/admin/dev`** | **Vercel UI + VM バックエンド** | `DEV_CONSOLE_BACKEND_URL` で GCP VM:3000 にプロキシ |
 
 ### やらないこと（2026-06-09 時点の決定）
 
@@ -35,7 +35,7 @@
 │  https://project-7bhii.vercel.app                       │
 │  · 記事サイト 3 テーマ                                    │
 │  · /admin（記事管理 UI）                                  │
-│  · /admin/dev → UI のみ（Python / Cursor SDK は動かない） │
+│  · /admin/dev → UI + API プロキシ → GCP VM:3000           │
 └─────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────┐
@@ -57,7 +57,7 @@
 
 | 環境 | Web UI | Cursor SDK（Python） |
 |------|--------|----------------------|
-| Vercel | ○ 表示 | **× 不可**（サーバーレス・Python なし） |
+| Vercel | ○ 表示 | **○ プロキシ経由**（`DEV_CONSOLE_BACKEND_URL` → VM） |
 | ローカル Mac | ○ | **○** `.env.local` + venv |
 | GCP VM（PM2） | ○（検証済・**運用しない**） | ○（検証済） |
 | **GCP VM + Remote SSH** | 不要 | **○ Agent が直接実行（推奨）** |

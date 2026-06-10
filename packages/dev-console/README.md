@@ -77,7 +77,18 @@ export default function DevPage() {
 
 basePath がある場合は API を `/myapp/api/dev/chat` のように **絶対パスで** 指定。
 
-### 4. API ルート（各1ファイル）
+### 4. Vercel 本番 + GCP VM バックエンド（プロキシ）
+
+Vercel では Python エージェントが動かないため、**API を VM に転送**する:
+
+| 環境 | 環境変数 |
+|------|----------|
+| Vercel | `DEV_CONSOLE_BACKEND_URL=http://VM_IP:3000` |
+| GCP VM（PM2） | `CURSOR_API_KEY`, `DEV_CONSOLE_PASSWORD`（`DEV_CONSOLE_BACKEND_URL` は未設定） |
+
+VM で `bash scripts/vm/open-dev-console-firewall.sh`（または Cloud Shell 版）で tcp:3000 を開放。
+
+### 5. API ルート（各1ファイル）
 
 `app/api/dev/chat/route.ts`:
 
@@ -89,11 +100,11 @@ export const { GET, POST, DELETE, dynamic, revalidate } = createDevChatHandlers(
 `upload/route.ts` → `createDevUploadHandlers()`  
 `deploy/route.ts` → `createDevDeployHandlers()`
 
-### 5. Python
+### 6. Python
 
 `python -m your_pkg.dev_agent --job` を実装（`sensor_ai/dev_agent.py` をコピーしてプロンプトだけ差し替え）。
 
-### 6. デプロイスクリプト
+### 7. デプロイスクリプト
 
 `scripts/dev-console-build.sh`（Sensor 版をコピーし PORT / HEALTH_PATH を変更）。
 
