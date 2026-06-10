@@ -43,8 +43,17 @@ fi
 mkdir -p /etc/nginx/conf.d
 cat > "$CONF" <<EOF
 # AIビジネスメディア — /Ziraku（自動生成 $(date -u +%Y-%m-%dT%H:%M:%SZ)）
+# /Ziraku 直アクセスは 301 にせず proxy する。
+# Next.js（basePath=/Ziraku, trailingSlash 無効）が /Ziraku/ → /Ziraku に 308 を返すため、
+# nginx 側で /Ziraku → /Ziraku/ に 301 すると無限リダイレクトループになる。
 location = /Ziraku {
-    return 301 /Ziraku/;
+    proxy_pass ${BACKEND}/Ziraku;
+    proxy_http_version 1.1;
+    proxy_ssl_server_name on;
+    proxy_set_header Host ${BACKEND_HOST};
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto \$scheme;
 }
 
 location /Ziraku/ {
