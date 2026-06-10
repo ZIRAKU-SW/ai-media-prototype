@@ -1,11 +1,32 @@
 ---
-description: 開発完了報告前に全本番URLを curl で確認する（必須）
+description: 実装後は必ず本番が繋がるか確認してから完了報告する（必須）
 alwaysApply: true
 ---
 
-# 本番 URL 確認（完了報告の必須条件）
+# 実装後の接続確認（完了報告の必須条件）
 
-機能追加・バグ修正・デプロイ後は、**ユーザーへ「完了」と報告する前に** 全 URL が動くことを確認する。`npm run build` だけでは完了としない。
+**コードを書いた・直した・デプロイした → 必ず本番 URL が繋がるか確認してから報告する。**
+
+`npm run build` が通っただけ、`localhost` で動いただけ、Tunnel 直 URL だけでは **完了としない**。
+
+## 鉄則
+
+1. **VM で変更したら** `npm run dev:vm-restart` してから確認（古いビルドのまま報告しない）
+2. **確認は oceanosfleet.com が正** — `https://oceanosfleet.com/Ziraku/...` で curl 200 を取る
+3. **Tunnel 直 URL が 200 でも oceanosfleet が 530 なら未完了** — nginx の Tunnel URL 不一致。完了報告禁止
+4. **verify:sites が exit 0 になるまで**「完了」「繋がっています」と言わない
+5. 確認結果（URL と HTTP ステータス）を報告に含める
+
+## oceanosfleet が 530 のとき
+
+Tunnel URL が変わった可能性。ZIRAKU VM で:
+
+```bash
+cat data/ziraku-backend-url.txt
+bash scripts/oceanosfleet/print-tunnel-update.sh
+```
+
+oceanosfleet VM で nginx 更新後、再度 `npm run verify:sites`。
 
 ## 確認コマンド
 

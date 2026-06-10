@@ -45,17 +45,26 @@ UI・バグ修正・記事追加は **wired / notion / zapier すべて** に適
 - 記事リスト（1024px以下）: **左サムネ 96px + 右テキスト** の Flexbox リスト
 - カテゴリタブ: 見出し下の横スクロール行（縦書き崩れ禁止）
 
-### 2-4. デプロイ完了の定義
+### 2-4. 実装後の接続確認（完了の定義）
 
-`npm run build` だけでは完了としない。
+**実装・修正・デプロイのあと、本番が繋がるか確認してから完了報告する。**
 
 ```
 npm run build
+npm run dev:vm-restart          # VM 変更時は必須
+npm run verify:sites            # exit 0 必須（oceanosfleet.com）
 git commit & push origin main   # ユーザー依頼時またはリリース時
-`npm run verify:sites` が exit 0（全 URL + 二重 /Ziraku ガード）
 ```
 
-手順: `.cursor/rules/vercel-deploy.mdc`
+| やってはいけないこと | 理由 |
+|---------------------|------|
+| build 成功だけで完了報告 | 本番は古いビルドのままのことがある |
+| Tunnel 直 URL だけ 200 で完了報告 | oceanosfleet nginx が古い URL のまま 530 になりうる |
+| curl 未実行で「繋がっています」 | 過去に誤報が発生済み |
+
+oceanosfleet が 530 → `data/ziraku-backend-url.txt` を oceanosfleet nginx に反映（`scripts/oceanosfleet/update-ziraku-proxy.sh`）。
+
+手順: `.cursor/rules/site-verification.mdc` / `.cursor/rules/vercel-deploy.mdc`
 
 ### 開発環境（VM が主・Vercel はリリース時のみ）
 
@@ -146,6 +155,7 @@ python3 platform_meta/seed.py --register-bug \
 | 2026-06-10 | fix | モバイル記事リストでタイトルが消える問題 — Grid→Flexbox（`mobile-shared.css`） |
 | 2026-06-10 | fix | カテゴリタブの縦書き崩れ — section-header を grid 化 |
 | 2026-06-09 | feat | Notion モック準拠 UI + モバイルレスポンシブ |
+| 2026-06-10 | rule | 実装後は oceanosfleet 接続確認必須（Tunnel 直のみでは完了報告不可） |
 | 2026-06-10 | fix | 管理画面 Link の二重 /Ziraku 修正 + verify:sites + 完了前 URL 確認ルール |
 | 2026-06-10 | infra | oceanosfleet.com/Ziraku 公開（nginx + basePath） |
 | 2026-06-09 | infra | GCP VM + Cursor Remote SSH 引き継ぎ |
