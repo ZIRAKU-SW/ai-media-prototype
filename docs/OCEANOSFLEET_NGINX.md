@@ -48,7 +48,36 @@ https://oceanosfleet.com/Ziraku/wired
 
 ---
 
-## 4. Tunnel URL の更新手順
+## 4. ZIRAKU VM → oceanosfleet SSH
+
+ZIRAKU VM から nginx を直接更新するための SSH 設定。
+
+### 初回（oceanosfleet VM で1回）
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ZIRAKU-SW/ai-media-prototype/main/scripts/oceanosfleet/install-ziraku-ssh-key.sh | bash
+```
+
+### ZIRAKU VM 側
+
+```bash
+bash scripts/oceanosfleet/setup-ssh-on-ziraku-vm.sh   # ~/.ssh/config 設定
+ssh oceanosfleet hostname                              # 接続テスト
+```
+
+### Tunnel URL を SSH 経由で反映
+
+```bash
+npm run oceanos:update-proxy
+# または
+bash scripts/oceanosfleet/remote-update-proxy.sh
+```
+
+公開鍵: `scripts/oceanosfleet/ziraku-vm-deploy.pub`
+
+---
+
+## 5. Tunnel URL の更新手順
 
 通常の `npm run dev:vm-restart` は **Tunnel を維持**する。URL が変わるのは `RESTART_TUNNEL=1` 時のみ。
 
@@ -75,7 +104,7 @@ curl -s -o /dev/null -w "%{http_code}\n" https://oceanosfleet.com/Ziraku/wired
 
 ---
 
-## 5. 安定化（Tunnel 更新を不要にする）
+## 6. 安定化（Tunnel 更新を不要にする）
 
 ZIRAKU VM のファイアウォールで **oceanosfleet IP のみ** tcp:3000 を開放:
 
@@ -92,7 +121,7 @@ proxy_pass http://34.146.146.150:3000;
 
 ---
 
-## 6. 確認 URL 一覧
+## 7. 確認 URL 一覧
 
 | ページ | URL |
 |--------|-----|
@@ -106,7 +135,7 @@ proxy_pass http://34.146.146.150:3000;
 
 ---
 
-## 7. 関連ファイル（ZIRAKU リポジトリ）
+## 8. 関連ファイル（ZIRAKU リポジトリ）
 
 | パス | 内容 |
 |------|------|

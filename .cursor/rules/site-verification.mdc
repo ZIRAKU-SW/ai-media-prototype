@@ -26,7 +26,10 @@ cat data/ziraku-backend-url.txt
 bash scripts/oceanosfleet/print-tunnel-update.sh
 ```
 
-oceanosfleet VM で nginx 更新後、再度 `npm run verify:sites`。
+SSH 設定済みなら ZIRAKU VM から: `npm run oceanos:update-proxy`
+
+未設定なら oceanosfleet VM で1回: `curl -fsSL .../install-ziraku-ssh-key.sh | bash`  
+その後 nginx 更新 → `npm run verify:sites`
 
 ## 確認コマンド
 
