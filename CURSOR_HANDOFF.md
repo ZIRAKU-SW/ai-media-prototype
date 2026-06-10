@@ -4,7 +4,7 @@
 > Claude Codeで進めてきた開発をCursor Agentに移行するための完全な引き継ぎ資料。  
 > 「何を作ったか」「何が動いているか」「何が残っているか」を全部ここに書く。
 
-最終更新: 2026-06-09
+最終更新: 2026-06-10
 
 ---
 
@@ -21,10 +21,13 @@
 
 | 項目 | URL |
 |------|-----|
-| Vercel（公開中） | https://project-7bhii.vercel.app |
-| WIRED テーマ | https://project-7bhii.vercel.app/wired |
-| Notion テーマ | https://project-7bhii.vercel.app/notion |
-| Zapier テーマ | https://project-7bhii.vercel.app/zapier |
+| **本番（スマホ・共有）** | https://oceanosfleet.com/Ziraku/ |
+| WIRED テーマ | https://oceanosfleet.com/Ziraku/wired |
+| Notion テーマ | https://oceanosfleet.com/Ziraku/notion |
+| Zapier テーマ | https://oceanosfleet.com/Ziraku/zapier |
+| 管理画面 | https://oceanosfleet.com/Ziraku/admin |
+| AI開発コンソール | https://oceanosfleet.com/Ziraku/admin/dev |
+| Vercel（リリース時のみ） | https://project-7bhii.vercel.app |
 | GitHub | https://github.com/ZIRAKU-SW/ai-media-prototype |
 | Supabase | https://supabase.com/dashboard/project/wqlelowutbxplrzforcc |
 
@@ -37,8 +40,9 @@
 | フロントエンド | Next.js + TypeScript | App Router |
 | スタイリング | CSS Variables（テーマ別CSS） | Tailwind CSS補助 |
 | DB / Auth | Supabase (PostgreSQL + RLS) | Pro plan |
-| デプロイ | Vercel | GitHub連携・自動デプロイ |
-| AI 開発（Cursor Agent） | GCP VM + SSH | Remote SSH（22番） |
+| 公開 | oceanosfleet.com `/Ziraku/*` | nginx → Cloudflare Tunnel → ZIRAKU VM |
+| リリース用 | Vercel | `git push` 時のみ（開発中は使わない） |
+| AI 開発（Cursor Agent） | GCP VM + SSH | Remote SSH（22番）+ PM2 常駐 |
 | パッケージ管理 | npm | Node.js v20+ |
 
 ### 環境変数（POC）
@@ -361,19 +365,25 @@ npm run dev  # → http://localhost:3000
 
 ---
 
-## 13. GCP VM・AI 開発環境（2026-06-09）
+## 13. GCP VM・oceanosfleet 公開（2026-06-10）
 
-> 詳細は **[docs/GCP_VM_HANDOFF.md](./docs/GCP_VM_HANDOFF.md)** に集約。
+> 詳細は **[docs/GCP_VM_HANDOFF.md](./docs/GCP_VM_HANDOFF.md)** と **[docs/OCEANOSFLEET_NGINX.md](./docs/OCEANOSFLEET_NGINX.md)**。
 
 ### 採用方針
 
 | 用途 | 場所 |
 |------|------|
-| 公開サイト | Vercel（`git push`） |
+| **日常の確認・スマホ共有** | **oceanosfleet.com/Ziraku/** |
+| 開発・ビルド | **ZIRAKU VM**（PM2 + Tunnel） |
 | Cursor Agent によるコード変更 | **GCP VM + SSH（Remote SSH）** |
-| ブラウザ `/admin/dev` | ローカル Mac のみ（任意） |
+| リリース | Vercel（`git push`、枠節約のため開発中は使わない） |
 
-**VM の 3000 番公開・Web UI 経由 Cursor SDK は不要**（SSH 22 番のみ）。
+```bash
+npm run dev:vm-url       # 全 URL 一覧
+npm run dev:vm-restart   # build + PM2 再起動
+```
+
+デプロイ完了報告前に `curl -s -o /dev/null -w "%{http_code}\n" https://oceanosfleet.com/Ziraku/notion` で **200** を確認すること。
 
 ### 接続
 

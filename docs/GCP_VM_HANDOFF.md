@@ -13,10 +13,11 @@
 
 | 用途 | 場所 | 方法 |
 |------|------|------|
-| **日常の開発・確認** | **GCP VM** | Cloudflare Tunnel → ブラウザで3テーマ確認 |
-| **AI開発コンソール** | **GCP VM** | `$TUNNEL/admin/dev`（Vercel 経由にしない） |
-| **コード編集** | **GCP VM** | Cursor Remote SSH |
-| **本番公開**（リリース時のみ） | **Vercel** | `git push origin main` → 自動デプロイ |
+| **日常の確認・スマホ共有** | **oceanosfleet.com** | `https://oceanosfleet.com/Ziraku/...` |
+| **開発・ビルド** | **ZIRAKU VM** | PM2 + Cloudflare Tunnel |
+| **AI開発コンソール** | **ZIRAKU VM** | `/Ziraku/admin/dev`（Vercel 経由にしない） |
+| **コード編集** | **ZIRAKU VM** | Cursor Remote SSH |
+| **リリース**（任意） | **Vercel** | `git push origin main` |
 
 **開発中は Vercel を触らない。** 枠超過を防ぎ、VM で全部やる。公開したいときだけ push。
 
@@ -35,26 +36,21 @@ bash scripts/vm/dev-url.sh
 ## 2. アーキテクチャ
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  Vercel（本番）                                          │
-│  https://project-7bhii.vercel.app                       │
-│  · 記事サイト 3 テーマ                                    │
-│  · /admin（記事管理 UI）                                  │
-│  · 開発完了後の公開用のみ（日常開発は使わない）            │
-└─────────────────────────────────────────────────────────┘
+スマホ/ブラウザ
+  → oceanosfleet.com/Ziraku/*  （お名前.com @ → 35.192.37.133）
+  → oceanosfleet VM user-nginx
+  → Cloudflare Tunnel URL
+  → ZIRAKU VM Next.js :3000（basePath=/Ziraku）
 
 ┌─────────────────────────────────────────────────────────┐
-│  GCP VM（開発の主環境）                                   │
-│  SSH :22 + Cloudflare Tunnel（ファイアウォール不要）       │
+│  ZIRAKU VM（34.146.146.150）— 開発の主環境                │
 │  · PM2: ai-media-dev + dev-console-tunnel               │
-│  · 3テーマ確認 / 管理画面 / AI開発コンソール              │
-│  · 完了後 git push → Vercel 本番反映                     │
+│  · npm run dev:vm-restart / dev:vm-url                  │
 └─────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────┐
-│  ローカル Mac（任意）                                     │
-│  · npm run dev + /admin/dev（Cursor SDK 付き Web UI）     │
-│  · ssh gcp-vm で VM に接続                                │
+│  Vercel（リリース時のみ・開発中は使わない）                 │
+│  https://project-7bhii.vercel.app                       │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -218,8 +214,8 @@ cd ~/ai-media-prototype && git pull
 3. `cd ~/ai-media-prototype && git pull`
 4. 変更・Agent 実行（VM 上または Mac ローカル）
 5. `npm run build` で確認
-6. `git commit` → `git push origin main`
-7. **Vercel 本番**で wired / notion / zapier を確認
+6. `git commit` → `git push origin main`（リリース時のみ）
+7. **oceanosfleet.com/Ziraku/** で wired / notion / zapier を curl 200 確認
 
 ローカルで `/admin/dev` の Web UI を使う場合は Mac で `npm run dev` + `.env.local`。
 
@@ -249,15 +245,16 @@ curl -s -o /dev/null -w "%{http_code}\n" "$(cat run/dev-console-tunnel-url.txt)/
 
 **パス:** `NEXT_PUBLIC_BASE_PATH=/Ziraku` → `/Ziraku/wired` 等（`.env.local`、Vercel には未設定）
 
-**oceanosfleet.com 連携（スマホから開くために必須）:** oceanosfleet サーバー（35.192.37.133）で **1回だけ**:
+**oceanosfleet.com 連携（設定済み 2026-06-10）:** 詳細は [`docs/OCEANOSFLEET_NGINX.md`](./OCEANOSFLEET_NGINX.md)。
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/ZIRAKU-SW/ai-media-prototype/main/scripts/oceanosfleet/apply-ziraku-nginx.sh -o /tmp/apply-ziraku.sh
-sudo bash /tmp/apply-ziraku.sh
-curl -sI https://oceanosfleet.com/Ziraku/notion | head -3   # 200 確認
+curl -s -o /dev/null -w "%{http_code}\n" https://oceanosfleet.com/Ziraku/notion   # 200
+curl -s -o /dev/null -w "%{http_code}\n" https://oceanosfleet.com/Ziraku/wired    # 200
 ```
 
-安定化（任意）: Cloud Shell で `bash scripts/oceanosfleet/open-vm-firewall-for-oceanos.sh` → VM 直結（Tunnel URL 変更不要）。
+Tunnel URL が変わったとき（`npm run dev:vm-restart` 後）: `data/ziraku-backend-url.txt` を oceanosfleet の `ziraku-locations.conf` に反映 → nginx reload。
+
+安定化（任意）: `bash scripts/oceanosfleet/open-vm-firewall-for-oceanos.sh` → VM:3000 直結（Tunnel 更新不要）。
 
 **開発中は Vercel を使わない。** 公開時のみ `git push origin main`。
 

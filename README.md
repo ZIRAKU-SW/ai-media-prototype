@@ -6,7 +6,34 @@ AIでビジネスを加速する実践メディアのサイトデザイン比較
 > 📄 参考発信者・参考メディアの調査まとめは **[docs/参考発信者メディア調査まとめ.pdf](./docs/参考発信者メディア調査まとめ.pdf)** を参照。  
 > 🤖 Cursor Agent / 新しいAIエージェントへの引き継ぎは **[CURSOR_HANDOFF.md](./CURSOR_HANDOFF.md)** を参照。  
 > 📋 エージェント統一仕様・バグ台帳は **[doc/AGENT_SPEC.md](./doc/AGENT_SPEC.md)**（運用: `/admin/operations`、[過去トラブルまとめ](./docs/過去トラブルまとめ.md)）を参照。  
-> 🖥️ GCP VM・SSH・AI 開発環境は **[docs/GCP_VM_HANDOFF.md](./docs/GCP_VM_HANDOFF.md)** を参照。
+> 🖥️ GCP VM・oceanosfleet 公開は **[docs/GCP_VM_HANDOFF.md](./docs/GCP_VM_HANDOFF.md)** / **[docs/OCEANOSFLEET_NGINX.md](./docs/OCEANOSFLEET_NGINX.md)** を参照。
+
+---
+
+## 公開URL（2026-06-10 現在）
+
+**日常の確認・スマホ共有はこちら（本番）**
+
+| テーマ | URL |
+|--------|-----|
+| テーマ選択 | https://oceanosfleet.com/Ziraku/ |
+| ZIRAKU本番想定 | https://oceanosfleet.com/Ziraku/ziraku |
+| Wired | https://oceanosfleet.com/Ziraku/wired |
+| Notion | https://oceanosfleet.com/Ziraku/notion |
+| Zapier | https://oceanosfleet.com/Ziraku/zapier |
+| 管理画面 | https://oceanosfleet.com/Ziraku/admin |
+| AI開発コンソール | https://oceanosfleet.com/Ziraku/admin/dev |
+
+| 用途 | URL |
+|------|-----|
+| Vercel（リリース時のみ・枠節約のため開発中は使わない） | https://project-7bhii.vercel.app |
+| 既存 Oceanos（半導体株等・触らない） | https://oceanosfleet.com/AI/stock |
+
+### 構成の要点
+
+- **ZIRAKU VM**（`34.146.146.150`）: Next.js + PM2 + `basePath=/Ziraku`
+- **oceanosfleet VM**（`35.192.37.133`）: user-nginx が `/Ziraku/*` を Tunnel 経由でプロキシ
+- **お名前.com DNS**: `@` → `35.192.37.133`（変更不要）
 
 ---
 
@@ -125,10 +152,17 @@ ai-media-prototype/
 
 ## 技術スタック
 
-- **HTML / CSS / Vanilla JS** のみ（フレームワーク不使用）
-- 依存ゼロ・ブラウザで直接開ける構成
-- レスポンシブ対応（モバイルファースト）
-- ダミーコンテンツはAIビジネスメディアの実際の記事テーマを使用
+| レイヤー | 技術 |
+|---------|------|
+| フロント | Next.js 16 App Router + TypeScript |
+| スタイル | テーマ別 CSS（wired / notion / zapier / ziraku）+ `mobile-shared.css` |
+| DB | Supabase PostgreSQL |
+| 開発実行 | GCP VM（PM2 + Cloudflare Tunnel） |
+| 公開 | oceanosfleet.com nginx プロキシ → `/Ziraku/*` |
+| リリース用 | Vercel（任意・`git push`） |
+| AI開発コンソール | `@oceanos/dev-console` + Python `cursor-sdk` |
+
+レガシーの静的 HTML プロトタイプ（`pattern-a-wired/` 等）もリポジトリに残っているが、**本番実装は `app/` 配下の Next.js**。
 
 ---
 
@@ -140,7 +174,8 @@ ai-media-prototype/
 - [x] Pattern C (Zapier) — トップ・記事詳細実装
 - [x] Supabase DB連携（9テーブル・RLS設定済み）
 - [x] Vercel公開
-- [ ] ブラウザ確認・スマホ表示チェック
+- [x] GCP VM + oceanosfleet.com/Ziraku 公開（nginx プロキシ済み）
+- [ ] 3パターン比較・最終デザイン選定
 - [ ] 3パターン比較・最終デザイン選定
 
 ---

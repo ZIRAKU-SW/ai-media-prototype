@@ -85,9 +85,9 @@ SUPABASE_SERVICE_ROLE_KEY=sb_secret_...            # サーバーサイド専用
 
 | チェック項目 | URL | 確認内容 |
 |------------|-----|---------|
-| トップページ | `project-7bhii.vercel.app/` | テーマ選択画面が表示されるか |
-| WIREDテーマ | `/wired` | 記事一覧がSupabaseから取得されているか |
-| Notionテーマ | `/notion` | 同上 |
+| トップページ | `oceanosfleet.com/Ziraku/` | テーマ選択画面が表示されるか |
+| WIREDテーマ | `/Ziraku/wired` | 記事一覧がSupabaseから取得されているか |
+| Notionテーマ | `/Ziraku/notion` | 同上 |
 | Zapierテーマ | `/zapier` | 同上 |
 | 管理画面 | `/admin` | 記事一覧が表示されているか |
 

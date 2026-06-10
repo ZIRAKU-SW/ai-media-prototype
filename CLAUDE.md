@@ -7,9 +7,11 @@ UIのバグ修正・見た目の変更・新機能追加を行ったら、**必�
 
 | パターン | トップ | 記事詳細（例） |
 |---------|--------|--------------|
-| Wired   | `/wired` | `/wired/articles/chatgpt-claude-gemini-comparison` |
-| Notion  | `/notion` | `/notion/articles/chatgpt-claude-gemini-comparison` |
-| Zapier  | `/zapier` | `/zapier/articles/chatgpt-claude-gemini-comparison` |
+| Wired   | `/Ziraku/wired` | `/Ziraku/wired/articles/chatgpt-claude-gemini-comparison` |
+| Notion  | `/Ziraku/notion` | `/Ziraku/notion/articles/chatgpt-claude-gemini-comparison` |
+| Zapier  | `/Ziraku/zapier` | `/Ziraku/zapier/articles/chatgpt-claude-gemini-comparison` |
+
+本番確認 URL: `https://oceanosfleet.com` + 上記パス
 
 ### なぜか
 
@@ -47,19 +49,20 @@ UIのバグ修正・見た目の変更・新機能追加を行ったら、**必�
 
 - 詳細: **`docs/GCP_VM_HANDOFF.md`**
 - **開発・確認・AIコンソールはすべて VM**（Vercel 枠を消費しない）
-- URL 確認: `bash scripts/vm/dev-url.sh`
+- URL 確認: `npm run dev:vm-url` または `https://oceanosfleet.com/Ziraku/...`
 - Cursor Remote SSH → gcp-vm で編集・Agent 実行
 
 ## Vercel デプロイ（リリース時のみ）
 
 **開発中は Vercel を使わない。** 公開・共有が必要なときだけ push する。
 
-| 開発（VM） | `bash scripts/vm/dev-url.sh` で表示される Tunnel URL |
-| 本番（Vercel） | https://project-7bhii.vercel.app |
+| 日常確認 | https://oceanosfleet.com/Ziraku/... |
+| Tunnel（直接） | `npm run dev:vm-url` |
+| Vercel（リリース時） | https://project-7bhii.vercel.app |
 
 ```
-VMで開発 → npm run build 確認 → git commit → git push origin main → Vercel本番で3テーマ確認
+VMで開発 → npm run build → oceanosfleet.com/Ziraku で3テーマ確認 → リリース時のみ git push
 ```
 
-- 日常の報告・確認は **VM の Tunnel URL** を使う
+- 日常の報告・確認は **oceanosfleet.com/Ziraku** を使う（curl 200 必須）
 - `git push` はユーザー依頼またはリリース時のみ

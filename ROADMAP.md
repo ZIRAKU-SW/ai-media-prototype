@@ -443,7 +443,8 @@ graph TD
 | Supabase DBスキーマ | ✅ 完了 | 9テーブル・RLS・ポリシー設定済み |
 | Supabase カテゴリデータ | ✅ 完了 | 6カテゴリ投入済み |
 | GitHubリポジトリ | ✅ 完了 | ZIRAKU-SW/ai-media-prototype |
-| Vercel公開 | ✅ 完了 | project-7bhii.vercel.app |
+| Vercel公開 | ✅ 完了 | project-7bhii.vercel.app（リリース用） |
+| oceanosfleet /Ziraku 公開 | ✅ 完了 | oceanosfleet.com/Ziraku（日常確認用） |
 | Next.js本番コード（3テーマ） | ✅ 完了 | App Router + TypeScript + Supabase連携 |
 | 初期記事（Supabase） | ✅ 完了 | **12本**投入済み（詳細は下記） |
 | 記事詳細ページ（Markdownレンダリング） | ✅ 完了 | テーブル・コードブロック・リスト対応 |
@@ -490,7 +491,7 @@ graph TD
 | 🟤 **Pattern B: Notion風** | 温かみのある余白重視、やわらかいUI | 一般社員・初心者層 |
 | 🟠 **Pattern C: Zapier風** | オレンジアクセント×大胆タイポ、強いCTA | 起業・副業・アクション重視層 |
 
-👉 **プロトタイプ確認:** https://project-7bhii.vercel.app
+👉 **プロトタイプ確認:** https://oceanosfleet.com/Ziraku/
 
 ### 決定事項 2 — サイト名
 
@@ -518,13 +519,14 @@ graph TD
 | 項目 | URL |
 |-----|-----|
 | GitHub | https://github.com/ZIRAKU-SW/ai-media-prototype |
-| Vercel（公開中プロトタイプ） | https://project-7bhii.vercel.app |
+| 本番（日常確認） | https://oceanosfleet.com/Ziraku/ |
+| Vercel（リリース用） | https://project-7bhii.vercel.app |
 | Supabase ダッシュボード | https://supabase.com/dashboard/project/wqlelowutbxplrzforcc |
-| Pattern A (WIRED) | https://project-7bhii.vercel.app/wired |
-| Pattern B (Notion) | https://project-7bhii.vercel.app/notion |
-| Pattern C (Zapier) | https://project-7bhii.vercel.app/zapier |
-| 記事例（Notion） | https://project-7bhii.vercel.app/notion/articles/chatgpt-claude-gemini-comparison |
-| 記事例（Zapier） | https://project-7bhii.vercel.app/zapier/articles/enterprise-ai-cost-web-agent-vs-seat |
+| Pattern A (WIRED) | https://oceanosfleet.com/Ziraku/wired |
+| Pattern B (Notion) | https://oceanosfleet.com/Ziraku/notion |
+| Pattern C (Zapier) | https://oceanosfleet.com/Ziraku/zapier |
+| 記事例（Notion） | https://oceanosfleet.com/Ziraku/notion/articles/chatgpt-claude-gemini-comparison |
+| 記事例（Zapier） | https://oceanosfleet.com/Ziraku/zapier/articles/enterprise-ai-cost-web-agent-vs-seat |
 
 ---
 

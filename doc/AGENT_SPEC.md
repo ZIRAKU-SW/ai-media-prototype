@@ -12,7 +12,8 @@
 | 項目 | 内容 |
 |------|------|
 | 目的 | 3デザインパターン（wired / notion / zapier）の比較・本番選定 |
-| 本番 | https://project-7bhii.vercel.app |
+| 本番（日常確認） | https://oceanosfleet.com/Ziraku/ |
+| Vercel（リリース時） | https://project-7bhii.vercel.app |
 | DB（記事） | Supabase PostgreSQL |
 | DB（運用・バグ） | SQLite `data/platform.db` + エクスポート `data/platform-bugs.json` |
 | 開発 | GCP VM + Cursor Remote SSH（`docs/GCP_VM_HANDOFF.md`） |
@@ -28,9 +29,9 @@ UI・バグ修正・記事追加は **wired / notion / zapier すべて** に適
 
 | 作業 | 確認URL |
 |------|---------|
-| Wired | `/wired` |
-| Notion | `/notion` |
-| Zapier | `/zapier` |
+| Wired | https://oceanosfleet.com/Ziraku/wired |
+| Notion | https://oceanosfleet.com/Ziraku/notion |
+| Zapier | https://oceanosfleet.com/Ziraku/zapier |
 
 ### 2-2. 記事コンテンツ
 
@@ -50,8 +51,8 @@ UI・バグ修正・記事追加は **wired / notion / zapier すべて** に適
 
 ```
 npm run build
-git commit & push origin main   # ユーザー依頼時または作業完了時
-本番URLで3テーマ確認
+git commit & push origin main   # ユーザー依頼時またはリリース時
+oceanosfleet.com/Ziraku で3テーマ curl 200 確認
 ```
 
 手順: `.cursor/rules/vercel-deploy.mdc`
@@ -60,11 +61,12 @@ git commit & push origin main   # ユーザー依頼時または作業完了時
 
 | 用途 | 場所 |
 |------|------|
-| 日常開発・3テーマ確認 | VM Tunnel URL（`bash scripts/vm/dev-url.sh`） |
-| AI開発コンソール | `$TUNNEL/admin/dev` |
-| 本番公開 | `git push` → Vercel（枠節約のため開発中は使わない） |
+| 日常開発・3テーマ確認 | https://oceanosfleet.com/Ziraku/... |
+| AI開発コンソール | https://oceanosfleet.com/Ziraku/admin/dev |
+| Tunnel URL（直接） | `npm run dev:vm-url` |
+| リリース | `git push` → Vercel（開発中は使わない） |
 
-VM 再起動: `bash scripts/vm/restart-dev-env.sh`
+VM 再起動: `npm run dev:vm-restart`
 
 ### 2-5. バグ・インシデント
 
@@ -144,6 +146,7 @@ python3 platform_meta/seed.py --register-bug \
 | 2026-06-10 | fix | モバイル記事リストでタイトルが消える問題 — Grid→Flexbox（`mobile-shared.css`） |
 | 2026-06-10 | fix | カテゴリタブの縦書き崩れ — section-header を grid 化 |
 | 2026-06-09 | feat | Notion モック準拠 UI + モバイルレスポンシブ |
+| 2026-06-10 | infra | oceanosfleet.com/Ziraku 公開（nginx + basePath） |
 | 2026-06-09 | infra | GCP VM + Cursor Remote SSH 引き継ぎ |
 
 ---
@@ -155,5 +158,6 @@ python3 platform_meta/seed.py --register-bug \
 | `CURSOR_HANDOFF.md` | 全体引き継ぎ |
 | `CLAUDE.md` | 3テーマ鉄則 |
 | `docs/GCP_VM_HANDOFF.md` | VM・SSH |
+| `docs/OCEANOSFLEET_NGINX.md` | oceanosfleet 公開・nginx |
 | `docs/concept.md` | メディアコンセプト |
 | `.cursor/rules/bug-registration.mdc` | バグ登録ルール |

@@ -1,42 +1,44 @@
 ---
-description: 変更後は必ず Vercel 本番へ git push デプロイする
+description: 変更後は oceanosfleet 本番で確認し、リリース時のみ git push
 alwaysApply: true
 ---
 
-# Vercel デプロイ（必須）
+# デプロイ・確認（必須）
 
-機能追加・バグ修正・UI変更を完了したら、**必ず本番へデプロイする**。ローカルで動いただけでは完了としない。
+機能追加・バグ修正・UI変更を完了したら、**本番 URL で動作確認する**。ローカルで動いただけでは完了としない。
 
-## 本番URL
+## 本番URL（日常の確認はこちら）
 
 | 項目 | URL |
 |------|-----|
-| トップ | https://project-7bhii.vercel.app |
-| 管理画面 | https://project-7bhii.vercel.app/admin |
-| WIRED | https://project-7bhii.vercel.app/wired |
-| Notion | https://project-7bhii.vercel.app/notion |
-| Zapier | https://project-7bhii.vercel.app/zapier |
+| トップ | https://oceanosfleet.com/Ziraku/ |
+| 管理画面 | https://oceanosfleet.com/Ziraku/admin |
+| WIRED | https://oceanosfleet.com/Ziraku/wired |
+| Notion | https://oceanosfleet.com/Ziraku/notion |
+| Zapier | https://oceanosfleet.com/Ziraku/zapier |
+| AI開発コンソール | https://oceanosfleet.com/Ziraku/admin/dev |
 
-## デプロイ手順（毎回）
+| リリース用（開発中は使わない） | https://project-7bhii.vercel.app |
+
+## 確認手順（毎回）
 
 ```
 1. npm run build          … ローカルでビルド確認
-2. git add / commit       … ユーザーが依頼した場合、または作業完了時に提案
-3. git push origin main   … Vercel 自動デプロイ（1〜2分）
-4. 本番URLで3テーマ確認   … wired / notion / zapier
+2. npm run dev:vm-restart … VM 常駐を更新（必要時）
+3. curl 200 確認          … oceanosfleet.com/Ziraku/{wired,notion,zapier}
+4. git commit & push      … ユーザー依頼時またはリリース時のみ
 ```
 
 ## 完了の定義
 
-- `git push` 済み（リリース時のみ）
-- **VM 開発中:** `bash scripts/vm/dev-url.sh` の URL で **curl 200** 確認済み（`/Ziraku/wired` 等3テーマ）
-- **Vercel リリース時:** デプロイ Ready + 本番URLで3テーマ確認済み
-- Tunnel URL は再起動で変わる — 古い URL を案内しない
+- **oceanosfleet.com/Ziraku/** で3テーマ **curl 200** 確認済み
+- Tunnel URL は再起動で変わる — 古い URL を案内しない（`npm run dev:vm-url` で最新を確認）
+- **Vercel リリース時:** `git push` 済み + デプロイ Ready + 本番URL確認
 
 ## 注意
 
-- `localhost:3000` はローカル専用。ユーザーへの報告は本番URLを使う
-- 環境変数変更は Vercel ダッシュボードでも設定が必要
-- AI開発コンソール（`/admin/dev`）の Python エージェントは Vercel 上では動作しない（UI のみ）
-- AI によるコード変更は **GCP VM + Cursor Remote SSH** — 詳細は `docs/GCP_VM_HANDOFF.md`
-- VM の **3000 番公開は不要**（SSH 22 番のみ）
+- `localhost:3000` はローカル専用。ユーザーへの報告は **oceanosfleet.com/Ziraku** を使う
+- 開発中は Vercel を使わない（枠節約）
+- AI開発コンソールの Python エージェントは Vercel 上では動作しない
+- oceanosfleet nginx 詳細: `docs/OCEANOSFLEET_NGINX.md`
+- VM 開発環境: `docs/GCP_VM_HANDOFF.md`
