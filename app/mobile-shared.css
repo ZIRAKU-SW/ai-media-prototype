@@ -57,6 +57,31 @@
   .btn--signup-green { width: 100%; margin-top: 8px; }
   .newsletter-banner__inner { flex-wrap: wrap; }
   .newsletter-banner__form { min-width: 0; width: 100%; }
+  .section-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 10px 12px;
+    margin-bottom: 16px;
+    padding: 0 16px;
+  }
+  .section-title { grid-column: 1; grid-row: 1; width: auto; margin: 0; }
+  .link-more { grid-column: 2; grid-row: 1; align-self: center; padding: 0; margin-top: 0; }
+  .category-tabs {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    flex: none;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px;
+    padding-bottom: 4px;
+    mask-image: linear-gradient(to right, #000 92%, transparent 100%);
+  }
+  .category-tabs::-webkit-scrollbar { display: none; }
+  .tab { flex-shrink: 0; white-space: nowrap; }
 }
 
 /* ---- Mobile (≤640px) ---- */
@@ -113,18 +138,30 @@
   .main__inner { gap: 20px; }
   .main__content { padding: 0; }
   .section-header {
-    flex-direction: column; align-items: stretch;
-    gap: 10px; padding: 0 16px; margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 8px 12px;
+    padding: 0 16px;
+    margin-bottom: 12px;
   }
-  .section-title { width: 100%; font-size: 1.15rem; }
+  .section-title { grid-column: 1; grid-row: 1; width: auto; font-size: 1.15rem; margin: 0; }
+  .link-more { grid-column: 2; grid-row: 1; align-self: center; font-size: 0.75rem; padding: 0; margin-top: 0; }
   .category-tabs {
-    width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; flex: none; gap: 6px; padding-bottom: 4px;
-    mask-image: linear-gradient(to right, #000 90%, transparent 100%);
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex: none;
+    gap: 6px;
+    padding-bottom: 4px;
+    mask-image: linear-gradient(to right, #000 92%, transparent 100%);
   }
   .category-tabs::-webkit-scrollbar { display: none; }
-  .tab { flex-shrink: 0; padding: 6px 14px; font-size: 0.75rem; }
-  .link-more { align-self: flex-end; font-size: 0.75rem; padding: 0 16px; margin-top: -4px; }
+  .tab { flex-shrink: 0; white-space: nowrap; padding: 6px 14px; font-size: 0.75rem; }
 
   /* 記事リスト：左サムネ・右テキスト（モック準拠） */
   .articles-grid--home,
