@@ -22,6 +22,7 @@ echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] tunnel start → $TARGET" | tee -a "$LOG"
   printf '%s\n' "$line" | tee -a "$LOG"
   if [[ "$line" =~ (https://[a-zA-Z0-9-]+\.trycloudflare\.com) ]]; then
     echo "${BASH_REMATCH[1]}" > "$URL_FILE"
+    echo "${BASH_REMATCH[1]}" > "$ROOT/data/ziraku-backend-url.txt"
     echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] tunnel url saved" >> "$LOG"
   fi
 done

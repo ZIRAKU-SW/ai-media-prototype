@@ -9,4 +9,8 @@ if [[ -z "$TUNNEL" ]]; then
   exit 1
 fi
 
-sed "s|__TUNNEL_URL__|${TUNNEL%/}|" "$ROOT/scripts/vm/nginx-oceanosfleet-ziraku.conf"
+TUNNEL_HOST="${TUNNEL#https://}"
+TUNNEL_HOST="${TUNNEL_HOST#http://}"
+TUNNEL_HOST="${TUNNEL_HOST%%/*}"
+sed -e "s|__TUNNEL_URL__|${TUNNEL%/}|" -e "s|__TUNNEL_HOST__|${TUNNEL_HOST}|" \
+  "$ROOT/scripts/vm/nginx-oceanosfleet-ziraku.conf"
