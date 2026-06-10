@@ -1,0 +1,265 @@
+/* ============================================================
+   Mobile — Notion サイト共通（トップ + 記事詳細）
+   ============================================================ */
+
+/* ---- Header / Drawer ---- */
+.header__mobile { display: none; align-items: center; gap: 4px; margin-left: auto; flex-shrink: 0; }
+.header__search-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border: none; background: transparent;
+  border-radius: 8px; color: var(--text-muted, #666); cursor: pointer;
+}
+.header__search-btn:hover { background: var(--warm-gray, #f1efec); }
+.header__icon-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border: none; background: transparent;
+  border-radius: 8px; color: inherit; cursor: pointer;
+}
+.header__icon-btn:hover { background: rgba(0,0,0,0.06); }
+.header__search-bar { padding: 0 16px 12px; max-width: 1200px; margin: 0 auto; width: 100%; }
+.header__search-bar .input { width: 100%; margin-bottom: 0; }
+
+.mobile-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+  z-index: 200; border: none; padding: 0; cursor: pointer;
+}
+.mobile-drawer {
+  position: fixed; top: 0; right: 0; width: min(320px, 88vw); height: 100dvh;
+  background: #fff; z-index: 201; display: flex; flex-direction: column;
+  box-shadow: -8px 0 32px rgba(0,0,0,0.15);
+  animation: drawer-in 0.25s ease;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+@keyframes drawer-in { from { transform: translateX(100%); } to { transform: translateX(0); } }
+.mobile-drawer__header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; border-bottom: 1px solid #e5e5e5;
+}
+.mobile-drawer__title { font-weight: 700; font-size: 0.95rem; }
+.mobile-drawer__nav { display: flex; flex-direction: column; padding: 8px 0; flex: 1; overflow-y: auto; }
+.mobile-drawer__link {
+  padding: 14px 20px; font-size: 0.9rem; font-weight: 500;
+  border-bottom: 1px solid #f0f0f0;
+}
+.mobile-drawer__link:hover { background: #f5f5f5; }
+.mobile-drawer__actions {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 16px 20px max(24px, env(safe-area-inset-bottom, 24px));
+  border-top: 1px solid #e5e5e5;
+}
+
+/* ---- Tablet (641–1024px) ---- */
+@media (max-width: 1024px) {
+  .main__inner { gap: 32px; }
+  .sidebar { order: 2; }
+  .main__content { order: 1; }
+  .members-banner { flex-wrap: wrap; }
+  .btn--signup-green { width: 100%; margin-top: 8px; }
+  .newsletter-banner__inner { flex-wrap: wrap; }
+  .newsletter-banner__form { min-width: 0; width: 100%; }
+}
+
+/* ---- Mobile (≤640px) ---- */
+@media (max-width: 640px) {
+  .nav--desktop,
+  .header__actions--desktop { display: none !important; }
+  .header__mobile { display: flex; }
+  .header__inner { gap: 8px; padding: 0 12px; height: 56px; }
+  .header { position: sticky; top: 0; }
+  .logo__tagline { display: none; }
+  .logo__name { font-size: 0.85rem; }
+  .logo__icon { width: 30px; height: 30px; }
+
+  /* ヒーロー */
+  .hero { padding: 28px 16px 32px; }
+  .hero__inner { gap: 0; }
+  .hero__title { font-size: 1.65rem; margin-bottom: 12px; }
+  .hero__desc { font-size: 0.85rem; margin-bottom: 20px; }
+  .hero__badge { font-size: 0.72rem; margin-bottom: 14px; }
+  .hero__cta { flex-direction: column; width: 100%; gap: 10px; }
+  .hero__cta .btn { width: 100%; justify-content: center; }
+  .hero__cta .btn--lg { padding: 12px 18px; font-size: 0.88rem; }
+  .hero__illustration {
+    display: flex; justify-content: center; align-items: center;
+    height: 160px; margin-top: 24px; transform: none;
+    position: relative;
+  }
+  .hero__card,
+  .hero__float { display: none; }
+  .hero__avatar { position: static; }
+  .hero__avatar-circle { width: 110px; height: 110px; font-size: 3.2rem; }
+  .hero__avatar-desk { display: none; }
+
+  /* 特徴 2×2 */
+  .values { padding: 20px 16px; }
+  .values__inner { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .value { padding: 14px 8px; }
+  .value p { display: none; }
+  .value strong { font-size: 0.75rem; }
+  .value__icon-wrap { width: 44px; height: 44px; margin-bottom: 6px; }
+  .value__icon { font-size: 1.2rem; }
+
+  /* ティッカー */
+  .ticker-bar {
+    padding: 10px 16px; gap: 8px;
+    flex-wrap: nowrap; overflow: hidden;
+  }
+  .ticker-bar__date,
+  .ticker-bar__more { display: none; }
+  .ticker-bar__text { font-size: 0.78rem; }
+
+  /* 新着記事 */
+  .main { padding: 24px 0 32px; }
+  .main__inner { gap: 20px; }
+  .main__content { padding: 0; }
+  .section-header {
+    flex-direction: column; align-items: stretch;
+    gap: 10px; padding: 0 16px; margin-bottom: 12px;
+  }
+  .section-title { width: 100%; font-size: 1.15rem; }
+  .category-tabs {
+    width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; flex: none; gap: 6px; padding-bottom: 4px;
+    mask-image: linear-gradient(to right, #000 90%, transparent 100%);
+  }
+  .category-tabs::-webkit-scrollbar { display: none; }
+  .tab { flex-shrink: 0; padding: 6px 14px; font-size: 0.75rem; }
+  .link-more { align-self: flex-end; font-size: 0.75rem; padding: 0 16px; margin-top: -4px; }
+
+  /* 記事リスト：左サムネ・右テキスト（モック準拠） */
+  .articles-grid--home,
+  .articles-grid--related {
+    display: flex; flex-direction: column; gap: 0;
+    margin-bottom: 0; padding: 0 16px;
+  }
+  .articles-grid--home .article-card,
+  .articles-grid--related .article-card {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    grid-template-rows: auto;
+    align-items: stretch;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid var(--border, #e0ddd8);
+    box-shadow: none;
+    transform: none !important;
+    background: #fff;
+  }
+  .articles-grid--home .article-card:first-child,
+  .articles-grid--related .article-card:first-child {
+    border-top: 1px solid var(--border, #e0ddd8);
+  }
+  .articles-grid--home .article-card:hover,
+  .articles-grid--related .article-card:hover {
+    transform: none; box-shadow: none;
+    background: rgba(79,134,247,0.04);
+  }
+  .articles-grid--home .article-card__img-wrap,
+  .articles-grid--related .article-card__img-wrap {
+    width: 96px; height: 96px; min-height: 96px;
+    aspect-ratio: 1; align-self: center;
+    margin: 8px 0 8px 0;
+    border-radius: 8px; overflow: hidden;
+  }
+  .articles-grid--home .article-card__img,
+  .articles-grid--related .article-card__img { transform: none !important; border-radius: 8px; }
+  .articles-grid--home .article-card__body,
+  .articles-grid--related .article-card__body {
+    padding: 12px 12px 12px 4px;
+    justify-content: center; gap: 4px; min-width: 0;
+  }
+  .articles-grid--home .article-card__title,
+  .articles-grid--related .article-card__title {
+    font-size: 0.84rem; line-height: 1.45;
+    display: -webkit-box; -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .articles-grid--home .article-card__excerpt,
+  .articles-grid--related .article-card__excerpt { display: none; }
+  .articles-grid--home .article-card__meta-time { display: none; }
+  .articles-grid--home .badge,
+  .articles-grid--related .badge { font-size: 0.62rem; padding: 2px 8px; }
+
+  /* 会員登録バナー */
+  .members-banner {
+    flex-direction: column; text-align: center;
+    padding: 24px 16px; margin: 20px 16px 0; gap: 16px;
+  }
+  .members-banner__illus { margin: 0 auto; width: 80px; height: 80px; }
+  .members-banner__character { font-size: 2.4rem; }
+  .members-banner__title { font-size: 1rem; }
+  .members-banner__list {
+    grid-template-columns: 1fr; text-align: left;
+    gap: 4px; font-size: 0.76rem;
+  }
+  .btn--signup-green { width: 100%; padding: 14px 20px; }
+
+  /* サイドバー */
+  .sidebar { padding: 0 16px; gap: 16px; }
+  .sidebar__block { padding: 16px; }
+  .sidebar__title { font-size: 0.88rem; margin-bottom: 12px; }
+  .ranking__thumb { width: 56px; height: 56px; border-radius: 8px; }
+  .ranking__text { font-size: 0.8rem; -webkit-line-clamp: 3; }
+  .ranking__num { width: 24px; height: 24px; font-size: 0.7rem; }
+
+  /* メルマガバナー */
+  .newsletter-banner { padding: 28px 16px 16px; }
+  .newsletter-banner--wide .newsletter-banner__inner {
+    flex-direction: column; text-align: center; gap: 16px;
+    padding: 0 8px;
+  }
+  .newsletter-banner__title { font-size: 1rem; }
+  .newsletter-banner__form {
+    width: 100%; flex-direction: column; min-width: 0; gap: 8px;
+  }
+  .newsletter-banner__form .btn { width: 100%; }
+
+  /* フッター */
+  .footer { padding: 32px 16px 20px; }
+  .footer__inner { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .footer__links { grid-template-columns: 1fr !important; gap: 20px !important; }
+
+  /* ---- 記事詳細ページ ---- */
+  .article-breadcrumb {
+    padding: 10px 16px 0; font-size: 0.72rem;
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    max-width: 100%;
+  }
+  .article-breadcrumb::-webkit-scrollbar { display: none; }
+  .article-breadcrumb__current {
+    max-width: 42vw; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis; flex: none;
+  }
+  .article-layout {
+    grid-template-columns: 1fr !important;
+    padding: 0; gap: 0; max-width: 100%;
+  }
+  .article-detail {
+    padding: 16px 16px 28px;
+    order: 1;
+  }
+  .article-sidebar {
+    order: 2;
+    padding: 0 16px 24px;
+  }
+  .article-detail__title { font-size: 1.3rem; line-height: 1.45; margin-bottom: 1rem; }
+  .article-detail__thumb { height: 190px; border-radius: 10px; margin-bottom: 1.25rem; }
+  .article-detail__excerpt { font-size: 0.88rem; padding: 0.875rem 1rem; margin-bottom: 1.5rem; }
+  .article-detail__content { font-size: 0.94rem; line-height: 1.85; }
+  .article-detail__h2 { font-size: 1.15rem; margin: 2rem 0 0.75rem; }
+  .article-detail__h3 { font-size: 1.02rem; }
+  .article-detail__meta { gap: 6px; }
+  .article-detail__meta-item--views { display: none; }
+  .article-detail__cta { padding: 1.5rem 1.25rem; margin-top: 2rem; border-radius: 12px; }
+  .article-detail__cta-text { font-size: 0.9rem; }
+  .article-detail__cta-btn { width: 100%; justify-content: center; }
+  .article-detail__share {
+    flex-direction: column; align-items: flex-start; gap: 8px;
+  }
+  .article-detail__code { font-size: 0.78rem; padding: 1rem; }
+  .article-detail__table { font-size: 0.8rem; min-width: 360px; }
+
+  .article-related { padding: 24px 0; }
+  .article-related__inner { padding: 0; max-width: 100%; }
+  .article-related .section-title { padding: 0 16px; margin-bottom: 0; font-size: 1.1rem; }
+}
