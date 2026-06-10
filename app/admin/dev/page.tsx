@@ -24,7 +24,6 @@ export default function AdminDevPage() {
 - **3テーマ**（wired / notion / zapier）すべてに対応して修正します
 - **画像**は入力欄で Ctrl+V / ⌘+V で貼り付け
 - **送信**は ⌘/Ctrl + Enter
-- **初回は下のトークン欄**に \`DEV_CONSOLE_PASSWORD\`（.env.local と同じ値）を入力して「保存」
 - 変更後は右パネルでビルド確認 → \`npm run dev:vm-restart\` で oceanosfleet.com/Ziraku へ反映`,
         autoDeployDefault: false,
       }}
