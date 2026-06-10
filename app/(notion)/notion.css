@@ -535,7 +535,20 @@ button { cursor: pointer; font-family: inherit; }
 }
 @media (max-width: 640px) {
   .members-banner__list { grid-template-columns: 1fr; }
-  .newsletter-banner__form { min-width: auto; flex-direction: column; width: 100%; }
+  .newsletter-banner { padding: 28px 16px 16px; }
+  .newsletter-banner__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    text-align: center;
+  }
+  .newsletter-banner__content { flex: none; width: 100%; }
+  .newsletter-banner__title { font-size: 1.05rem; line-height: 1.45; }
+  .newsletter-banner__desc { font-size: 0.82rem; line-height: 1.6; }
+  .newsletter-banner__form,
+  .newsletter-form--inline { min-width: 0; flex-direction: column; width: 100%; gap: 8px; }
+  .newsletter-banner__form .btn,
+  .newsletter-form--inline .btn { width: 100%; }
   .newsletter-banner__icon { display: none; }
   .footer__social { justify-content: flex-start; }
 }

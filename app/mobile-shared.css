@@ -204,15 +204,22 @@
 
   /* メルマガバナー */
   .newsletter-banner { padding: 28px 16px 16px; }
-  .newsletter-banner--wide .newsletter-banner__inner {
-    flex-direction: column; text-align: center; gap: 16px;
-    padding: 0 8px;
+  .newsletter-banner__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    text-align: center;
   }
-  .newsletter-banner__title { font-size: 1rem; }
-  .newsletter-banner__form {
+  .newsletter-banner__icon { display: none; }
+  .newsletter-banner__content { flex: none; width: 100%; min-width: 0; }
+  .newsletter-banner__title { font-size: 1.05rem; line-height: 1.45; }
+  .newsletter-banner__desc { font-size: 0.82rem; line-height: 1.6; }
+  .newsletter-banner__form,
+  .newsletter-form--inline {
     width: 100%; flex-direction: column; min-width: 0; gap: 8px;
   }
-  .newsletter-banner__form .btn { width: 100%; }
+  .newsletter-banner__form .btn,
+  .newsletter-form--inline .btn { width: 100%; }
 
   /* フッター */
   .footer { padding: 32px 16px 20px; }
