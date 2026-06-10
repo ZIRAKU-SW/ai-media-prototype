@@ -249,11 +249,15 @@ curl -s -o /dev/null -w "%{http_code}\n" "$(cat run/dev-console-tunnel-url.txt)/
 
 **パス:** `NEXT_PUBLIC_BASE_PATH=/Ziraku` → `/Ziraku/wired` 等（`.env.local`、Vercel には未設定）
 
-**oceanosfleet.com 連携:** oceanosfleet サーバー（35.192.37.133）の nginx に:
+**oceanosfleet.com 連携（スマホから開くために必須）:** oceanosfleet サーバー（35.192.37.133）で **1回だけ**:
 
 ```bash
-bash scripts/vm/print-oceanosfleet-nginx.sh   # 出力を nginx に include → reload
+curl -fsSL https://raw.githubusercontent.com/ZIRAKU-SW/ai-media-prototype/main/scripts/oceanosfleet/apply-ziraku-nginx.sh -o /tmp/apply-ziraku.sh
+sudo bash /tmp/apply-ziraku.sh
+curl -sI https://oceanosfleet.com/Ziraku/notion | head -3   # 200 確認
 ```
+
+安定化（任意）: Cloud Shell で `bash scripts/oceanosfleet/open-vm-firewall-for-oceanos.sh` → VM 直結（Tunnel URL 変更不要）。
 
 **開発中は Vercel を使わない。** 公開時のみ `git push origin main`。
 
