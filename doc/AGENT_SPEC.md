@@ -84,7 +84,7 @@ git commit & push origin main   # ユーザー依頼時または作業完了時
 | 種別 | 置き場 |
 |------|--------|
 | 仕様・デザイン・変更履歴要約 | `doc/AGENT_SPEC.md` §6 |
-| バグ・再発・インシデント | SQLite `data/platform.db` + **運用**タブ |
+| バグ・再発・インシデント | SQLite `data/platform.db` + **運用**タブ + [`docs/過去トラブルまとめ.md`](../docs/過去トラブルまとめ.md) |
 | 記事（本番） | Supabase `articles` |
 | 引き継ぎ全文 | `CURSOR_HANDOFF.md` |
 | フェーズ計画 | `ROADMAP.md` |
