@@ -1,6 +1,22 @@
 {
-  "exported_at": "2026-06-10T13:00:10.890400+00:00",
+  "exported_at": "2026-06-10T16:57:26.838566+00:00",
   "bugs": [
+    {
+      "id": 13,
+      "title": "/Ziraku 直アクセスが無限リダイレクトループ（nginx 301 × Next.js 308）",
+      "symptom": "https://oceanosfleet.com/Ziraku/ がブラウザで ERR_TOO_MANY_REDIRECTS。下層ページ（/Ziraku/wired 等）は正常",
+      "root_cause": "oceanosfleet(dify-vm) nginx の location = /Ziraku が /Ziraku/ へ 301、Next.js（basePath=/Ziraku, trailingSlash無効）が /Ziraku/ → /Ziraku へ 308 を返すため相互リダイレクト",
+      "fix": "301 をやめ /Ziraku も backend へ proxy_pass。実機 snippets/ziraku-locations.conf + テンプレ scripts/oceanosfleet/apply-ziraku-nginx.sh, scripts/vm/nginx-oceanosfleet-ziraku.conf を修正",
+      "affected_themes": "wired,notion,zapier",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-06-10",
+      "fixed_at": "2026-06-10",
+      "commit_hash": "5b25341",
+      "tags": null,
+      "created_at": "2026-06-10 16:57:26",
+      "updated_at": "2026-06-10 16:57:26"
+    },
     {
       "id": 12,
       "title": "デプロイ完了報告時に本番URL未確認",
