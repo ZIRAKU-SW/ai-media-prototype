@@ -82,6 +82,89 @@
   }
   .category-tabs::-webkit-scrollbar { display: none; }
   .tab { flex-shrink: 0; white-space: nowrap; }
+
+  /* 記事リスト：左サムネ・右テキスト */
+  .articles-grid--home,
+  .articles-grid--related {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 0;
+    padding: 0 16px;
+  }
+  .articles-grid--home .article-card,
+  .articles-grid--related .article-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid var(--border, #e0ddd8);
+    box-shadow: none;
+    transform: none !important;
+    background: #fff;
+    overflow: visible;
+  }
+  .articles-grid--home .article-card:first-child,
+  .articles-grid--related .article-card:first-child {
+    border-top: 1px solid var(--border, #e0ddd8);
+  }
+  .articles-grid--home .article-card:hover,
+  .articles-grid--related .article-card:hover {
+    transform: none;
+    box-shadow: none;
+    background: rgba(79, 134, 247, 0.04);
+  }
+  .articles-grid--home .article-card__img-wrap,
+  .articles-grid--related .article-card__img-wrap {
+    flex: 0 0 88px;
+    width: 88px;
+    height: 88px;
+    min-width: 88px;
+    max-width: 88px;
+    aspect-ratio: 1;
+    margin: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    display: block;
+  }
+  .articles-grid--home .article-card__img,
+  .articles-grid--related .article-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    transform: none !important;
+    border-radius: 0;
+    background: var(--warm-gray, #f1efec);
+  }
+  .articles-grid--home .article-card__body,
+  .articles-grid--related .article-card__body {
+    flex: 1;
+    min-width: 0;
+    padding: 0 4px 0 0;
+    justify-content: center;
+    gap: 4px;
+    overflow: hidden;
+  }
+  .articles-grid--home .article-card__title,
+  .articles-grid--related .article-card__title {
+    font-size: 0.84rem;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+  }
+  .articles-grid--home .article-card__excerpt,
+  .articles-grid--related .article-card__excerpt { display: none; }
+  .articles-grid--home .article-card__meta-time { display: none; }
+  .articles-grid--home .badge,
+  .articles-grid--related .badge { font-size: 0.62rem; padding: 2px 8px; }
 }
 
 /* ---- Mobile (≤640px) ---- */
@@ -162,60 +245,6 @@
   }
   .category-tabs::-webkit-scrollbar { display: none; }
   .tab { flex-shrink: 0; white-space: nowrap; padding: 6px 14px; font-size: 0.75rem; }
-
-  /* 記事リスト：左サムネ・右テキスト（モック準拠） */
-  .articles-grid--home,
-  .articles-grid--related {
-    display: flex; flex-direction: column; gap: 0;
-    margin-bottom: 0; padding: 0 16px;
-  }
-  .articles-grid--home .article-card,
-  .articles-grid--related .article-card {
-    display: grid;
-    grid-template-columns: 96px 1fr;
-    grid-template-rows: auto;
-    align-items: stretch;
-    border-radius: 0;
-    border: none;
-    border-bottom: 1px solid var(--border, #e0ddd8);
-    box-shadow: none;
-    transform: none !important;
-    background: #fff;
-  }
-  .articles-grid--home .article-card:first-child,
-  .articles-grid--related .article-card:first-child {
-    border-top: 1px solid var(--border, #e0ddd8);
-  }
-  .articles-grid--home .article-card:hover,
-  .articles-grid--related .article-card:hover {
-    transform: none; box-shadow: none;
-    background: rgba(79,134,247,0.04);
-  }
-  .articles-grid--home .article-card__img-wrap,
-  .articles-grid--related .article-card__img-wrap {
-    width: 96px; height: 96px; min-height: 96px;
-    aspect-ratio: 1; align-self: center;
-    margin: 8px 0 8px 0;
-    border-radius: 8px; overflow: hidden;
-  }
-  .articles-grid--home .article-card__img,
-  .articles-grid--related .article-card__img { transform: none !important; border-radius: 8px; }
-  .articles-grid--home .article-card__body,
-  .articles-grid--related .article-card__body {
-    padding: 12px 12px 12px 4px;
-    justify-content: center; gap: 4px; min-width: 0;
-  }
-  .articles-grid--home .article-card__title,
-  .articles-grid--related .article-card__title {
-    font-size: 0.84rem; line-height: 1.45;
-    display: -webkit-box; -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical; overflow: hidden;
-  }
-  .articles-grid--home .article-card__excerpt,
-  .articles-grid--related .article-card__excerpt { display: none; }
-  .articles-grid--home .article-card__meta-time { display: none; }
-  .articles-grid--home .badge,
-  .articles-grid--related .badge { font-size: 0.62rem; padding: 2px 8px; }
 
   /* 会員登録バナー */
   .members-banner {
