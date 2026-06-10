@@ -192,6 +192,8 @@ function DevConsoleClientInner() {
   const [activityLog, setActivityLog] = useState<ActivityLine[]>([]);
   const [deploy, setDeploy] = useState<DeployStatus>({ phase: "idle", message: "", updated_at: null });
   const [needAuth, setNeedAuth] = useState(false);
+  const [passwordRequired, setPasswordRequired] = useState(false);
+  const [backendOk, setBackendOk] = useState(true);
   const [pwInput, setPwInput] = useState("");
   const [rightWidth, setRightWidth] = useState(420);
   const [leftWidth, setLeftWidth] = useState(208);
@@ -210,6 +212,10 @@ function DevConsoleClientInner() {
   const deployBusy = BUSY_DEPLOY.has(deploy.phase);
 
   useEffect(() => {
+    const savedToken = readToken(keys);
+    if (savedToken) {
+      setPwInput(savedToken);
+    }
     const { sessions: s, activeId: id } = loadSessions(keys, welcome);
     setSessions(s);
     setActiveId(id);
@@ -231,6 +237,28 @@ function DevConsoleClientInner() {
     );
     setHydrated(true);
   }, [keys, welcome, autoDeployDefault]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    const healthUrl = api.chat.replace(/\/chat\/?$/, "/health");
+    void (async () => {
+      try {
+        const res = await fetch(healthUrl, { cache: "no-store" });
+        const data = (await res.json()) as {
+          ok?: boolean;
+          python_ok?: boolean;
+          password_required?: boolean;
+        };
+        setBackendOk(Boolean(res.ok && data.ok && data.python_ok));
+        if (data.password_required) {
+          setPasswordRequired(true);
+          if (!readToken(keys)) setNeedAuth(true);
+        }
+      } catch {
+        setBackendOk(false);
+      }
+    })();
+  }, [hydrated, api.chat, keys]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -790,12 +818,35 @@ function DevConsoleClientInner() {
             完了後に自動ビルド
           </label>
         </div>
-        <a
-          href={branding.backHref}
-          className="text-xs text-[var(--cl-muted)] transition hover:text-[var(--cl-accent)]"
-        >
-          {branding.backLabel ?? "← 戻る"}
-        </a>
+        <div className="flex items-center gap-3">
+          {!backendOk && (
+            <span className="text-[11px] text-red-400">バックエンド未接続</span>
+          )}
+          {passwordRequired && (
+            <div className="flex items-center gap-1.5">
+              <input
+                type="password"
+                value={pwInput}
+                onChange={(e) => setPwInput(e.target.value)}
+                placeholder="DEV_CONSOLE_PASSWORD"
+                className="w-36 rounded-lg border border-[var(--cl-border)] bg-[var(--cl-input)] px-2 py-1 text-[11px] text-[var(--cl-text)]"
+              />
+              <button
+                type="button"
+                onClick={saveToken}
+                className="rounded-lg bg-[var(--cl-accent)] px-2.5 py-1 text-[11px] font-medium text-[var(--cl-accent-fg)]"
+              >
+                保存
+              </button>
+            </div>
+          )}
+          <a
+            href={branding.backHref}
+            className="text-xs text-[var(--cl-muted)] transition hover:text-[var(--cl-accent)]"
+          >
+            {branding.backLabel ?? "← 戻る"}
+          </a>
+        </div>
       </header>
 
       <div className="flex min-h-0 flex-1">

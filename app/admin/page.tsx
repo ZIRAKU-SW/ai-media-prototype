@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase, type Article } from '@/lib/supabase'
-import { withBasePath } from '@/lib/base-path'
 
 export default function AdminPage() {
   const [articles, setArticles] = useState<Article[]>([])
@@ -50,7 +49,7 @@ export default function AdminPage() {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <Link
-            href={withBasePath('/admin/operations')}
+            href="/admin/operations"
             style={{
               fontSize: '0.85rem',
               color: '#0369a1',
@@ -65,7 +64,7 @@ export default function AdminPage() {
             🛠️ 運用（過去トラブル）
           </Link>
           <Link
-            href={withBasePath('/admin/dev')}
+            href="/admin/dev"
             style={{
               fontSize: '0.85rem',
               color: '#fff',
@@ -81,7 +80,7 @@ export default function AdminPage() {
           >
             🤖 AI開発コンソール
           </Link>
-          <Link href={withBasePath('/')} style={{ fontSize: '0.85rem', color: '#888', textDecoration: 'none' }}>← サイトに戻る</Link>
+          <Link href="/" style={{ fontSize: '0.85rem', color: '#888', textDecoration: 'none' }}>← サイトに戻る</Link>
         </div>
       </header>
 

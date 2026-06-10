@@ -1,0 +1,52 @@
+---
+description: 開発完了報告前に全本番URLを curl で確認する（必須）
+alwaysApply: true
+---
+
+# 本番 URL 確認（完了報告の必須条件）
+
+機能追加・バグ修正・デプロイ後は、**ユーザーへ「完了」と報告する前に** 全 URL が動くことを確認する。`npm run build` だけでは完了としない。
+
+## 確認コマンド
+
+```bash
+bash scripts/vm/verify-sites.sh
+# または
+npm run verify:sites
+```
+
+VM でコードを変えたら **必ず** `npm run dev:vm-restart` してから確認する（古いビルドのまま報告しない）。
+
+## 必須チェック一覧
+
+| ページ | URL |
+|--------|-----|
+| トップ | https://oceanosfleet.com/Ziraku/ |
+| Wired | https://oceanosfleet.com/Ziraku/wired |
+| Notion | https://oceanosfleet.com/Ziraku/notion |
+| Zapier | https://oceanosfleet.com/Ziraku/zapier |
+| ZIRAKU | https://oceanosfleet.com/Ziraku/ziraku |
+| 管理画面 | https://oceanosfleet.com/Ziraku/admin |
+| AI開発コンソール | https://oceanosfleet.com/Ziraku/admin/dev |
+| 運用 | https://oceanosfleet.com/Ziraku/admin/operations |
+| dev health | https://oceanosfleet.com/Ziraku/api/dev/health |
+
+## 二重 basePath ガード
+
+`/Ziraku/Ziraku/...` のような **二重パスは 404 であること** を確認する。管理画面のリンクが二重になっていないか HTML の `href` も見る:
+
+```bash
+curl -s https://oceanosfleet.com/Ziraku/admin | grep -o 'href="[^"]*admin[^"]*"'
+# 正: href="/Ziraku/admin/dev"  誤: href="/Ziraku/Ziraku/admin/dev"
+```
+
+## Next.js Link と basePath
+
+- `next.config` の `basePath=/Ziraku` があるとき、`<Link href="/admin">` は **プレフィックスなし** で書く
+- `withBasePath()` は **fetch** と **plain `<a>`** 用のみ。`<Link>` に使うと二重になる
+
+## 完了の定義
+
+- `verify-sites.sh` が **exit 0**
+- 変更した画面をブラウザでも目視確認（可能なら）
+- 上記を満たすまで「完了」「動いています」と報告しない

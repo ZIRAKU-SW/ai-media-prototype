@@ -24,10 +24,12 @@ alwaysApply: true
 
 ```
 1. npm run build          … ローカルでビルド確認
-2. npm run dev:vm-restart … VM 常駐を更新（必要時）
-3. curl 200 確認          … oceanosfleet.com/Ziraku/{wired,notion,zapier}
-4. git commit & push      … ユーザー依頼時またはリリース時のみ
+2. npm run dev:vm-restart … VM 常駐を更新（コード変更時は必須）
+3. npm run verify:sites   … 全 URL + 二重 /Ziraku ガード（exit 0 必須）
+4. git commit & push      … ユーザー依頼時。除外は git-commit-policy.mdc 参照
 ```
+
+詳細: `.cursor/rules/site-verification.mdc`
 
 ## 完了の定義
 

@@ -52,7 +52,7 @@ UI・バグ修正・記事追加は **wired / notion / zapier すべて** に適
 ```
 npm run build
 git commit & push origin main   # ユーザー依頼時またはリリース時
-oceanosfleet.com/Ziraku で3テーマ curl 200 確認
+`npm run verify:sites` が exit 0（全 URL + 二重 /Ziraku ガード）
 ```
 
 手順: `.cursor/rules/vercel-deploy.mdc`
@@ -146,6 +146,7 @@ python3 platform_meta/seed.py --register-bug \
 | 2026-06-10 | fix | モバイル記事リストでタイトルが消える問題 — Grid→Flexbox（`mobile-shared.css`） |
 | 2026-06-10 | fix | カテゴリタブの縦書き崩れ — section-header を grid 化 |
 | 2026-06-09 | feat | Notion モック準拠 UI + モバイルレスポンシブ |
+| 2026-06-10 | fix | 管理画面 Link の二重 /Ziraku 修正 + verify:sites + 完了前 URL 確認ルール |
 | 2026-06-10 | infra | oceanosfleet.com/Ziraku 公開（nginx + basePath） |
 | 2026-06-09 | infra | GCP VM + Cursor Remote SSH 引き継ぎ |
 

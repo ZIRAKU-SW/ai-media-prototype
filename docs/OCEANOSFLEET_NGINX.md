@@ -50,7 +50,7 @@ https://oceanosfleet.com/Ziraku/wired
 
 ## 4. Tunnel URL の更新手順
 
-PM2 再起動（`npm run dev:vm-restart`）で Tunnel URL が変わる。
+通常の `npm run dev:vm-restart` は **Tunnel を維持**する。URL が変わるのは `RESTART_TUNNEL=1` 時のみ。
 
 ### ZIRAKU VM 側
 

@@ -11,7 +11,8 @@
 ```bash
 cd ~/ai-media-prototype
 npm run dev:vm-url       # 全 URL 一覧（oceanosfleet 含む）
-npm run dev:vm-restart   # build + PM2 再起動
+npm run dev:vm-restart   # build + PM2 再起動（Tunnel URL は維持）
+npm run verify:sites     # 本番 URL 一括確認（完了報告前に必須）
 pm2 status               # ai-media-dev / dev-console-tunnel
 ```
 
