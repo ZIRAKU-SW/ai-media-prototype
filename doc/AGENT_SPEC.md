@@ -56,15 +56,15 @@ git commit & push origin main   # ユーザー依頼時または作業完了時
 
 手順: `.cursor/rules/vercel-deploy.mdc`
 
-### AI開発コンソール（本番）
+### 開発環境（VM が主・Vercel はリリース時のみ）
 
-| 役割 | 設定 |
+| 用途 | 場所 |
 |------|------|
-| Vercel（UI + API プロキシ） | `DEV_CONSOLE_BACKEND_URL=http://VM_IP:3000` |
-| GCP VM（PM2 `ai-media-dev`） | `CURSOR_API_KEY`, `DEV_CONSOLE_PASSWORD`（`DEV_CONSOLE_BACKEND_URL` は**未設定**） |
-| トンネル | VM で `bash scripts/vm/setup-cloudflared-tunnel.sh`（Cloud Shell 不要） |
+| 日常開発・3テーマ確認 | VM Tunnel URL（`bash scripts/vm/dev-url.sh`） |
+| AI開発コンソール | `$TUNNEL/admin/dev` |
+| 本番公開 | `git push` → Vercel（枠節約のため開発中は使わない） |
 
-本番: https://project-7bhii.vercel.app/admin/dev — トークン欄に `DEV_CONSOLE_PASSWORD` を入力。
+VM 再起動: `bash scripts/vm/restart-dev-env.sh`
 
 ### 2-5. バグ・インシデント
 

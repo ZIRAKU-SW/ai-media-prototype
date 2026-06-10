@@ -43,22 +43,23 @@ UIのバグ修正・見た目の変更・新機能追加を行ったら、**必�
 | `app/(notion)/notion/...` | notion のみ |
 | `app/(zapier)/zapier/...` | zapier のみ |
 
-## GCP VM・AI 開発（Remote SSH）
+## GCP VM・開発環境（日常はここ）
 
 - 詳細: **`docs/GCP_VM_HANDOFF.md`**
-- 公開サイトは Vercel、AI Agent 作業は **SSH → gcp-vm**（22番のみ、3000番公開不要）
-- `/admin/dev` Web UI はローカル Mac 用（Vercel では Python 不可）
+- **開発・確認・AIコンソールはすべて VM**（Vercel 枠を消費しない）
+- URL 確認: `bash scripts/vm/dev-url.sh`
+- Cursor Remote SSH → gcp-vm で編集・Agent 実行
 
-## Vercel デプロイ（必須・作業完了の条件）
+## Vercel デプロイ（リリース時のみ）
 
-**ローカルで動いただけでは完了としない。** 変更後は必ず本番へデプロイする。
+**開発中は Vercel を使わない。** 公開・共有が必要なときだけ push する。
 
-| 本番 | https://project-7bhii.vercel.app |
-| 管理 | https://project-7bhii.vercel.app/admin |
+| 開発（VM） | `bash scripts/vm/dev-url.sh` で表示される Tunnel URL |
+| 本番（Vercel） | https://project-7bhii.vercel.app |
 
 ```
-npm run build → git commit → git push origin main → 本番URLで3テーマ確認
+VMで開発 → npm run build 確認 → git commit → git push origin main → Vercel本番で3テーマ確認
 ```
 
-- 報告・共有は `localhost` ではなく **本番URL** を使う
-- UI変更後は wired / notion / zapier すべて本番で確認
+- 日常の報告・確認は **VM の Tunnel URL** を使う
+- `git push` はユーザー依頼またはリリース時のみ

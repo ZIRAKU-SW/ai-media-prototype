@@ -3,27 +3,32 @@
 > **目的**  
 > GCP VM・SSH・AI開発コンソールに関する検討と設定を、次の Cursor Agent / 開発者がリポジトリだけで引き継げるようにまとめた資料。
 
-最終更新: 2026-06-09
+最終更新: 2026-06-10
 
 ---
 
 ## 1. 結論（先に読む）
 
-### 採用方針
+### 採用方針（2026-06-10 更新）
 
 | 用途 | 場所 | 方法 |
 |------|------|------|
-| **公開サイト**（wired / notion / zapier） | **Vercel** | `git push origin main` → 自動デプロイ |
-| **AI によるコード変更** | **GCP VM** | **Cursor Remote SSH**（22番）で VM に接続し、別 Agent で実行 |
-| **ブラウザの `/admin/dev`** | **Vercel UI + VM バックエンド** | `DEV_CONSOLE_BACKEND_URL` で GCP VM:3000 にプロキシ |
+| **日常の開発・確認** | **GCP VM** | Cloudflare Tunnel → ブラウザで3テーマ確認 |
+| **AI開発コンソール** | **GCP VM** | `$TUNNEL/admin/dev`（Vercel 経由にしない） |
+| **コード編集** | **GCP VM** | Cursor Remote SSH |
+| **本番公開**（リリース時のみ） | **Vercel** | `git push origin main` → 自動デプロイ |
 
-### やらないこと（2026-06-09 時点の決定）
+**開発中は Vercel を触らない。** 枠超過を防ぎ、VM で全部やる。公開したいときだけ push。
 
-- **VM の 3000 番をインターネットに公開しない**（ファイアウォール不要）
-- **`http://34.146.146.150:3000/admin/dev` を本番運用しない**
-- VM 上の Web UI 経由 Cursor SDK は **検証用に一度構築したが、今後の開発フローには使わない**
+```bash
+# VM で URL 確認
+bash scripts/vm/dev-url.sh
+```
 
-**理由:** 今後は Cursor の別 Agent を **SSH 経由**（Remote SSH）で VM 上で動かす。22 番だけで足りる。
+### やらないこと
+
+- **開発中に Vercel の `/admin/dev` を使わない**（Function 枠を消費する）
+- **VM の 3000 番を GCP ファイアウォールで直公開しない**（Cloudflare Tunnel 経由）
 
 ---
 
@@ -35,15 +40,15 @@
 │  https://project-7bhii.vercel.app                       │
 │  · 記事サイト 3 テーマ                                    │
 │  · /admin（記事管理 UI）                                  │
-│  · /admin/dev → UI + API プロキシ → GCP VM:3000           │
+│  · 開発完了後の公開用のみ（日常開発は使わない）            │
 └─────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────┐
-│  GCP VM（開発・AI 実行用）                                │
-│  SSH :22 のみ公開                                         │
-│  · Cursor Remote SSH → ファイル編集・ターミナル           │
-│  · Cursor Agent が git / npm / Python を実行              │
-│  · 変更は git commit → push → Vercel 反映                 │
+│  GCP VM（開発の主環境）                                   │
+│  SSH :22 + Cloudflare Tunnel（ファイアウォール不要）       │
+│  · PM2: ai-media-dev + dev-console-tunnel               │
+│  · 3テーマ確認 / 管理画面 / AI開発コンソール              │
+│  · 完了後 git push → Vercel 本番反映                     │
 └─────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────┐
@@ -57,10 +62,10 @@
 
 | 環境 | Web UI | Cursor SDK（Python） |
 |------|--------|----------------------|
-| Vercel | ○ 表示 | **○ プロキシ経由**（`DEV_CONSOLE_BACKEND_URL` → VM） |
-| ローカル Mac | ○ | **○** `.env.local` + venv |
-| GCP VM（PM2） | ○（検証済・**運用しない**） | ○（検証済） |
-| **GCP VM + Remote SSH** | 不要 | **○ Agent が直接実行（推奨）** |
+| **GCP VM（Tunnel）** | **○ 主環境** | **○** |
+| GCP VM + Remote SSH | 任意 | **○ Agent 直接実行** |
+| Vercel | × 開発中は使わない | × 枠超過の原因になる |
+| ローカル Mac | ○ 任意 | ○ `.env.local` + venv |
 
 関連コード:
 
@@ -234,23 +239,22 @@ cd ~/ai-media-prototype && git pull
 
 ---
 
-## 10. 本番で `/admin/dev` を有効化する手順（Cloud Shell 不要）
+## 10. VM 開発環境の起動・確認
 
-**GCP ファイアウォールを開けずに** Cloudflare Tunnel で VM:3000 を公開する。
+```bash
+# 初回 or トンネルだけ
+bash scripts/vm/setup-cloudflared-tunnel.sh
 
-1. **GCP VM（SSH）** でトンネル起動:
-   ```bash
-   bash scripts/vm/setup-cloudflared-tunnel.sh
-   ```
-   表示された `https://….trycloudflare.com` を控える（`run/dev-console-tunnel-url.txt` にも保存）。
-2. **Vercel** Environment Variables に追加:
-   - `DEV_CONSOLE_BACKEND_URL` = 上記トンネル URL（末尾スラッシュなし）
-   - `DEV_CONSOLE_PASSWORD` = VM の `.env.local` と同じ値
-3. Vercel を **Redeploy**
-4. https://project-7bhii.vercel.app/admin/dev → トークン欄に `DEV_CONSOLE_PASSWORD` を入力
-5. 確認: `curl -s $TUNNEL_URL/api/dev/health` が `mode: "backend", ok: true`
+# コード更新後（ビルド + PM2 再起動）
+bash scripts/vm/restart-dev-env.sh
 
-トンネル再起動で URL が変わる場合は Vercel の `DEV_CONSOLE_BACKEND_URL` を更新して Redeploy。
+# URL 一覧
+bash scripts/vm/dev-url.sh
+```
+
+**開発中は Vercel を使わない。** 公開したいときだけ `git push origin main`。
+
+（参考）Vercel 経由で開発コンソールを使う方法は枠超過の原因になるため非推奨。
 
 ---
 

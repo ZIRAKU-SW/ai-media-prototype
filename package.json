@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "platform:seed": "python3 platform_meta/seed.py"
+    "platform:seed": "python3 platform_meta/seed.py",
+    "dev:vm-url": "bash scripts/vm/dev-url.sh",
+    "dev:vm-restart": "bash scripts/vm/restart-dev-env.sh"
   },
   "dependencies": {
     "@oceanos/dev-console": "file:./packages/dev-console",
