@@ -36,3 +36,15 @@ pm2 save
 
 echo ""
 bash scripts/vm/dev-url.sh
+
+echo ""
+echo "==> oceanosfleet 接続確認"
+if bash scripts/vm/verify-sites.sh; then
+  echo "oceanosfleet: OK"
+else
+  echo ""
+  echo "!!! oceanosfleet が繋がっていません（Tunnel URL 不一致の可能性）"
+  echo "    oceanosfleet VM で以下を実行:"
+  bash scripts/oceanosfleet/print-tunnel-update.sh 2>/dev/null || true
+  exit 1
+fi
