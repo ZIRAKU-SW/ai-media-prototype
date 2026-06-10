@@ -234,7 +234,22 @@ cd ~/ai-media-prototype && git pull
 
 ---
 
-## 10. セキュリティ
+## 10. 本番で `/admin/dev` を有効化する手順
+
+1. **GCP Cloud Shell** でファイアウォール開放:
+   ```bash
+   bash scripts/vm/open-firewall-cloudshell.sh
+   ```
+2. **Vercel** プロジェクトの Environment Variables に追加:
+   - `DEV_CONSOLE_BACKEND_URL` = `http://34.146.146.150:3000`
+   - `DEV_CONSOLE_PASSWORD` = VM の `.env.local` と同じ値
+3. Vercel を **Redeploy**
+4. https://project-7bhii.vercel.app/admin/dev を開き、トークン欄に `DEV_CONSOLE_PASSWORD` を入力
+5. 動作確認: `GET /api/dev/health` が `mode: "proxy"` + `backend.ok: true` を返すこと
+
+---
+
+## 11. セキュリティ
 
 - **POC:** `.env` / `.env.local` を Git 管理（demo 引き継ぎ優先）
 - **本番化時:** `.gitignore` に戻し、全キーをローテーション
