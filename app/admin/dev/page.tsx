@@ -1,6 +1,7 @@
 'use client'
 
 import { DevConsole } from '@oceanos/dev-console'
+import { withBasePath } from '@/lib/base-path'
 
 export default function AdminDevPage() {
   return (
@@ -8,14 +9,14 @@ export default function AdminDevPage() {
       config={{
         storagePrefix: 'ai-media-v2',
         api: {
-          chat: '/api/dev/chat',
-          upload: '/api/dev/upload',
-          deploy: '/api/dev/deploy',
+          chat: withBasePath('/api/dev/chat'),
+          upload: withBasePath('/api/dev/upload'),
+          deploy: withBasePath('/api/dev/deploy'),
         },
         branding: {
           eyebrow: 'AIビジネスメディア · Dev',
           title: 'AI開発コンソール',
-          backHref: '/admin',
+          backHref: withBasePath('/admin'),
           backLabel: '← 管理画面',
         },
         welcomeText: `こんにちは。AIビジネスメディアのコード修正をお手伝いします。

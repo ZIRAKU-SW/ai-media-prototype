@@ -28,9 +28,10 @@ alwaysApply: true
 
 ## 完了の定義
 
-- `git push` 済み
-- Vercel デプロイが Ready
-- 変更したページを **本番URL** で確認済み
+- `git push` 済み（リリース時のみ）
+- **VM 開発中:** `bash scripts/vm/dev-url.sh` の URL で **curl 200** 確認済み（`/Ziraku/wired` 等3テーマ）
+- **Vercel リリース時:** デプロイ Ready + 本番URLで3テーマ確認済み
+- Tunnel URL は再起動で変わる — 古い URL を案内しない
 
 ## 注意
 

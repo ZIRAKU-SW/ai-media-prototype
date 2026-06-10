@@ -15,15 +15,26 @@ if [[ -z "$BASE" ]]; then
   echo ""
 fi
 
-cat <<EOF
-=== VM 開発環境 ===
-トップ（テーマ選択）  $BASE/
-Wired                 $BASE/wired
-Notion                $BASE/notion
-Zapier                $BASE/zapier
-管理画面              $BASE/admin
-AI開発コンソール      $BASE/admin/dev
-運用（過去トラブル）  $BASE/admin/operations
+if [[ -f "$ROOT/.env.local" ]]; then
+  # shellcheck disable=SC1090
+  set -a; source "$ROOT/.env.local"; set +a
+fi
+PREFIX="${NEXT_PUBLIC_BASE_PATH:-/Ziraku}"
+PREFIX="${PREFIX%/}"
 
-本番（リリース時のみ） https://project-7bhii.vercel.app
+cat <<EOF
+=== VM 開発環境（basePath: $PREFIX）===
+トップ（テーマ選択）  $BASE$PREFIX/
+ZIRAKU本番想定        $BASE$PREFIX/ziraku
+Wired                 $BASE$PREFIX/wired
+Notion                $BASE$PREFIX/notion
+Zapier                $BASE$PREFIX/zapier
+管理画面              $BASE$PREFIX/admin
+AI開発コンソール      $BASE$PREFIX/admin/dev
+運用（過去トラブル）  $BASE$PREFIX/admin/operations
+
+oceanosfleet（nginx設定後） https://oceanosfleet.com$PREFIX/
+nginx スニペット: bash scripts/vm/print-oceanosfleet-nginx.sh
+
+Vercel 本番（リリース時） https://project-7bhii.vercel.app/
 EOF

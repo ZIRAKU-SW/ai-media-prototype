@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { withBasePath } from '@/lib/base-path'
 import {
   loadPlatformExport,
   statusLabel,

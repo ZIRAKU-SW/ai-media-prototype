@@ -1,6 +1,22 @@
 {
-  "exported_at": "2026-06-10T10:09:26.756229+00:00",
+  "exported_at": "2026-06-10T13:00:10.890400+00:00",
   "bugs": [
+    {
+      "id": 12,
+      "title": "デプロイ完了報告時に本番URL未確認",
+      "symptom": "VM Tunnel URL変更後も古いURLを案内し530/接続不可。ルール違反で作業完了報告",
+      "root_cause": "restart後のtunnel URL更新確認とcurl検証を省略",
+      "fix": "完了前に bash scripts/vm/dev-url.sh + 全パスcurl 200確認を必須化",
+      "affected_themes": "notion,wired,zapier",
+      "status": "fixed",
+      "severity": "high",
+      "occurred_at": "2026-06-10",
+      "fixed_at": "2026-06-10",
+      "commit_hash": "pending",
+      "tags": null,
+      "created_at": "2026-06-10 13:00:10",
+      "updated_at": "2026-06-10 13:00:10"
+    },
     {
       "id": 11,
       "title": "Wiredヘッダーに青い✕マークが表示される",

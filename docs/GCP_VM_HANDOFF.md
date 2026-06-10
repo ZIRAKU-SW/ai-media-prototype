@@ -242,19 +242,20 @@ cd ~/ai-media-prototype && git pull
 ## 10. VM 開発環境の起動・確認
 
 ```bash
-# 初回 or トンネルだけ
-bash scripts/vm/setup-cloudflared-tunnel.sh
-
-# コード更新後（ビルド + PM2 再起動）
-bash scripts/vm/restart-dev-env.sh
-
-# URL 一覧
-bash scripts/vm/dev-url.sh
+bash scripts/vm/restart-dev-env.sh   # ビルド + PM2 再起動
+bash scripts/vm/dev-url.sh           # URL 一覧（再起動のたびに Tunnel URL が変わる）
+curl -s -o /dev/null -w "%{http_code}\n" "$(cat run/dev-console-tunnel-url.txt)/Ziraku/wired"  # 200 確認必須
 ```
 
-**開発中は Vercel を使わない。** 公開したいときだけ `git push origin main`。
+**パス:** `NEXT_PUBLIC_BASE_PATH=/Ziraku` → `/Ziraku/wired` 等（`.env.local`、Vercel には未設定）
 
-（参考）Vercel 経由で開発コンソールを使う方法は枠超過の原因になるため非推奨。
+**oceanosfleet.com 連携:** oceanosfleet サーバー（35.192.37.133）の nginx に:
+
+```bash
+bash scripts/vm/print-oceanosfleet-nginx.sh   # 出力を nginx に include → reload
+```
+
+**開発中は Vercel を使わない。** 公開時のみ `git push origin main`。
 
 ---
 
