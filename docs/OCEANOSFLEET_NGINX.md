@@ -2,7 +2,7 @@
 
 > **状態: 設定済み（2026-06-10）** — スマホから `https://oceanosfleet.com/Ziraku/...` でアクセス可能。
 
-最終更新: 2026-06-10
+最終更新: 2026-06-10（gcp-vm→dify-vm SSH・update-proxy 手順）
 
 ---
 
@@ -82,25 +82,24 @@ npm run dify:update-proxy      # nginx 更新 + verify:sites
 
 通常の `npm run dev:vm-restart` は **Tunnel を維持**する。URL が変わるのは `RESTART_TUNNEL=1` 時のみ。
 
-### ZIRAKU VM 側
+### 推奨（gcp-vm から自動）
 
 ```bash
 cd ~/ai-media-prototype
-npm run dev:vm-restart
 cat data/ziraku-backend-url.txt
-# 例: https://courts-elvis-shell-template.trycloudflare.com
+npm run dify:update-proxy    # ssh dify-vm → nginx 更新 → verify:sites
 ```
 
-### oceanosfleet VM 側
+`update-ziraku-proxy.sh` が更新する項目:
 
-1. `deploy/nginx/snippets/ziraku-locations.conf` の `proxy_pass` を新 URL に更新
-2. `~/.local/bin/nginx -t`
-3. `~/.local/bin/nginx -s reload`
-4. 確認:
+- `proxy_pass` → 新 Tunnel URL
+- `proxy_set_header Host` → Tunnel ホスト名（**これが古いと 530 / Error 1033**）
+- nginx reload: `~/.local/bin/nginx -c ~/ai-agent-platform/deploy/nginx/nginx.conf`
+
+### 手動（dify-vm 上で Cursor SSH している場合）
 
 ```bash
-curl -s -o /dev/null -w "%{http_code}\n" https://oceanosfleet.com/Ziraku/notion
-curl -s -o /dev/null -w "%{http_code}\n" https://oceanosfleet.com/Ziraku/wired
+bash scripts/oceanosfleet/update-ziraku-proxy.sh
 ```
 
 ---
@@ -143,5 +142,7 @@ proxy_pass http://34.146.146.150:3000;
 | `lib/base-path.ts` | `withBasePath()` ヘルパ |
 | `next.config.ts` | `basePath` from `NEXT_PUBLIC_BASE_PATH` |
 | `data/ziraku-backend-url.txt` | 現在の Tunnel URL（git 管理） |
-| `scripts/oceanosfleet/` | nginx テンプレ・ファイアウォールスクリプト |
+| `scripts/oceanosfleet/update-ziraku-proxy.sh` | nginx の Tunnel URL + Host 更新 |
+| `scripts/oceanosfleet/remote-update-proxy.sh` | gcp-vm から ssh dify-vm で上記を実行 |
+| `scripts/oceanosfleet/setup-dify-vm-ssh.sh` | gcp-vm の ~/.ssh/config 整備 |
 | `docs/GCP_VM_HANDOFF.md` | ZIRAKU VM 開発環境 |

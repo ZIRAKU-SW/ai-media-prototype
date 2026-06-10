@@ -83,11 +83,12 @@ SUPABASE_SERVICE_ROLE_KEY=sb_secret_...            # サーバーサイド専用
 
 ### ✅ デプロイ後チェックリスト
 
-| チェック項目 | URL | 確認内容 |
-|------------|-----|---------|
-| トップページ | `oceanosfleet.com/Ziraku/` | テーマ選択画面が表示されるか |
-| WIREDテーマ | `/Ziraku/wired` | 記事一覧がSupabaseから取得されているか |
+| チェック項目 | コマンド / URL | 確認内容 |
+|------------|---------------|---------|
+| 一括確認 | `npm run verify:sites` | oceanosfleet 全 URL が exit 0 |
+| WIREDテーマ | `oceanosfleet.com/Ziraku/wired` | 記事一覧が Supabase から取得されているか |
 | Notionテーマ | `/Ziraku/notion` | 同上 |
+| nginx 更新 | `npm run dify:update-proxy` | Tunnel 変更時（gcp-vm → dify-vm SSH） |
 | Zapierテーマ | `/zapier` | 同上 |
 | 管理画面 | `/admin` | 記事一覧が表示されているか |
 

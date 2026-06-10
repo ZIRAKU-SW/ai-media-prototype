@@ -4,7 +4,7 @@
 > Claude Codeで進めてきた開発をCursor Agentに移行するための完全な引き継ぎ資料。  
 > 「何を作ったか」「何が動いているか」「何が残っているか」を全部ここに書く。
 
-最終更新: 2026-06-10
+最終更新: 2026-06-10（gcp-vm→dify-vm SSH・運用コマンド追記）
 
 ---
 
@@ -379,23 +379,29 @@ npm run dev  # → http://localhost:3000
 | リリース | Vercel（`git push`、枠節約のため開発中は使わない） |
 
 ```bash
-npm run dev:vm-url       # 全 URL 一覧
-npm run dev:vm-restart   # build + PM2 再起動
+npm run dev:vm-restart      # build + PM2 再起動（Tunnel 維持）
+npm run verify:sites        # oceanosfleet 全 URL（完了報告前に exit 0 必須）
+npm run dify:update-proxy   # Tunnel 変更時: ssh dify-vm で nginx 更新
 ```
 
-デプロイ完了報告前に `curl -s -o /dev/null -w "%{http_code}\n" https://oceanosfleet.com/Ziraku/notion` で **200** を確認すること。
+### Cursor SSH（2台）
 
-### 接続
+| Host | IP | User | 用途 |
+|------|-----|------|------|
+| **gcp-vm** | 34.146.146.150 | powerpass7 | 開発・ビルド |
+| **dify-vm** | 35.192.37.133 | difyaifaq | oceanosfleet nginx |
 
-```
-Host gcp-vm → 34.146.146.150 / powerpass7 / ~/.ssh/id_ed25519_gcp
-```
+gcp-vm から dify-vm へ SSH: Mac の `google_compute_engine` 鍵を gcp-vm にコピー済み → `npm run dify:ssh-test`
 
-Cursor: **Remote-SSH: Connect to Host → gcp-vm** → `/home/powerpass7/ai-media-prototype`
+### 注意（2026-06-10 で修正済み）
 
-### AI開発コンソール（参考）
+- **Link と basePath:** `<Link href="/admin/dev">` はプレフィックスなし（`withBasePath` 禁止）
+- **開発コンソール:** VM ではパスワード不要。`DEV_CONSOLE_PASSWORD` は未設定
+- **530 / Error 1033:** Tunnel URL または `proxy_set_header Host` が古い → `npm run dify:update-proxy`
 
-- パッケージ: `@oceanos/dev-console`（`packages/dev-console/`）
-- API: `/api/dev/chat` → Python `ai_media_agent/dev_agent.py` → Cursor SDK
-- Vercel: UI のみ。Python エージェントは **サーバーレスでは不可**
-- モデル: `CURSOR_SDK_MODEL=composer-2.5`（`composer-2.5-fast` は API エラー）
+### AI開発コンソール
+
+- URL: https://oceanosfleet.com/Ziraku/admin/dev
+- パッケージ: `@oceanos/dev-console`
+- API: `/api/dev/chat` → `ai_media_agent/dev_agent.py` → Cursor SDK
+- モデル: `CURSOR_SDK_MODEL=composer-2.5`

@@ -155,8 +155,10 @@ python3 platform_meta/seed.py --register-bug \
 | 2026-06-10 | fix | モバイル記事リストでタイトルが消える問題 — Grid→Flexbox（`mobile-shared.css`） |
 | 2026-06-10 | fix | カテゴリタブの縦書き崩れ — section-header を grid 化 |
 | 2026-06-09 | feat | Notion モック準拠 UI + モバイルレスポンシブ |
-| 2026-06-10 | rule | 実装後は oceanosfleet 接続確認必須（Tunnel 直のみでは完了報告不可） |
-| 2026-06-10 | fix | 管理画面 Link の二重 /Ziraku 修正 + verify:sites + 完了前 URL 確認ルール |
+| 2026-06-10 | infra | gcp-vm→dify-vm SSH + `dify:update-proxy`（nginx 自動更新） |
+| 2026-06-10 | fix | 開発コンソールパスワード UI 削除（VM では認証なし） |
+| 2026-06-10 | rule | 実装後は `verify:sites` 必須（Tunnel 直のみでは完了報告不可） |
+| 2026-06-10 | fix | 管理画面 Link の二重 /Ziraku 修正 |
 | 2026-06-10 | infra | oceanosfleet.com/Ziraku 公開（nginx + basePath） |
 | 2026-06-09 | infra | GCP VM + Cursor Remote SSH 引き継ぎ |
 

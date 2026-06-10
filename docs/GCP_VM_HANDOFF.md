@@ -3,7 +3,7 @@
 > **目的**  
 > GCP VM・SSH・AI開発コンソールに関する検討と設定を、次の Cursor Agent / 開発者がリポジトリだけで引き継げるようにまとめた資料。
 
-最終更新: 2026-06-10
+最終更新: 2026-06-10（gcp-vm→dify-vm SSH・接続確認ルール追記）
 
 ---
 
@@ -238,23 +238,36 @@ cd ~/ai-media-prototype && git pull
 ## 10. VM 開発環境の起動・確認
 
 ```bash
-bash scripts/vm/restart-dev-env.sh   # ビルド + PM2 再起動
-bash scripts/vm/dev-url.sh           # URL 一覧（再起動のたびに Tunnel URL が変わる）
-curl -s -o /dev/null -w "%{http_code}\n" "$(cat run/dev-console-tunnel-url.txt)/Ziraku/wired"  # 200 確認必須
+npm run dev:vm-restart    # ビルド + PM2 再起動（Tunnel は維持）
+npm run verify:sites      # oceanosfleet 全 URL 確認（exit 0 必須）
+npm run dev:vm-url        # URL 一覧
 ```
 
-**パス:** `NEXT_PUBLIC_BASE_PATH=/Ziraku` → `/Ziraku/wired` 等（`.env.local`、Vercel には未設定）
+**パス:** `NEXT_PUBLIC_BASE_PATH=/Ziraku`（`.env.local`、Vercel には未設定）
 
-**oceanosfleet.com 連携（設定済み 2026-06-10）:** 詳細は [`docs/OCEANOSFLEET_NGINX.md`](./OCEANOSFLEET_NGINX.md)。
+**Link と basePath:** `<Link href="/admin">` はプレフィックスなし。`withBasePath()` は fetch / `<a>` 用のみ（`<Link>` に使うと `/Ziraku/Ziraku/...` になる）。
+
+### oceanosfleet 連携
+
+| 項目 | 内容 |
+|------|------|
+| 本番確認 | `https://oceanosfleet.com/Ziraku/...` |
+| nginx 更新 | `npm run dify:update-proxy`（ssh dify-vm） |
+| Tunnel URL | `data/ziraku-backend-url.txt`（git 管理） |
+| 詳細 | [`docs/OCEANOSFLEET_NGINX.md`](./OCEANOSFLEET_NGINX.md) |
+
+`npm run dev:vm-restart` は **Tunnel を維持**。URL が変わるのは `RESTART_TUNNEL=1` 時のみ。
+
+### gcp-vm → dify-vm SSH
+
+Mac の Cursor 設定（`dify-vm` / `difyaifaq` / `google_compute_engine`）と同じ鍵を gcp-vm にコピー済みなら:
 
 ```bash
-curl -s -o /dev/null -w "%{http_code}\n" https://oceanosfleet.com/Ziraku/notion   # 200
-curl -s -o /dev/null -w "%{http_code}\n" https://oceanosfleet.com/Ziraku/wired    # 200
+npm run dify:ssh-test
+npm run dify:update-proxy
 ```
 
-Tunnel URL が変わったとき（`npm run dev:vm-restart` 後）: `data/ziraku-backend-url.txt` を oceanosfleet の `ziraku-locations.conf` に反映 → nginx reload。
-
-安定化（任意）: `bash scripts/oceanosfleet/open-vm-firewall-for-oceanos.sh` → VM:3000 直結（Tunnel 更新不要）。
+初回: Mac で `scp ~/.ssh/google_compute_engine* gcp-vm:~/.ssh/` → `chmod 600 ~/.ssh/google_compute_engine`
 
 **開発中は Vercel を使わない。** 公開時のみ `git push origin main`。
 
@@ -264,4 +277,5 @@ Tunnel URL が変わったとき（`npm run dev:vm-restart` 後）: `data/ziraku
 
 - **POC:** `.env` / `.env.local` を Git 管理（demo 引き継ぎ優先）
 - **本番化時:** `.gitignore` に戻し、全キーをローテーション
-- VM の 3000 番はインターネット直公開しない（Cloudflare Tunnel 経由 + `DEV_CONSOLE_PASSWORD`）
+- VM の 3000 番はインターネット直公開しない（Cloudflare Tunnel 経由）
+- 開発コンソール: VM では `DEV_CONSOLE_PASSWORD` 未設定（パスワード不要）。公開時のみ `.env` で任意設定可

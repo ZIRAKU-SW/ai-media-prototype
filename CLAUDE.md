@@ -49,7 +49,8 @@ UIのバグ修正・見た目の変更・新機能追加を行ったら、**必�
 
 - 詳細: **`docs/GCP_VM_HANDOFF.md`**
 - **開発・確認・AIコンソールはすべて VM**（Vercel 枠を消費しない）
-- URL 確認: `npm run dev:vm-url` または `https://oceanosfleet.com/Ziraku/...`
+- URL 確認: `npm run verify:sites` または `https://oceanosfleet.com/Ziraku/...`
+- nginx 更新: `npm run dify:update-proxy`（gcp-vm → dify-vm SSH）
 - Cursor Remote SSH → gcp-vm で編集・Agent 実行
 
 ## Vercel デプロイ（リリース時のみ）

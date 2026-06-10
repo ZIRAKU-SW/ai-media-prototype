@@ -31,9 +31,56 @@ AIでビジネスを加速する実践メディアのサイトデザイン比較
 
 ### 構成の要点
 
-- **ZIRAKU VM**（`34.146.146.150`）: Next.js + PM2 + `basePath=/Ziraku`
-- **oceanosfleet VM**（`35.192.37.133`）: user-nginx が `/Ziraku/*` を Tunnel 経由でプロキシ
-- **お名前.com DNS**: `@` → `35.192.37.133`（変更不要）
+| ホスト | IP | Cursor SSH | 役割 |
+|--------|-----|------------|------|
+| **ZIRAKU VM**（gcp-vm） | `34.146.146.150` | `gcp-vm` / `powerpass7` | 開発・ビルド・PM2・Tunnel |
+| **oceanosfleet VM**（dify-vm） | `35.192.37.133` | `dify-vm` / `difyaifaq` | nginx プロキシ（`/Ziraku/*`） |
+| DNS（お名前.com） | `@` → `35.192.37.133` | — | 変更不要 |
+
+```
+ブラウザ → oceanosfleet.com/Ziraku/*
+  → dify-vm nginx (user-nginx)
+  → Cloudflare Tunnel
+  → gcp-vm Next.js :3000 (basePath=/Ziraku)
+```
+
+---
+
+## 日常運用（ZIRAKU VM）
+
+```bash
+cd ~/ai-media-prototype
+npm run dev:vm-restart    # ビルド + PM2 再起動（Tunnel は維持）
+npm run verify:sites      # oceanosfleet 全 URL 確認（完了報告前に必須）
+npm run dev:vm-url        # URL 一覧
+```
+
+Tunnel URL が変わったとき（`RESTART_TUNNEL=1` 後など）:
+
+```bash
+npm run dify:update-proxy   # ssh dify-vm で nginx 更新 + verify:sites
+```
+
+**gcp-vm → dify-vm SSH**（初回のみ Mac で鍵コピー済みであること）:
+
+```bash
+# Mac で1回: scp ~/.ssh/google_compute_engine* gcp-vm:~/.ssh/
+npm run dify:ssh-test     # ssh dify-vm hostname
+```
+
+詳細: [`docs/OCEANOSFLEET_NGINX.md`](./docs/OCEANOSFLEET_NGINX.md) / [`docs/GCP_VM_HANDOFF.md`](./docs/GCP_VM_HANDOFF.md)
+
+### 実装後の鉄則
+
+- `npm run build` だけでは完了としない → **`npm run verify:sites` が exit 0**
+- Tunnel 直 URL が 200 でも **oceanosfleet が 530 なら未完了**
+- `<Link href>` に `withBasePath()` を使わない（二重 `/Ziraku/Ziraku/...` になる）
+
+### AI開発コンソール
+
+- URL: https://oceanosfleet.com/Ziraku/admin/dev
+- **パスワード不要**（VM では `DEV_CONSOLE_PASSWORD` 未設定。ライブラリの任意認証のみ）
+- 送信: ⌘/Ctrl + Enter
 
 ---
 
@@ -175,7 +222,7 @@ ai-media-prototype/
 - [x] Supabase DB連携（9テーブル・RLS設定済み）
 - [x] Vercel公開
 - [x] GCP VM + oceanosfleet.com/Ziraku 公開（nginx プロキシ済み）
-- [ ] 3パターン比較・最終デザイン選定
+- [x] gcp-vm → dify-vm SSH（nginx 自動更新）
 - [ ] 3パターン比較・最終デザイン選定
 
 ---
