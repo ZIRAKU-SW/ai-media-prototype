@@ -9,8 +9,10 @@ REMOTE_SCRIPT="${REMOTE_SCRIPT:-$ROOT/scripts/oceanosfleet/update-ziraku-proxy.s
 if ! ssh -o BatchMode=yes -o ConnectTimeout=10 "$SSH_HOST" "hostname" >/dev/null 2>&1; then
   echo "ERROR: ssh $SSH_HOST に接続できません。" >&2
   echo "" >&2
-  echo "oceanosfleet VM で1回実行してください:" >&2
-  echo "  curl -fsSL https://raw.githubusercontent.com/ZIRAKU-SW/ai-media-prototype/main/scripts/oceanosfleet/install-ziraku-ssh-key.sh | bash" >&2
+  echo "Mac から google_compute_engine を ZIRAKU VM にコピーしてください:" >&2
+  echo "  scp ~/.ssh/google_compute_engine ~/.ssh/google_compute_engine.pub gcp-vm:~/.ssh/" >&2
+  echo "  npm run oceanos:ssh-setup && chmod 600 ~/.ssh/google_compute_engine" >&2
+  echo "詳細: scripts/oceanosfleet/copy-key-from-mac.md" >&2
   exit 1
 fi
 

@@ -50,19 +50,25 @@ https://oceanosfleet.com/Ziraku/wired
 
 ## 4. ZIRAKU VM → oceanosfleet SSH
 
-ZIRAKU VM から nginx を直接更新するための SSH 設定。
+Mac の Cursor SSH 設定と同じ（`difyaifaq` + `google_compute_engine`）。
 
-### 初回（oceanosfleet VM で1回）
+### 初回（Mac から鍵をコピー）
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/ZIRAKU-SW/ai-media-prototype/main/scripts/oceanosfleet/install-ziraku-ssh-key.sh | bash
+# Mac
+ls -la ~/.ssh/google_compute_engine*
+ssh dify-vm hostname
+scp ~/.ssh/google_compute_engine ~/.ssh/google_compute_engine.pub gcp-vm:~/.ssh/
 ```
+
+詳細: [`scripts/oceanosfleet/copy-key-from-mac.md`](../scripts/oceanosfleet/copy-key-from-mac.md)
 
 ### ZIRAKU VM 側
 
 ```bash
-bash scripts/oceanosfleet/setup-ssh-on-ziraku-vm.sh   # ~/.ssh/config 設定
-ssh oceanosfleet hostname                              # 接続テスト
+npm run oceanos:ssh-setup
+chmod 600 ~/.ssh/google_compute_engine
+npm run oceanos:ssh-test
 ```
 
 ### Tunnel URL を SSH 経由で反映
