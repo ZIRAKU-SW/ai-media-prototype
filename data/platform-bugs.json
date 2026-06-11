@@ -1,5 +1,5 @@
 {
-  "exported_at": "2026-06-11T15:48:28.754800+00:00",
+  "exported_at": "2026-06-11T16:10:54.963454+00:00",
   "bugs": [
     {
       "id": 25,
@@ -403,6 +403,14 @@
     }
   ],
   "changelog": [
+    {
+      "id": 16,
+      "entry_date": "2026-06-11",
+      "category": "feat",
+      "title": "コーポレートデザイン刷新（会社情報/会員エリア）+ 顧客アンケート/設定画面 + 記事3本",
+      "body": "絵文字を全廃し ZirakuIcons（SVGラインアイコン15種）に統一。会社情報を ZirakuCompanyContent でコーポレート品質に刷新（ダークヒーロー/CEO/事業/選ばれる理由/CTA）。会員エリアに WORK WITH US CTA。signup に顧客セグメントアンケート（氏名/会社/規模/役職/関心→profiles 4カラム追加+トリガー反映、本番DB適用済み）。/ziraku/settings 新設（プロフィール編集+パスワード変更）。記事3本追加（役割プロンプト/一文iOSアプリ/Obsidian×YouTube複利）。",
+      "created_at": "2026-06-11 16:10:54"
+    },
     {
       "id": 15,
       "entry_date": "2026-06-11",

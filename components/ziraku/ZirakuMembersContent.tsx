@@ -6,6 +6,7 @@ import ZirakuSiteHeader from '@/components/ziraku/ZirakuSiteHeader'
 import ZirakuFooter from '@/components/ziraku/ZirakuFooter'
 import { useZirakuUser } from '@/components/ziraku/useZirakuUser'
 import { supabase, type Article } from '@/lib/supabase'
+import { IconClipboard, IconDocument, IconLock, IconCalendar, IconCheck, IconSettings, IconChat, IconArrowRight } from '@/components/ziraku/ZirakuIcons'
 
 const CHECKLIST = [
   '社内の定型文書（議事録・報告書・メール）のどれかをAIで下書きしている',
@@ -48,10 +49,10 @@ const PROMPTS = [
 ]
 
 const MEMBER_BENEFITS = [
-  { icon: '📋', title: 'AI活用チェックリスト', desc: '自社のAI活用レベルを10項目で診断', href: '#checklist', ready: true },
-  { icon: '📝', title: '営業効率化プロンプト集', desc: 'コピペで使える実務プロンプト6本', href: '#prompts', ready: true },
-  { icon: '🔒', title: '会員限定記事', desc: '深掘り解説・実装ノウハウ', href: '#exclusive', ready: true },
-  { icon: '🎓', title: 'セミナー優先案内', desc: '開催決定時に優先的にご案内', href: '#seminar', ready: false },
+  { icon: IconClipboard, no: '01', title: 'AI活用チェックリスト', desc: '自社のAI活用レベルを10項目で診断', href: '#checklist', ready: true },
+  { icon: IconDocument, no: '02', title: '営業効率化プロンプト集', desc: 'コピペで使える実務プロンプト6本', href: '#prompts', ready: true },
+  { icon: IconLock, no: '03', title: '会員限定記事', desc: '深掘り解説・実装ノウハウ', href: '#exclusive', ready: true },
+  { icon: IconCalendar, no: '04', title: 'セミナー優先案内', desc: '開催決定時に優先的にご案内', href: '#seminar', ready: false },
 ]
 
 function PromptCard({ title, body }: { title: string; body: string }) {
@@ -115,7 +116,7 @@ export default function ZirakuMembersContent() {
         <ZirakuSiteHeader />
         <main className="members">
           <div className="members__gate">
-            <div className="members__gate-icon" aria-hidden>🔒</div>
+            <div className="members__gate-icon"><IconLock size={34} /></div>
             <h1 className="members__gate-title">会員限定エリア</h1>
             <p className="members__gate-desc">
               このページの閲覧には会員登録（無料）が必要です。
@@ -136,14 +137,22 @@ export default function ZirakuMembersContent() {
     <>
       <ZirakuSiteHeader />
       <main className="members">
-        <header className="members__hero">
-          <p className="members__welcome">ようこそ、{(user.email ?? '').split('@')[0]} さん 🎉</p>
-          <h1 className="members__title">会員限定コンテンツ</h1>
-          <p className="members__lead">登録ありがとうございます。以下の特典をご利用いただけます。</p>
+        <header className="members__hero corp-hero">
+          <div className="corp-hero__row">
+            <div>
+              <p className="corp-eyebrow">MEMBERS LOUNGE</p>
+              <h1 className="members__title">会員限定コンテンツ</h1>
+              <p className="members__lead">ようこそ、{(user.email ?? '').split('@')[0]} さん。以下の特典をご利用いただけます。</p>
+            </div>
+            <Link href="/ziraku/settings" className="btn btn--ghost btn--pill members__settings-link">
+              <IconSettings size={16} /> アカウント設定
+            </Link>
+          </div>
           <div className="members__nav">
             {MEMBER_BENEFITS.map(b => (
               <a key={b.title} href={b.href} className={`members__nav-card${b.ready ? '' : ' members__nav-card--soon'}`}>
-                <span className="members__nav-icon" aria-hidden>{b.icon}</span>
+                <span className="members__nav-no">{b.no}</span>
+                <span className="members__nav-icon"><b.icon size={24} /></span>
                 <span className="members__nav-title">{b.title}{!b.ready && <em className="members__soon">準備中</em>}</span>
                 <span className="members__nav-desc">{b.desc}</span>
               </a>
@@ -152,7 +161,7 @@ export default function ZirakuMembersContent() {
         </header>
 
         <section className="members__section" id="checklist">
-          <h2 className="members__section-title">📋 AI活用チェックリスト</h2>
+          <h2 className="members__section-title"><IconClipboard className="section-icon" />AI活用チェックリスト</h2>
           <p className="members__section-lead">当てはまるものにチェックを入れると、自社のAI活用レベルを診断できます。</p>
           <ul className="members-checklist">
             {CHECKLIST.map((item, i) => (
@@ -175,7 +184,7 @@ export default function ZirakuMembersContent() {
         </section>
 
         <section className="members__section" id="prompts">
-          <h2 className="members__section-title">📝 営業効率化プロンプト集</h2>
+          <h2 className="members__section-title"><IconDocument className="section-icon" />営業効率化プロンプト集</h2>
           <p className="members__section-lead">［　］の部分を自社の情報に置き換えて、そのままAIに貼り付けて使えます。</p>
           <div className="members__prompts">
             {PROMPTS.map(p => <PromptCard key={p.title} {...p} />)}
@@ -183,7 +192,7 @@ export default function ZirakuMembersContent() {
         </section>
 
         <section className="members__section" id="exclusive">
-          <h2 className="members__section-title">🔒 会員限定記事</h2>
+          <h2 className="members__section-title"><IconLock className="section-icon" />会員限定記事</h2>
           <p className="members__section-lead">編集部の深掘り解説つき。会員の方だけが読める記事です。</p>
           {memberArticles.length === 0 ? (
             <p className="members__section-lead">読み込み中...</p>
@@ -193,7 +202,7 @@ export default function ZirakuMembersContent() {
                 <Link key={a.id} href={`/ziraku/articles/${a.slug}`} className="members__article-card">
                   <img src={a.thumbnail_url ?? ''} alt="" className="members__article-thumb" />
                   <span className="members__article-body">
-                    <strong className="members__article-title">🔒 {a.title}</strong>
+                    <strong className="members__article-title"><IconLock size={14} className="title-lock" /> {a.title}</strong>
                     <span className="members__article-excerpt">{a.excerpt}</span>
                   </span>
                 </Link>
@@ -203,11 +212,30 @@ export default function ZirakuMembersContent() {
         </section>
 
         <section className="members__section members__section--soon" id="seminar">
-          <h2 className="members__section-title">🎓 セミナー・イベント優先案内</h2>
+          <h2 className="members__section-title"><IconCalendar className="section-icon" />セミナー・イベント優先案内</h2>
           <p className="members__section-lead">
             セミナー開催が決まり次第、会員の皆さまへ優先的にご案内します。
             開催情報は<Link href="/ziraku/seminar" className="members__inline-link">セミナーページ</Link>でもお知らせします。
           </p>
+        </section>
+
+        <section className="corp-cta">
+          <div className="corp-cta__body">
+            <p className="corp-eyebrow corp-eyebrow--light">WORK WITH US</p>
+            <h2 className="corp-cta__title">記事の内容を、自社の業務で実現しませんか</h2>
+            <p className="corp-cta__desc">
+              当メディアで紹介している自動化・AI導入は、運営元の株式会社ZIRAKUが実際に設計・開発しているものです。
+              業務自動化、AIエージェント開発、システム内製化のご相談を無料で承っています。
+            </p>
+          </div>
+          <div className="corp-cta__actions">
+            <a href="https://www.ziraku.co.jp/contact" target="_blank" rel="noopener noreferrer" className="btn btn--primary btn--lg btn--pill">
+              <IconChat size={16} /> 無料で相談する
+            </a>
+            <Link href="/ziraku/company" className="btn btn--outline btn--lg btn--pill corp-cta__sub">
+              運営会社について <IconArrowRight size={14} />
+            </Link>
+          </div>
         </section>
       </main>
       <ZirakuFooter />

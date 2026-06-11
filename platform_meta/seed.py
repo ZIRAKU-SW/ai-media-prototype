@@ -24,6 +24,12 @@ CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-06-11",
         "category": "feat",
+        "title": "コーポレートデザイン刷新（会社情報/会員エリア）+ 顧客アンケート/設定画面 + 記事3本",
+        "body": "絵文字を全廃し ZirakuIcons（SVGラインアイコン15種）に統一。会社情報を ZirakuCompanyContent でコーポレート品質に刷新（ダークヒーロー/CEO/事業/選ばれる理由/CTA）。会員エリアに WORK WITH US CTA。signup に顧客セグメントアンケート（氏名/会社/規模/役職/関心→profiles 4カラム追加+トリガー反映、本番DB適用済み）。/ziraku/settings 新設（プロフィール編集+パスワード変更）。記事3本追加（役割プロンプト/一文iOSアプリ/Obsidian×YouTube複利）。",
+    },
+    {
+        "entry_date": "2026-06-11",
+        "category": "feat",
         "title": "会員限定記事3本 + 限定記事の閲覧ゲート実装、統計バンド削除",
         "body": "is_members_only 記事（Hyperagent自律実例/YouTube一気通貫/Microsoft採用、いずれも動画埋め込み・編集部深掘り付き）。RLSを『ログイン済みなら閲覧可』に変更、未ログインは🔒ゲート（service_roleでタイトルのみ取得）、会員エリアに限定記事一覧。render-markdown に !video[poster](mp4) 記法追加。ドラフトに無い統計バンドは完全削除（台帳 #25）。",
     },

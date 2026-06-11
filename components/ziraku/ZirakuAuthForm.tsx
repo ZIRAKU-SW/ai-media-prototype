@@ -27,6 +27,11 @@ function translateError(message: string): string {
 export default function ZirakuAuthForm({ mode }: { mode: 'login' | 'signup' }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [displayName, setDisplayName] = useState('')
+  const [companyName, setCompanyName] = useState('')
+  const [companySize, setCompanySize] = useState('')
+  const [jobRole, setJobRole] = useState('')
+  const [interest, setInterest] = useState('')
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
   const [busy, setBusy] = useState(false)
@@ -53,7 +58,19 @@ export default function ZirakuAuthForm({ mode }: { mode: 'login' | 'signup' }) {
         if (error) { setError(translateError(error.message)); return }
         router.push('/ziraku/members')
       } else {
-        const { data, error } = await supabase.auth.signUp({ email, password })
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              display_name: displayName,
+              company_name: companyName,
+              company_size: companySize,
+              job_role: jobRole,
+              interest,
+            },
+          },
+        })
         if (error) { setError(translateError(error.message)); return }
         if (data.session) {
           router.push('/ziraku/members')
@@ -119,6 +136,52 @@ export default function ZirakuAuthForm({ mode }: { mode: 'login' | 'signup' }) {
                   required
                 />
               </label>
+              {!isLogin && (
+                <>
+                  <label className="auth__label">
+                    お名前
+                    <input type="text" className="input" value={displayName} onChange={e => setDisplayName(e.target.value)} placeholder="山田 太郎" required />
+                  </label>
+                  <label className="auth__label">
+                    会社名 <span className="auth__hint">（任意）</span>
+                    <input type="text" className="input" value={companyName} onChange={e => setCompanyName(e.target.value)} placeholder="株式会社○○" />
+                  </label>
+                  <div className="auth__row">
+                    <label className="auth__label">
+                      会社規模
+                      <select className="input" value={companySize} onChange={e => setCompanySize(e.target.value)} required>
+                        <option value="">選択してください</option>
+                        <option value="個人">個人</option>
+                        <option value="2-10名">2〜10名</option>
+                        <option value="11-50名">11〜50名</option>
+                        <option value="51-300名">51〜300名</option>
+                        <option value="301名以上">301名以上</option>
+                      </select>
+                    </label>
+                    <label className="auth__label">
+                      ご役職
+                      <select className="input" value={jobRole} onChange={e => setJobRole(e.target.value)} required>
+                        <option value="">選択してください</option>
+                        <option value="経営者・役員">経営者・役員</option>
+                        <option value="部門責任者">部門責任者</option>
+                        <option value="会社員">会社員</option>
+                        <option value="個人事業主・フリーランス">個人事業主・フリーランス</option>
+                        <option value="その他">その他</option>
+                      </select>
+                    </label>
+                  </div>
+                  <label className="auth__label">
+                    主なご関心
+                    <select className="input" value={interest} onChange={e => setInterest(e.target.value)} required>
+                      <option value="">選択してください</option>
+                      <option value="ai-adoption">自社業務へのAI導入・DX</option>
+                      <option value="dev-partner">システム/AI開発のパートナー探し</option>
+                      <option value="learning">情報収集・学習</option>
+                      <option value="side-business">発信・副業・起業</option>
+                    </select>
+                  </label>
+                </>
+              )}
               {error && <p className="auth__error" role="alert">⚠ {error}</p>}
               <button type="submit" className="btn btn--primary btn--lg btn--pill btn--block" disabled={busy}>
                 {busy ? '処理中...' : isLogin ? 'ログイン' : '無料で会員登録する'}

@@ -209,6 +209,7 @@ python3 platform_meta/seed.py --register-bug \
 | 2026-06-11 | content | 新記事8件追加（Fable 5特集）: claude-fable-5-overview / claude-fable-5-subagent-strategy / fable-5-self-correction-loops / anthropic-31-ai-skills / claude-fable-5-notebooklm / claude-autopilot-14-steps / kubell-ceo-fable-5-prompt / ai-agent-company-management。X 話題ポスト出典明記、英語2本翻訳 |
 | 2026-06-11 | feat | `lib/render-markdown.ts` に画像（`![alt](url)` → `<img class="article-detail__img" loading="lazy">`）とリンク（`[text](url)` → `<a target="_blank" rel="noopener noreferrer">`）対応追加。CSS（`app/article-shared.css` / `app/(notion)/notion.css`）に `.article-detail__img` 追加 |
 | 2026-06-11 | feat | 記事追加ワークフロー確立 — 本文 Markdown を `data/articles-md/{slug}.md` で管理、`scripts/articles/upsert-articles.mjs` + `npm run articles:upsert` で Supabase に upsert |
+| 2026-06-11 | feat | コーポレート刷新（会社情報/会員エリア・絵文字全廃→`ZirakuIcons`）+ signup顧客アンケート（profiles 4カラム）+ `/ziraku/settings` + 記事3本 |
 | 2026-06-11 | feat | 会員限定記事3本+閲覧ゲート（RLS=ログイン済み可・🔒ゲート・`!video[]()` 記法）+ ドラフトに無い統計バンド削除（台帳 #25） |
 | 2026-06-11 | feat | ziraku 会員限定エリア（/ziraku/members: チェックリスト診断+プロンプト集）+ ログイン後CTA切替 |
 | 2026-06-11 | feat | ziraku 会員ログイン/登録実装（Supabase Auth）— /ziraku/login・/signup、ヘッダー状態切替、signup 500 の DB トリガー修正（台帳 #21） |

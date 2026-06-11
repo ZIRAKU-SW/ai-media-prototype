@@ -16,6 +16,24 @@ select
   true, v.reading_time_minutes, v.view_count,
   v.published_at::timestamptz
 from (values
+  ('AIの回答が一般論からプロの答えに変わる「役割プロンプト」の型──4要素を埋めるだけ',
+   'role-prompts-guide',
+   '「マーケどうすれば?」に教科書回答しか返らないのは情報不足の安全運転。役割・読者・制約・出力形式の4要素で答えが一段プロに寄る実践ガイド。',
+   'https://pbs.twimg.com/media/HKcmMk9boAE3j5O.png',
+   'ai-guide', 6, 52, '2026-06-11T17:00:00Z'),
+
+  ('「極めて喜びが伝わるカロリー計算アプリを作って」の一文で動くiOSアプリが出てきた',
+   'fable-5-oneshot-ios-app',
+   '感情的な抽象表現だけのワンショット指示でUI・ロジック・画面遷移まで生成、修正なしで動作。「たたき台の民主化」が変えるのは開発現場ではなく会議室。',
+   'https://pbs.twimg.com/amplify_video_thumb/2064573130090389504/img/JI0uo6rrwhJJVQa8.jpg',
+   'lab', 5, 67, '2026-06-11T16:50:00Z'),
+
+  ('Obsidian×ClaudeでYouTube制作を丸ごと自動化──1本の台本が4媒体に分裂する複利の仕組み',
+   'obsidian-claude-youtube-knowledge',
+   '競合動画の文字起こしとコメントを放り込むだけで「何が刺さるか」のナレッジが育つ。YouTube→ショート→Xスレ→Telegramへ自動派生する構造を解説。',
+   'https://pbs.twimg.com/amplify_video_thumb/2061144585057796100/img/OGj6FgPh4VngjKsf.jpg',
+   'solo-business', 6, 71, '2026-06-11T16:40:00Z'),
+
   ('Fable 5×Hyperagent: 目標を渡すだけで数時間働く「自律エージェント」の実例3つ【会員限定】',
    'fable-5-hyperagent-autonomous',
    'NASAデータの小惑星可視化、100エーカーの施設設計、PDFからのパネル再現──人が触らず完結する働き方と、中小企業が今やるべき2つの準備を深掘り。',

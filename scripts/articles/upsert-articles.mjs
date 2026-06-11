@@ -50,6 +50,36 @@ if (!SUPABASE_URL || !SERVICE_KEY) {
 // ── Article metadata ──────────────────────────────────────────────────────────
 const ARTICLES = [
   {
+    slug: 'role-prompts-guide',
+    title: 'AIの回答が一般論からプロの答えに変わる「役割プロンプト」の型──4要素を埋めるだけ',
+    cat_slug: 'ai-guide',
+    excerpt: '「マーケどうすれば?」に教科書回答しか返らないのは情報不足の安全運転。役割・読者・制約・出力形式の4要素で答えが一段プロに寄る実践ガイド。',
+    thumbnail_url: 'https://pbs.twimg.com/media/HKcmMk9boAE3j5O.png',
+    reading_time_minutes: 6,
+    view_count: 52,
+    published_at: '2026-06-11T17:00:00Z',
+  },
+  {
+    slug: 'fable-5-oneshot-ios-app',
+    title: '「極めて喜びが伝わるカロリー計算アプリを作って」の一文で動くiOSアプリが出てきた',
+    cat_slug: 'lab',
+    excerpt: '感情的な抽象表現だけのワンショット指示でUI・ロジック・画面遷移まで生成、修正なしで動作。「たたき台の民主化」が変えるのは開発現場ではなく会議室。',
+    thumbnail_url: 'https://pbs.twimg.com/amplify_video_thumb/2064573130090389504/img/JI0uo6rrwhJJVQa8.jpg',
+    reading_time_minutes: 5,
+    view_count: 67,
+    published_at: '2026-06-11T16:50:00Z',
+  },
+  {
+    slug: 'obsidian-claude-youtube-knowledge',
+    title: 'Obsidian×ClaudeでYouTube制作を丸ごと自動化──1本の台本が4媒体に分裂する複利の仕組み',
+    cat_slug: 'solo-business',
+    excerpt: '競合動画の文字起こしとコメントを放り込むだけで「何が刺さるか」のナレッジが育つ。YouTube→ショート→Xスレ→Telegramへ自動派生する構造を解説。',
+    thumbnail_url: 'https://pbs.twimg.com/amplify_video_thumb/2061144585057796100/img/OGj6FgPh4VngjKsf.jpg',
+    reading_time_minutes: 6,
+    view_count: 71,
+    published_at: '2026-06-11T16:40:00Z',
+  },
+  {
     slug: 'fable-5-hyperagent-autonomous',
     title: 'Fable 5×Hyperagent: 目標を渡すだけで数時間働く「自律エージェント」の実例3つ【会員限定】',
     cat_slug: 'ai-news',

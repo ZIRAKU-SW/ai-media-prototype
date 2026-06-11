@@ -26,6 +26,11 @@ create table profiles (
   display_name text,
   avatar_url text,
   is_member boolean default false,
+  -- 顧客セグメント用アンケート（2026-06-11 追加）
+  company_name text,
+  company_size text,   -- 個人 / 2-10名 / 11-50名 / 51-300名 / 301名以上
+  job_role text,       -- 経営者・役員 / 部門責任者 / 会社員 / 個人事業主 / その他
+  interest text,       -- ai-adoption / dev-partner / learning / side-business
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -149,8 +154,15 @@ $$ language sql security definer;
 create or replace function handle_new_user()
 returns trigger as $$
 begin
-  insert into public.profiles (id, display_name)
-  values (new.id, new.raw_user_meta_data->>'display_name');
+  insert into public.profiles (id, display_name, company_name, company_size, job_role, interest)
+  values (
+    new.id,
+    new.raw_user_meta_data->>'display_name',
+    new.raw_user_meta_data->>'company_name',
+    new.raw_user_meta_data->>'company_size',
+    new.raw_user_meta_data->>'job_role',
+    new.raw_user_meta_data->>'interest'
+  );
   return new;
 end;
 $$ language plpgsql security definer set search_path = public;
