@@ -13,7 +13,11 @@
     "verify:sites": "bash scripts/vm/verify-sites.sh",
     "dify:ssh-setup": "bash scripts/oceanosfleet/setup-dify-vm-ssh.sh",
     "dify:ssh-test": "ssh dify-vm hostname",
-    "dify:update-proxy": "bash scripts/oceanosfleet/remote-update-proxy.sh"
+    "dify:update-proxy": "bash scripts/oceanosfleet/remote-update-proxy.sh",
+    "articles:upsert": "node scripts/articles/upsert-articles.mjs",
+    "x:slots": "tsx scripts/x/run-slot.ts --list",
+    "x:post": "tsx scripts/x/run-slot.ts",
+    "x:post:dry": "tsx scripts/x/run-slot.ts --dry-run"
   },
   "dependencies": {
     "@oceanos/dev-console": "file:./packages/dev-console",
