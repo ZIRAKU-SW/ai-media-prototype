@@ -22,6 +22,12 @@ EXPORT_PATH = ROOT / "data" / "platform-bugs.json"
 
 CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
+        "entry_date": "2026-06-11",
+        "category": "feat",
+        "title": "ziraku テーマのバックボーン実装",
+        "body": "記事一覧/詳細・カテゴリ別・サービス・会社情報・セミナー・プライバシーの7ページ追加。SiteTheme に ziraku を追加し ThemeArticlePage/CompanyPage を共用。トップのデッドリンク・notion 行きリンクを解消。コミット 4917c60。",
+    },
+    {
         "entry_date": "2026-06-10",
         "category": "fix",
         "title": "Vercelビルド失敗（ThemeSiteHeader未コミット）",
