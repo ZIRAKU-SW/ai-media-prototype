@@ -16,7 +16,9 @@ mkdir -p $LIBROOT
 cd $LIBROOT
 
 echo "==> playwright + chromium headless shell"
-( cd /tmp && npm init -y >/dev/null 2>&1 && npm install playwright@1.60.0 --no-save 2>&1 | tail -1 )
+# 注意: --no-save 禁止。package.json に記録しないと、/tmp で別パッケージを
+# npm install したときに playwright が「不要物」として削除される（台帳 #22）
+( cd /tmp && npm init -y >/dev/null 2>&1 && npm install --save playwright@1.60.0 2>&1 | tail -1 )
 npx -y playwright@1.60.0 install chromium 2>&1 | tail -1
 
 echo "==> 共有ライブラリ（sudo 不要: apt-get download + dpkg -x）"
