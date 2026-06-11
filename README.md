@@ -289,6 +289,7 @@ ai-media-prototype/
 | 18 | Claudeを「完全自動運転」にする14ステップ──/loopとRoutinesで自動化スタックを組む【海外記事翻訳】 ★新着 | AI活用ガイド | claude-autopilot-14-steps |
 | 19 | 上場企業CEOも実践──高コストなFable 5を「一文のプロンプト」で実用的に使う ★新着 | AIニュース | kubell-ceo-fable-5-prompt |
 | 20 | 【保存版】AIエージェントで会社を経営する手順──リサーチ・コンテンツ・事務をAIに任せる ★新着 | 1人社長・副業・起業 | ai-agent-company-management |
+| 21 | Claude Fable 5で会社員が副業月30万円を目指す──AIを「戦略責任者」として雇う4ステップ ★新着 | 1人社長・副業・起業 | claude-fable-5-side-business |
 
 > ★新着（#13〜#20）は 2026-06-11 追加。X(Twitter) の話題ポストを出典明記のうえ記事化（#15・#18 は英語記事翻訳）。  
 > 本文 Markdown は `data/articles-md/{slug}.md` で管理。Supabase への本番反映は下記コマンドを使う（anon key では INSERT 不可）。

@@ -120,6 +120,16 @@ const ARTICLES = [
     published_at: '2026-06-11T09:10:00Z',
   },
   {
+    slug: 'claude-fable-5-side-business',
+    title: 'Claude Fable 5で会社員が副業月30万円を目指す──AIを「戦略責任者」として雇う4ステップ',
+    cat_slug: 'solo-business',
+    excerpt: '市場分析も商品設計も未来予測もAIに任せ、自分は実行だけ。「考えるAI」Fable 5で副業の役割分担が逆転する具体的な手順を解説。',
+    thumbnail_url: 'https://pbs.twimg.com/media/HKcStMIaUAAww-M.jpg',
+    reading_time_minutes: 8,
+    view_count: 42,
+    published_at: '2026-06-11T09:45:00Z',
+  },
+  {
     slug: 'ai-agent-company-management',
     title: '【保存版】AIエージェントで会社を経営する手順──リサーチ・コンテンツ・事務をAIに任せる',
     cat_slug: 'solo-business',

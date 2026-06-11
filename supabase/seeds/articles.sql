@@ -1,5 +1,5 @@
 -- ============================================================
--- モック記事データ（19本）
+-- モック記事データ（20本）
 -- 参考元:
 --   https://www.skillupai.com/blog/for-business/generative-ai-business/
 --   https://www.matrixflow.net/case-study/161/
@@ -136,7 +136,13 @@ from (values
    'ai-agent-company-management',
    '「AIに任せてるつもりで結局全部自分でやってる」を卒業。東大AIエージェントラボSwarmによる、経営業務をAIに任せる実践手順。',
    'https://pbs.twimg.com/media/HHtptx_a8AARAev.jpg',
-   'solo-business', 10, 31, '2026-06-11T09:05:00Z')
+   'solo-business', 10, 31, '2026-06-11T09:05:00Z'),
+
+  ('Claude Fable 5で会社員が副業月30万円を目指す──AIを「戦略責任者」として雇う4ステップ',
+   'claude-fable-5-side-business',
+   '市場分析も商品設計も未来予測もAIに任せ、自分は実行だけ。「考えるAI」Fable 5で副業の役割分担が逆転する具体的な手順を解説。',
+   'https://pbs.twimg.com/media/HKcStMIaUAAww-M.jpg',
+   'solo-business', 8, 42, '2026-06-11T09:45:00Z')
 
 ) as v(title, slug, excerpt, thumbnail_url, cat_slug, reading_time_minutes, view_count, published_at)
 join categories c on c.slug = v.cat_slug

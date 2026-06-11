@@ -110,7 +110,7 @@ ai-media-prototype/
 │
 ├── supabase/
 │   ├── schema.sql              ← テーブル定義（9テーブル）
-│   └── seeds/articles.sql     ← 記事シードSQL（20本）
+│   └── seeds/articles.sql     ← 記事シードSQL（21本）
 │
 ├── docs/
 │   ├── concept.md              ← メディアコンセプト・要件定義
@@ -180,7 +180,7 @@ curl -X POST "https://wqlelowutbxplrzforcc.supabase.co/rest/v1/articles" \
 
 ---
 
-## 5. 現在の記事一覧（Supabase 20本）
+## 5. 現在の記事一覧（Supabase 21本）
 
 | # | slug | カテゴリ | 本文 |
 |---|------|---------|------|
@@ -204,6 +204,7 @@ curl -X POST "https://wqlelowutbxplrzforcc.supabase.co/rest/v1/articles" \
 | 18 | claude-autopilot-14-steps | AI活用ガイド | **あり**（翻訳・`data/articles-md/`） |
 | 19 | kubell-ceo-fable-5-prompt | AIニュース | **あり**（`data/articles-md/`） |
 | 20 | ai-agent-company-management | 1人社長・副業・起業 | **あり**（`data/articles-md/`） |
+| 21 | claude-fable-5-side-business | 1人社長・副業・起業 | **あり**（`data/articles-md/`） |
 
 > 本文なしの記事は「本文準備中です」と表示される。  
 > #13〜#20 は 2026-06-11 追加。本文 Markdown は `data/articles-md/{slug}.md` で管理（git 管理）。
