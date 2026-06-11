@@ -43,9 +43,9 @@ export default function ZirakuAuthButtons({ block = false }: { block?: boolean }
   if (user) {
     return (
       <>
-        <span className="auth-user" title={user.email ?? ''}>
+        <Link href="/ziraku/members" className="auth-user" title={user.email ?? ''}>
           👤 {(user.email ?? '').split('@')[0]}
-        </span>
+        </Link>
         <button type="button" className={`btn btn--ghost${blockCls}`} onClick={handleLogout}>
           ログアウト
         </button>

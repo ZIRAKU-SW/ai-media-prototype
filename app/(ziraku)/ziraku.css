@@ -967,6 +967,78 @@
   .ziraku-root .auth__card { padding: 28px 20px 22px; }
 }
 
+/* ---- Members area ---- */
+.ziraku-root .members { max-width: 880px; margin: 0 auto; padding: 40px 24px 64px; }
+.ziraku-root .members__loading { text-align: center; color: var(--text-muted); padding: 80px 0; }
+.ziraku-root .members__gate {
+  max-width: 480px; margin: 40px auto; text-align: center;
+  background: #fff; border: 1px solid var(--border); border-radius: 20px;
+  box-shadow: var(--shadow-md); padding: 44px 32px;
+}
+.ziraku-root .members__gate-icon { font-size: 2.4rem; margin-bottom: 12px; }
+.ziraku-root .members__gate-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; }
+.ziraku-root .members__gate-desc { font-size: 0.84rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 22px; }
+.ziraku-root .members__gate-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.ziraku-root .members__hero { text-align: center; margin-bottom: 36px; }
+.ziraku-root .members__welcome { font-size: 0.84rem; font-weight: 700; color: var(--green-dark); margin-bottom: 8px; }
+.ziraku-root .members__title { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
+.ziraku-root .members__lead { font-size: 0.86rem; color: var(--text-muted); margin-bottom: 22px; }
+.ziraku-root .members__nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.ziraku-root .members__nav-card {
+  display: flex; flex-direction: column; gap: 4px; align-items: center; text-align: center;
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 10px; transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+}
+.ziraku-root .members__nav-card:hover { border-color: var(--accent-light); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.ziraku-root .members__nav-card--soon { opacity: 0.65; }
+.ziraku-root .members__nav-icon { font-size: 1.4rem; }
+.ziraku-root .members__nav-title { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+.ziraku-root .members__soon {
+  font-style: normal; font-size: 0.6rem; font-weight: 700; color: var(--text-light);
+  border: 1px solid var(--border); border-radius: 999px; padding: 1px 7px; margin-left: 5px;
+}
+.ziraku-root .members__nav-desc { font-size: 0.68rem; color: var(--text-muted); line-height: 1.5; }
+.ziraku-root .members__section {
+  background: #fff; border: 1px solid var(--border); border-radius: 20px;
+  box-shadow: var(--shadow); padding: 28px 28px 26px; margin-bottom: 22px;
+}
+.ziraku-root .members__section--soon { background: var(--bg); box-shadow: none; }
+.ziraku-root .members__section-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; }
+.ziraku-root .members__section-lead { font-size: 0.82rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 16px; }
+.ziraku-root .members__inline-link { color: var(--accent); font-weight: 700; }
+.ziraku-root .members-checklist { list-style: none; display: grid; gap: 8px; margin-bottom: 16px; }
+.ziraku-root .members-checklist__item {
+  display: flex; align-items: flex-start; gap: 10px; cursor: pointer;
+  font-size: 0.84rem; line-height: 1.6; padding: 9px 12px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg);
+}
+.ziraku-root .members-checklist__item:hover { border-color: var(--accent-light); }
+.ziraku-root .members-checklist__item input { width: 17px; height: 17px; margin-top: 2px; accent-color: var(--green); flex-shrink: 0; }
+.ziraku-root .members-checklist__result {
+  background: #f4fbf8; border: 1px solid #d8efe5; border-radius: var(--radius);
+  padding: 14px 18px; font-size: 0.84rem; line-height: 1.7;
+}
+.ziraku-root .members-checklist__result strong { color: var(--green-dark); display: block; margin-bottom: 4px; }
+.ziraku-root .members__prompts { display: grid; gap: 14px; }
+.ziraku-root .members-prompt { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.ziraku-root .members-prompt__head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 14px; background: var(--accent-pale);
+}
+.ziraku-root .members-prompt__title { font-size: 0.84rem; font-weight: 700; }
+.ziraku-root .members-prompt__copy { padding: 4px 12px; font-size: 0.72rem; background: #fff; }
+.ziraku-root .members-prompt__body {
+  margin: 0; padding: 14px 16px; font-size: 0.78rem; line-height: 1.75;
+  white-space: pre-wrap; word-break: break-word;
+  font-family: var(--sans); background: #fff; color: var(--text);
+}
+@media (max-width: 768px) {
+  .ziraku-root .members { padding: 24px 16px 48px; }
+  .ziraku-root .members__nav { grid-template-columns: repeat(2, 1fr); }
+  .ziraku-root .members__section { padding: 20px 16px; border-radius: var(--radius); }
+  .ziraku-root .members-prompt__head { flex-wrap: wrap; }
+}
+
 /* ============================================================
    バックページ（記事一覧・カテゴリ・サービス・セミナー・法務）
    ============================================================ */

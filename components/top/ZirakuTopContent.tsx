@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import ZirakuSiteHeader, { ZIRAKU_CONTACT_URL } from '@/components/ziraku/ZirakuSiteHeader'
+import { useZirakuUser } from '@/components/ziraku/useZirakuUser'
 import ZirakuFooter from '@/components/ziraku/ZirakuFooter'
 import type { TopContentProps } from './types'
 import type { Article } from '@/lib/supabase'
@@ -62,6 +63,7 @@ function formatDate(d: string | null) {
 
 export default function ZirakuTopContent({ articles, email, setEmail, subscribed, handleNewsletter }: TopContentProps) {
   const [activeTab, setActiveTab] = useState<string>('all')
+  const { user } = useZirakuUser()
   const latest = articles[0]
   const filtered = useMemo(() => filterByTab(articles, activeTab).slice(0, 8), [articles, activeTab])
   const ranking = articles.slice(0, 3)
@@ -90,10 +92,17 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
           </div>
 
           <div className="hero__cta">
-            <Link href="/ziraku/signup" className="btn btn--primary btn--lg btn--pill hero__cta-signup">
-              無料で会員登録する
-              <span className="hero__cta-badge" aria-hidden>かんたん<br />1分！</span>
-            </Link>
+            {user ? (
+              <Link href="/ziraku/members" className="btn btn--primary btn--lg btn--pill hero__cta-signup">
+                会員限定コンテンツを見る
+                <span className="hero__cta-badge" aria-hidden>会員<br />特典</span>
+              </Link>
+            ) : (
+              <Link href="/ziraku/signup" className="btn btn--primary btn--lg btn--pill hero__cta-signup">
+                無料で会員登録する
+                <span className="hero__cta-badge" aria-hidden>かんたん<br />1分！</span>
+              </Link>
+            )}
             <Link href="/ziraku/articles" className="btn btn--outline btn--lg btn--pill">
               記事を探す
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
@@ -264,7 +273,9 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
               />
             </div>
             <div className="members-banner__body">
-              <h3 className="members-banner__title">会員登録すると、すべての機能が使えます！✨</h3>
+              <h3 className="members-banner__title">
+                {user ? 'おかえりなさい！会員特典をご利用いただけます🎉' : '会員登録すると、すべての機能が使えます！✨'}
+              </h3>
               <ul className="members-banner__list">
                 <li><span className="members-banner__check" aria-hidden>✓</span><span>会員限定記事が読み放題</span></li>
                 <li><span className="members-banner__check" aria-hidden>✓</span><span>AI活用チェックリストをプレゼント</span></li>
@@ -272,8 +283,8 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
                 <li><span className="members-banner__check" aria-hidden>✓</span><span>セミナー・イベントに優先ご招待</span></li>
               </ul>
             </div>
-            <Link href="/ziraku/signup" className="btn btn--signup-green btn--pill members-banner__btn">
-              無料で会員登録する
+            <Link href={user ? '/ziraku/members' : '/ziraku/signup'} className="btn btn--signup-green btn--pill members-banner__btn">
+              {user ? '会員限定エリアへ' : '無料で会員登録する'}
               <span className="btn__circle" aria-hidden>›</span>
             </Link>
           </div>

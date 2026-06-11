@@ -50,6 +50,16 @@ if (!SUPABASE_URL || !SERVICE_KEY) {
 // ── Article metadata ──────────────────────────────────────────────────────────
 const ARTICLES = [
   {
+    slug: 'fable-5-ui-oneshot-designer',
+    title: 'Claude Fable 5、5つのUIワンショット生成に全合格──「コードを書かないデザイナー」の仕事が変わる',
+    cat_slug: 'ai-news',
+    excerpt: 'GSAP/Three.js込みの高品質UIが1プロンプトで。著名UI/UX教育者の検証全合格が示す「デザイン→実装」分業の崩壊と、発注側が知るべき3つの変化。',
+    thumbnail_url: 'https://pbs.twimg.com/amplify_video_thumb/2064717260200030208/img/rDa5YZj-oOnNzufl.jpg',
+    reading_time_minutes: 6,
+    view_count: 44,
+    published_at: '2026-06-11T15:00:00Z',
+  },
+  {
     slug: 'obsidian-claude-skills-second-brain',
     title: 'Obsidian×Claude Skillsで「第二の脳」を構築する──元OpenAI Karpathy式・3フォルダ最小実装',
     cat_slug: 'ai-guide',

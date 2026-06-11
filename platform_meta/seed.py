@@ -24,6 +24,12 @@ CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-06-11",
         "category": "feat",
+        "title": "ziraku 会員限定エリア実装 + ログイン後のCTA切替",
+        "body": "/ziraku/members 新設（未ログインはゲート表示）。実体特典2つ: AI活用チェックリスト（10項目診断・スコア判定）と営業効率化プロンプト集（コピー機能付き6本）。会員限定記事・セミナー優先は準備中表示。ログイン中はヒーローCTA・緑バナーが会員エリア誘導に切替（『ログイン後も会員登録表示』の不整合を解消）。E2Eログインフローで検証済み。",
+    },
+    {
+        "entry_date": "2026-06-11",
+        "category": "feat",
         "title": "ziraku 会員ログイン・会員登録を実装（Supabase Auth）",
         "body": "/ziraku/login・/ziraku/signup を新設（メール+パスワード、エラー日本語化、メール確認フロー対応）。ヘッダーがログイン状態を検知しユーザー表示+ログアウトに切替（SiteHeader にオプショナル authArea props 追加・他テーマ不変）。ヒーロー/会員バナーCTAを signup へ接続。",
     },

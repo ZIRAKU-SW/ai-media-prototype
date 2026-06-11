@@ -16,6 +16,12 @@ select
   true, v.reading_time_minutes, v.view_count,
   v.published_at::timestamptz
 from (values
+  ('Claude Fable 5、5つのUIワンショット生成に全合格──「コードを書かないデザイナー」の仕事が変わる',
+   'fable-5-ui-oneshot-designer',
+   'GSAP/Three.js込みの高品質UIが1プロンプトで。著名UI/UX教育者の検証全合格が示す「デザイン→実装」分業の崩壊と、発注側が知るべき3つの変化。',
+   'https://pbs.twimg.com/amplify_video_thumb/2064717260200030208/img/rDa5YZj-oOnNzufl.jpg',
+   'ai-news', 6, 44, '2026-06-11T15:00:00Z'),
+
   ('Obsidian×Claude Skillsで「第二の脳」を構築する──元OpenAI Karpathy式・3フォルダ最小実装',
    'obsidian-claude-skills-second-brain',
    '議事録もSlackも死蔵させない。AIを「コンパイラと図書館係」として動かし、自分の業務を覚え続けるナレッジベースを週末2日で立ち上げる手順。',
