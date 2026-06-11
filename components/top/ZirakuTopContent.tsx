@@ -259,30 +259,6 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
               ))}
             </div>
 
-            <div className="members-banner">
-              <div className="members-banner__illus" aria-hidden>
-                <img
-                  src={`${BASE_PATH}/ziraku-member.png`}
-                  alt=""
-                  width={180}
-                  height={126}
-                  className="members-banner__img"
-                />
-              </div>
-              <div className="members-banner__body">
-                <h3 className="members-banner__title">会員登録すると、すべての機能が使えます！✨</h3>
-                <ul className="members-banner__list">
-                  <li><span className="members-banner__check" aria-hidden>✓</span><span>会員限定記事が読み放題</span></li>
-                  <li><span className="members-banner__check" aria-hidden>✓</span><span>AI活用チェックリストをプレゼント</span></li>
-                  <li><span className="members-banner__check" aria-hidden>✓</span><span>便利なプロンプト集を無料配布</span></li>
-                  <li><span className="members-banner__check" aria-hidden>✓</span><span>セミナー・イベントに優先ご招待</span></li>
-                </ul>
-              </div>
-              <a href="#newsletter" className="btn btn--signup-green btn--pill members-banner__btn">
-                無料で会員登録する
-                <span className="btn__circle" aria-hidden>›</span>
-              </a>
-            </div>
           </div>
 
           <aside className="sidebar">
@@ -327,6 +303,35 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
           </aside>
         </div>
       </main>
+
+      <section className="members-banner-section">
+        <div className="members-banner-section__inner">
+          <div className="members-banner">
+            <div className="members-banner__illus" aria-hidden>
+              <img
+                src={`${BASE_PATH}/ziraku-member.png`}
+                alt=""
+                width={180}
+                height={126}
+                className="members-banner__img"
+              />
+            </div>
+            <div className="members-banner__body">
+              <h3 className="members-banner__title">会員登録すると、すべての機能が使えます！✨</h3>
+              <ul className="members-banner__list">
+                <li><span className="members-banner__check" aria-hidden>✓</span><span>会員限定記事が読み放題</span></li>
+                <li><span className="members-banner__check" aria-hidden>✓</span><span>AI活用チェックリストをプレゼント</span></li>
+                <li><span className="members-banner__check" aria-hidden>✓</span><span>便利なプロンプト集を無料配布</span></li>
+                <li><span className="members-banner__check" aria-hidden>✓</span><span>セミナー・イベントに優先ご招待</span></li>
+              </ul>
+            </div>
+            <a href="#newsletter" className="btn btn--signup-green btn--pill members-banner__btn">
+              無料で会員登録する
+              <span className="btn__circle" aria-hidden>›</span>
+            </a>
+          </div>
+        </div>
+      </section>
 
       <section className="newsletter-banner newsletter-banner--wide" id="newsletter">
         <div className="newsletter-banner__inner">

@@ -24,6 +24,12 @@ CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-06-11",
         "category": "feat",
+        "title": "ziraku 会員バナー刷新 + 角丸・ピル化で親しみ路線に統一",
+        "body": "会員登録バナーをドラフト準拠の全幅横長レイアウトに（原画切り出しの人物イラスト・横並び4特典・角丸チェックアイコン・緑ピルボタン+白丸矢印）。ヒーローCTAをピル形状+白丸『かんたん1分！』バーストに。--radius 16px / --radius-sm 10px、緑を #0a9180 系ティールへ。",
+    },
+    {
+        "entry_date": "2026-06-11",
+        "category": "feat",
         "title": "ziraku ロゴ統一 + ファビコン刷新",
         "body": "ドラフトの分子ネットワークマークを ZirakuLogoMark コンポーネント化しヘッダー（青）・フッター（白mono）で統一。ファビコンを Next デフォルト（黒地三角）から青角丸+白マークの app/icon.png / favicon.ico に差し替え（全テーマ共通）。",
     },

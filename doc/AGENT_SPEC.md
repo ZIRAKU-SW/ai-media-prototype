@@ -147,6 +147,7 @@ python3 platform_meta/seed.py --register-bug \
 
 | 日付 | 区分 | 内容 |
 |------|------|------|
+| 2026-06-11 | feat | ziraku 会員バナー刷新（全幅・人物イラスト・横並び特典・緑ピル）+ CTAピル化 + 角丸拡大（--radius 16px）で親しみ路線統一 |
 | 2026-06-11 | feat | ziraku ロゴ統一 + ファビコン刷新 — `ZirakuLogoMark` 新設（ヘッダー青/フッター白）、`app/icon.png`・`favicon.ico` を青角丸+白マークに（全テーマ共通） |
 | 2026-06-11 | feat | ziraku ヒーローをドラフト原画イラストに差し替え — `サイトイメージ1.png` から切り出した `public/ziraku-hero.png` を使用、HTML浮遊カード削除 |
 | 2026-06-11 | feat | ziraku トップをドラフト『親しみ路線』に寄せ込み — ヒーロー刷新（黄色マーカーH1＋自作フラットSVGイラスト＋浮遊カード）、統計を薄青バンドへ分離、バリューカード白化、PC/モバイル調整（`ziraku.css`/`ZirakuTopContent.tsx` のみ） |
