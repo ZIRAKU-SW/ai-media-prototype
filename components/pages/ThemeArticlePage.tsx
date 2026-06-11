@@ -13,21 +13,40 @@ const CTA_MAP: Record<string, { text: string; label: string }> = {
   'solo-business': { text: '1人でもAIで事業を広げたい方は、ぜひご相談ください', label: '業務自動化について相談する' },
 }
 
-export default function ThemeArticlePage({ theme, slug }: { theme: SiteTheme; slug: string }) {
-  const [article, setArticle] = useState<Article | null>(null)
-  const [related, setRelated] = useState<Article[]>([])
-  const [loading, setLoading] = useState(true)
+export default function ThemeArticlePage({
+  theme,
+  slug,
+  initialArticle,
+  initialRelated,
+}: {
+  theme: SiteTheme
+  slug: string
+  initialArticle?: Article | null
+  initialRelated?: Article[]
+}) {
+  const [article, setArticle] = useState<Article | null>(initialArticle !== undefined ? initialArticle : null)
+  const [related, setRelated] = useState<Article[]>(initialRelated ?? [])
+  const [loading, setLoading] = useState(initialArticle === undefined)
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
   const base = `/${theme}`
   const badge = THEME_BADGE[theme]
 
   useEffect(() => {
-    getArticleBySlug(slug)
-      .then(a => { setArticle(a); trackView(slug) })
-      .catch(() => {})
-      .finally(() => setLoading(false))
-    getArticles({ limit: 5 }).then(setRelated).catch(() => {})
+    if (initialArticle !== undefined) {
+      // Initial data provided via SSR — just track view, skip fetch
+      trackView(slug)
+    } else {
+      // Client-side fetch (existing behavior for wired/notion/zapier)
+      getArticleBySlug(slug)
+        .then(a => { setArticle(a); trackView(slug) })
+        .catch(() => {})
+        .finally(() => setLoading(false))
+    }
+    if (initialRelated === undefined) {
+      getArticles({ limit: 5 }).then(setRelated).catch(() => {})
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug])
 
   const handleNewsletter = async (e: React.FormEvent) => {
