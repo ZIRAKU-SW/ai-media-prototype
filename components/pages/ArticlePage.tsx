@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { getArticleBySlug, getArticles, trackView, subscribeNewsletter, type Article } from '@/lib/supabase'
 import Link from 'next/link'
+import ZirakuLogoMark from '@/components/ziraku/ZirakuLogoMark'
 
 type Theme = 'wired' | 'notion' | 'zapier'
 
@@ -125,7 +126,7 @@ export default function ArticlePage({ theme, slug }: { theme: Theme; slug: strin
         <div className="header__inner">
           <Link href={base} className="logo">
             {theme === 'wired' && <><span className="logo__mark">✕</span><div><div className="logo__name">AIビジネスメディア</div><div className="logo__tagline">AIで、ビジネスはもっと進化する。</div></div></>}
-            {theme === 'notion' && <><div className="logo__icon">AI</div><div><div className="logo__name">AIビジネスメディア</div><div className="logo__tagline">AIで、ビジネスはもっと進化する。</div></div></>}
+            {theme === 'notion' && <><div className="logo__icon"><ZirakuLogoMark size={20} mono /></div><div><div className="logo__name">AIビジネスメディア</div><div className="logo__tagline">AIで、ビジネスはもっと進化する。</div></div></>}
             {theme === 'zapier' && <><div className="logo__icon">⚡</div><div className="logo__name">AIビジネスメディア</div></>}
           </Link>
           <nav className="nav">

@@ -2,7 +2,7 @@
 
 Claude Fable 5に**「極めて喜びが伝わるカロリー計算アプリを作って」と1文だけ**渡したら、そのまま動くiOSアプリが出てきた──。東大ClaudeCode研究所(@ClaudeCode_UT)が取り上げた検証(元: @anshuc氏)が話題です。
 
-!video[https://pbs.twimg.com/amplify_video_thumb/2064573130090389504/img/JI0uo6rrwhJJVQa8.jpg](https://video.twimg.com/amplify_video/2064573130090389504/vid/avc1/1080x2160/l4pvmXWiiuJE2.mp4?tag=27)
+!video[https://pbs.twimg.com/amplify_video_thumb/2064573130090389504/img/JI0uo6rrwhJJVQa8.jpg](https://video.twimg.com/amplify_video/2064573130090389504/vid/avc1/1080x2160/l4pvmXWiiuJE2gRd.mp4?tag=27)
 
 ポイントは3つです。
 

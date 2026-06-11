@@ -27,6 +27,8 @@ export default function ZirakuSettingsContent() {
   const [profileMsg, setProfileMsg] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [passwordMsg, setPasswordMsg] = useState('')
+  const [newEmail, setNewEmail] = useState('')
+  const [emailMsg, setEmailMsg] = useState('')
   const [busy, setBusy] = useState(false)
 
   useEffect(() => {
@@ -61,6 +63,17 @@ export default function ZirakuSettingsContent() {
     const { error } = await supabase.auth.updateUser({ password: newPassword })
     setPasswordMsg(error ? `変更に失敗しました（${error.message}）` : 'パスワードを変更しました')
     if (!error) setNewPassword('')
+    setBusy(false)
+  }
+
+  const changeEmail = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setBusy(true); setEmailMsg('')
+    const { error } = await supabase.auth.updateUser({ email: newEmail })
+    setEmailMsg(error
+      ? `変更に失敗しました（${error.message}）`
+      : '確認メールを新旧両方のアドレスに送信しました。メール内のリンクをクリックすると変更が完了します。')
+    if (!error) setNewEmail('')
     setBusy(false)
   }
 
@@ -138,6 +151,18 @@ export default function ZirakuSettingsContent() {
             </label>
             {passwordMsg && <p className={passwordMsg.includes('失敗') || passwordMsg.includes('8文字') ? 'auth__error' : 'auth__notice'}>{passwordMsg}</p>}
             <button type="submit" className="btn btn--outline btn--pill" disabled={busy}>パスワードを変更</button>
+          </form>
+        </section>
+
+        <section className="members__section">
+          <h2 className="members__section-title"><IconUser className="section-icon" />メールアドレス変更</h2>
+          <p className="members__section-lead">現在: {user.email}</p>
+          <form onSubmit={changeEmail} className="auth__form">
+            <label className="auth__label">新しいメールアドレス
+              <input type="email" className="input" value={newEmail} onChange={e => setNewEmail(e.target.value)} placeholder="new@example.com" required />
+            </label>
+            {emailMsg && <p className={emailMsg.includes('失敗') ? 'auth__error' : 'auth__notice'}>{emailMsg}</p>}
+            <button type="submit" className="btn btn--outline btn--pill" disabled={busy}>確認メールを送信</button>
           </form>
         </section>
 

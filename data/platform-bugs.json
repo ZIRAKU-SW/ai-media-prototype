@@ -1,6 +1,22 @@
 {
-  "exported_at": "2026-06-11T16:10:54.963454+00:00",
+  "exported_at": "2026-06-11T20:46:56.253324+00:00",
   "bugs": [
+    {
+      "id": 26,
+      "title": "記事内の動画URLが切り詰められたまま掲載され再生不可（2記事）",
+      "symptom": "fable-5-oneshot-ios-app と obsidian-claude-youtube-knowledge の動画が黒いまま再生されない",
+      "root_cause": "X取得スクリプトのデバッグ出力で video URL を [:90] でスライスしたものを記事に転記。末尾4文字欠けでvideo.twimg.comが404",
+      "fix": "完全URLを再取得して2記事を修正・再upsert。全5動画を curl range で疎通確認。教訓: 外部URLは転記後に必ず疎通確認する",
+      "affected_themes": "ziraku",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-06-11",
+      "fixed_at": "2026-06-11",
+      "commit_hash": null,
+      "tags": null,
+      "created_at": "2026-06-11 20:46:56",
+      "updated_at": "2026-06-11 20:46:56"
+    },
     {
       "id": 25,
       "title": "統計バンドを「縮小して残す」判断がドラフト逸脱の再発だった（#20の不完全な修正）",
@@ -403,6 +419,14 @@
     }
   ],
   "changelog": [
+    {
+      "id": 17,
+      "entry_date": "2026-06-11",
+      "category": "fix",
+      "title": "動画URL切れ2件修正 + モバイルファビコン + ロゴ統一展開 + ヘッダー設定導線",
+      "body": "①記事2本の動画が再生不可（抽出スクリプトがURLを90文字で切り詰めたまま記事化）→完全URLに修正し全5動画の疎通確認。②app/apple-icon.png 追加でiOS/Androidのタブ・ホーム画面にロゴ表示。③全テーマの『青箱にAI』『⚡』旧ロゴを ZirakuLogoMark(mono) に統一（header/footer/記事ページ計7箇所）。④ログイン中ヘッダーとハンバーガードロワーに『会員情報・設定』リンク、設定ページにメールアドレス変更を追加。",
+      "created_at": "2026-06-11 20:46:56"
+    },
     {
       "id": 16,
       "entry_date": "2026-06-11",

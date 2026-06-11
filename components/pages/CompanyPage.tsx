@@ -2,6 +2,7 @@ import Link from 'next/link'
 import ThemeSiteHeader, { type SiteTheme } from '@/components/theme/ThemeSiteHeader'
 import { ZIRAKU_COMPANY, ZIRAKU_CONTACT_URL, ZIRAKU_SOURCE_URL } from '@/lib/company-data'
 import { themeBase } from '@/lib/theme-links'
+import ZirakuLogoMark from '@/components/ziraku/ZirakuLogoMark'
 
 export default function CompanyPage({ theme }: { theme: SiteTheme }) {
   const base = themeBase(theme)
@@ -115,7 +116,7 @@ export default function CompanyPage({ theme }: { theme: SiteTheme }) {
         <div className="footer__inner">
           <div className="footer__brand">
             <div className="footer__logo">
-              <div className="logo__icon">AI</div>
+              <div className="logo__icon"><ZirakuLogoMark size={20} mono /></div>
               <span className="logo__name">AIビジネスメディア</span>
             </div>
             <p>AIで、ビジネスはもっと進化する。</p>

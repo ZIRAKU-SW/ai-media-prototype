@@ -6,6 +6,7 @@ import ThemeSiteHeader from '@/components/theme/ThemeSiteHeader'
 import { themeCompanyHref, ZIRAKU_CONTACT_URL } from '@/lib/theme-links'
 import type { TopContentProps } from './types'
 import type { Article } from '@/lib/supabase'
+import ZirakuLogoMark from '@/components/ziraku/ZirakuLogoMark'
 
 const BADGE: Record<string, string> = {
   'ai-guide': 'badge--blue', 'dx-improvement': 'badge--green', 'tools': 'badge--gray',
@@ -223,7 +224,7 @@ export default function NotionTopContent({ articles, email, setEmail, subscribed
         <div className="footer__inner">
           <div className="footer__brand">
             <div className="footer__logo">
-              <div className="logo__icon">AI</div>
+              <div className="logo__icon"><ZirakuLogoMark size={20} mono /></div>
               <span className="logo__name">AIビジネスメディア</span>
             </div>
             <p>AIで、ビジネスはもっと進化する。</p>

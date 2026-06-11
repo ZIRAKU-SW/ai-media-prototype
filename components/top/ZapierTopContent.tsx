@@ -3,6 +3,7 @@ import ThemeSiteHeader from '@/components/theme/ThemeSiteHeader'
 import { themeCompanyHref, ZIRAKU_CONTACT_URL } from '@/lib/theme-links'
 import ZapierArticleCard from '@/components/zapier/ZapierArticleCard'
 import type { TopContentProps } from './types'
+import ZirakuLogoMark from '@/components/ziraku/ZirakuLogoMark'
 
 export default function ZapierTopContent({ articles, email, setEmail, subscribed, handleNewsletter }: TopContentProps) {
   return (
@@ -133,7 +134,7 @@ export default function ZapierTopContent({ articles, email, setEmail, subscribed
       <footer className="footer">
         <div className="footer__inner">
           <div className="footer__brand">
-            <div className="logo"><div className="logo__icon">⚡</div><div className="logo__name">AIビジネスメディア</div></div>
+            <div className="logo"><div className="logo__icon"><ZirakuLogoMark size={20} mono /></div><div className="logo__name">AIビジネスメディア</div></div>
             <p>AIで、ビジネスはもっと進化する。</p>
           </div>
           <div className="footer__links">

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
-import { IconUser } from '@/components/ziraku/ZirakuIcons'
+import { IconSettings, IconUser } from '@/components/ziraku/ZirakuIcons'
 import type { User } from '@supabase/supabase-js'
 
 /** ziraku ヘッダーの認証エリア。未ログイン=ログイン/会員登録、ログイン中=ユーザー表示+ログアウト */
@@ -46,6 +46,9 @@ export default function ZirakuAuthButtons({ block = false }: { block?: boolean }
       <>
         <Link href="/ziraku/members" className="auth-user" title={user.email ?? ''}>
           <IconUser size={15} className="auth-user__icon" /> {(user.email ?? '').split('@')[0]}
+        </Link>
+        <Link href="/ziraku/settings" className={`btn btn--ghost${blockCls}`}>
+          <IconSettings size={15} /> 会員情報・設定
         </Link>
         <button type="button" className={`btn btn--ghost${blockCls}`} onClick={handleLogout}>
           ログアウト

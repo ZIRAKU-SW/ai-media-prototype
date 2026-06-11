@@ -23,6 +23,12 @@ EXPORT_PATH = ROOT / "data" / "platform-bugs.json"
 CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-06-11",
+        "category": "fix",
+        "title": "動画URL切れ2件修正 + モバイルファビコン + ロゴ統一展開 + ヘッダー設定導線",
+        "body": "①記事2本の動画が再生不可（抽出スクリプトがURLを90文字で切り詰めたまま記事化）→完全URLに修正し全5動画の疎通確認。②app/apple-icon.png 追加でiOS/Androidのタブ・ホーム画面にロゴ表示。③全テーマの『青箱にAI』『⚡』旧ロゴを ZirakuLogoMark(mono) に統一（header/footer/記事ページ計7箇所）。④ログイン中ヘッダーとハンバーガードロワーに『会員情報・設定』リンク、設定ページにメールアドレス変更を追加。",
+    },
+    {
+        "entry_date": "2026-06-11",
         "category": "feat",
         "title": "コーポレートデザイン刷新（会社情報/会員エリア）+ 顧客アンケート/設定画面 + 記事3本",
         "body": "絵文字を全廃し ZirakuIcons（SVGラインアイコン15種）に統一。会社情報を ZirakuCompanyContent でコーポレート品質に刷新（ダークヒーロー/CEO/事業/選ばれる理由/CTA）。会員エリアに WORK WITH US CTA。signup に顧客セグメントアンケート（氏名/会社/規模/役職/関心→profiles 4カラム追加+トリガー反映、本番DB適用済み）。/ziraku/settings 新設（プロフィール編集+パスワード変更）。記事3本追加（役割プロンプト/一文iOSアプリ/Obsidian×YouTube複利）。",

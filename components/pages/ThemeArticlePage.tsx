@@ -6,6 +6,7 @@ import ThemeSiteHeader, { THEME_BADGE, type SiteTheme } from '@/components/theme
 import { themeCompanyHref, ZIRAKU_CONTACT_URL } from '@/lib/theme-links'
 import { getArticleBySlug, getArticles, trackView, subscribeNewsletter, type Article } from '@/lib/supabase'
 import { renderMarkdown } from '@/lib/render-markdown'
+import ZirakuLogoMark from '@/components/ziraku/ZirakuLogoMark'
 
 const CTA_MAP: Record<string, { text: string; label: string }> = {
   'dx-improvement': { text: '自社の業務もAIで自動化したい方は、お気軽にご相談ください', label: '無料でAI/DX相談をする' },
@@ -223,7 +224,7 @@ export default function ThemeArticlePage({
             ) : theme === 'zapier' ? (
               <div className="logo"><div className="logo__icon">⚡</div><div className="logo__name">AIビジネスメディア</div></div>
             ) : (
-              <div className="footer__logo"><div className="logo__icon">AI</div><span className="logo__name">AIビジネスメディア</span></div>
+              <div className="footer__logo"><div className="logo__icon"><ZirakuLogoMark size={20} mono /></div><span className="logo__name">AIビジネスメディア</span></div>
             )}
             <p>AIで、ビジネスはもっと進化する。</p>
           </div>

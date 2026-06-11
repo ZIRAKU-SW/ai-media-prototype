@@ -2,7 +2,7 @@
 
 ObsidianとClaudeを連携させて、**YouTube制作システムを丸ごと自動化**している事例が話題です。りゅう氏(@obsidianstudio9)が紹介した@0xSpivach氏の仕組みは、発信ビジネスをしている人なら見逃せない内容です。
 
-!video[https://pbs.twimg.com/amplify_video_thumb/2061144585057796100/img/OGj6FgPh4VngjKsf.jpg](https://video.twimg.com/amplify_video/2061144585057796100/vid/avc1/720x1280/FTYid4eTDJrv0L.mp4?tag=27)
+!video[https://pbs.twimg.com/amplify_video_thumb/2061144585057796100/img/OGj6FgPh4VngjKsf.jpg](https://video.twimg.com/amplify_video/2061144585057796100/vid/avc1/720x1280/FTYid4eTDJrv0LKa.mp4?tag=27)
 
 仕組みの入口は驚くほどシンプルです。**競合動画の文字起こしと、バズった動画のコメントを1つのフォルダに放り込むだけ**。あとはClaudeが全部読んで、「自分のジャンルで何が刺さるか」のナレッジベースを勝手に育てていきます。
 
