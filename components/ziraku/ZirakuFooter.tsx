@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import ZirakuLogoMark from '@/components/ziraku/ZirakuLogoMark'
 import { ZIRAKU_CONTACT_URL } from '@/lib/theme-links'
 
 export default function ZirakuFooter() {
@@ -7,13 +8,8 @@ export default function ZirakuFooter() {
       <div className="footer__inner">
         <div className="footer__brand">
           <div className="footer__logo">
-            <div className="logo__icon logo__icon--network">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="5" r="2.5" fill="#fff" />
-                <circle cx="6" cy="14" r="2.5" fill="#fff" />
-                <circle cx="18" cy="14" r="2.5" fill="#fff" />
-                <circle cx="12" cy="19" r="2.5" fill="#fff" />
-              </svg>
+            <div className="logo__mark" aria-hidden>
+              <ZirakuLogoMark size={28} mono />
             </div>
             <span className="logo__name">AIビジネスメディア</span>
           </div>

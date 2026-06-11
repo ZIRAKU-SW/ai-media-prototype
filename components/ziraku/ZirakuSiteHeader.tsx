@@ -1,4 +1,5 @@
 import SiteHeader from '@/components/SiteHeader'
+import ZirakuLogoMark from '@/components/ziraku/ZirakuLogoMark'
 import { ZIRAKU_CONTACT_URL } from '@/lib/theme-links'
 
 const NAV = [
@@ -11,14 +12,8 @@ const NAV = [
 
 const LOGO = (
   <>
-    <div className="logo__icon logo__icon--network" aria-hidden>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="5" r="2.5" fill="#fff" />
-        <circle cx="6" cy="14" r="2.5" fill="#fff" />
-        <circle cx="18" cy="14" r="2.5" fill="#fff" />
-        <circle cx="12" cy="19" r="2.5" fill="#fff" />
-        <path d="M12 7.5v3M8.5 12.5L10 14M15.5 12.5L14 14M12 16v2.5" stroke="#fff" strokeWidth="1.2" />
-      </svg>
+    <div className="logo__mark" aria-hidden>
+      <ZirakuLogoMark size={34} />
     </div>
     <div>
       <div className="logo__name">AIビジネスメディア</div>

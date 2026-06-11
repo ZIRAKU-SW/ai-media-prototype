@@ -24,6 +24,12 @@ CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-06-11",
         "category": "feat",
+        "title": "ziraku ロゴ統一 + ファビコン刷新",
+        "body": "ドラフトの分子ネットワークマークを ZirakuLogoMark コンポーネント化しヘッダー（青）・フッター（白mono）で統一。ファビコンを Next デフォルト（黒地三角）から青角丸+白マークの app/icon.png / favicon.ico に差し替え（全テーマ共通）。",
+    },
+    {
+        "entry_date": "2026-06-11",
+        "category": "feat",
         "title": "ziraku ヒーローをドラフト原画イラストに差し替え",
         "body": "自作SVGイラストをやめ、docs/assets/サイトイメージ1.png から手描き風イラスト（人物＋PC＋吹き出しテキスト入り）を原寸切り出して public/ziraku-hero.png として使用。HTML側の浮遊カードはテキストが画像に含まれるため削除。",
     },
