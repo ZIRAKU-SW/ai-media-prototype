@@ -777,3 +777,196 @@
   .ziraku-root .footer__inner { grid-template-columns: 1fr; gap: 28px; }
   .ziraku-root .footer__links { grid-template-columns: 1fr; gap: 20px; }
 }
+
+/* ============================================================
+   バックページ（記事一覧・カテゴリ・サービス・セミナー・法務）
+   ============================================================ */
+
+/* ---- 記事一覧 / カテゴリ ---- */
+.ziraku-root .main__inner--single { display: block; max-width: 900px; }
+.ziraku-root .articles-lead {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  margin: 6px 0 22px;
+}
+.ziraku-root .articles-empty {
+  padding: 48px 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.ziraku-root .main__inner--single .articles-grid--home {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* ---- サービス紹介 ---- */
+.ziraku-root .services-page,
+.ziraku-root .seminar-page,
+.ziraku-root .legal-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 36px 24px 56px;
+}
+.ziraku-root .services-hero { text-align: center; margin-bottom: 36px; }
+.ziraku-root .services-hero__eyebrow,
+.ziraku-root .seminar-hero__eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.ziraku-root .services-hero__title,
+.ziraku-root .seminar-hero__title,
+.ziraku-root .legal-hero__title {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.ziraku-root .services-hero__lead,
+.ziraku-root .seminar-hero__lead,
+.ziraku-root .legal-hero__lead {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.85;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.ziraku-root .services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-bottom: 40px;
+}
+.ziraku-root .service-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 22px 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+.ziraku-root .service-card__icon { font-size: 1.7rem; margin-bottom: 10px; }
+.ziraku-root .service-card__title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.ziraku-root .service-card__desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-bottom: 16px;
+  flex: 1;
+}
+.ziraku-root .service-card__cta { align-self: flex-start; }
+.ziraku-root .services-cta,
+.ziraku-root .seminar-status {
+  background: var(--accent-pale);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  text-align: center;
+}
+.ziraku-root .services-cta__text {
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 18px;
+}
+
+/* ---- セミナー ---- */
+.ziraku-root .seminar-hero { text-align: center; margin-bottom: 28px; }
+.ziraku-root .seminar-hero__icon { font-size: 2.4rem; margin-bottom: 8px; }
+.ziraku-root .seminar-status { margin-bottom: 32px; }
+.ziraku-root .seminar-status__badge {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.ziraku-root .seminar-status__text {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.85;
+  max-width: 620px;
+  margin: 0 auto;
+}
+.ziraku-root .seminar-newsletter__inner {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 28px;
+  text-align: center;
+}
+.ziraku-root .seminar-newsletter__icon { font-size: 2rem; margin-bottom: 10px; }
+.ziraku-root .seminar-newsletter__title {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.ziraku-root .seminar-newsletter__desc {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 18px;
+}
+.ziraku-root .newsletter-form--wide {
+  display: flex;
+  gap: 10px;
+  max-width: 460px;
+  margin: 0 auto;
+}
+.ziraku-root .newsletter-form--wide .input { margin-bottom: 0; flex: 1; }
+
+/* ---- 法務（プライバシーポリシー） ---- */
+.ziraku-root .legal-hero { margin-bottom: 28px; }
+.ziraku-root .legal-hero__title { text-align: left; }
+.ziraku-root .legal-hero__lead { margin: 0; max-width: none; }
+.ziraku-root .legal-section { margin-bottom: 26px; }
+.ziraku-root .legal-section__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ziraku-root .legal-section p {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.9;
+}
+.ziraku-root .legal-section a { color: var(--accent); text-decoration: underline; }
+.ziraku-root .legal-list {
+  margin: 10px 0 0;
+  padding-left: 1.2em;
+  list-style: disc;
+}
+.ziraku-root .legal-list li {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.85;
+  margin-bottom: 6px;
+}
+.ziraku-root .legal-updated {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  margin-top: 32px;
+}
+
+@media (max-width: 768px) {
+  .ziraku-root .services-grid { grid-template-columns: 1fr; }
+  .ziraku-root .main__inner--single .articles-grid--home { grid-template-columns: 1fr; }
+  .ziraku-root .newsletter-form--wide { flex-direction: column; }
+  .ziraku-root .newsletter-form--wide .btn { width: 100%; }
+}

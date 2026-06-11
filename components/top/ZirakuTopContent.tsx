@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import ZirakuSiteHeader, { ZIRAKU_CONTACT_URL } from '@/components/ziraku/ZirakuSiteHeader'
+import ZirakuFooter from '@/components/ziraku/ZirakuFooter'
 import type { TopContentProps } from './types'
 import type { Article } from '@/lib/supabase'
 
@@ -99,17 +100,17 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
               最新ツールの使い方から業務自動化のノウハウ、導入事例まで、ビジネスの成長につながる情報がここに。
             </p>
             <div className="hero__cta">
-              <button type="button" className="btn btn--primary btn--lg">
+              <a href="#newsletter" className="btn btn--primary btn--lg">
                 会員登録して最新情報を受け取る（無料）
                 <span className="btn__arrow">›</span>
-              </button>
-              <button type="button" className="btn btn--outline btn--lg">
+              </a>
+              <Link href="/ziraku/articles" className="btn btn--outline btn--lg">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
                   <circle cx="11" cy="11" r="7" />
                   <path d="M20 20l-4-4" />
                 </svg>
                 記事を探す
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -176,10 +177,10 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
         <div className="ticker-bar">
           <span className="ticker-bar__label">NEW</span>
           <p className="ticker-bar__text">
-            <Link href={`/notion/articles/${latest.slug}`}>{latest.title}</Link>
+            <Link href={`/ziraku/articles/${latest.slug}`}>{latest.title}</Link>
           </p>
           <span className="ticker-bar__date">{formatDate(latest.published_at)}</span>
-          <Link href="#articles" className="ticker-bar__more">一覧を見る →</Link>
+          <Link href="/ziraku/articles" className="ticker-bar__more">一覧を見る →</Link>
         </div>
       )}
 
@@ -223,13 +224,13 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
                   </button>
                 ))}
               </div>
-              <Link href="#" className="link-more">一覧を見る →</Link>
+              <Link href="/ziraku/articles" className="link-more">一覧を見る →</Link>
             </div>
 
             <div className="articles-grid articles-grid--home">
               {filtered.map(a => (
                 <article key={a.id} className="article-card">
-                  <Link href={`/notion/articles/${a.slug}`} className="article-card__img-wrap">
+                  <Link href={`/ziraku/articles/${a.slug}`} className="article-card__img-wrap">
                     <img src={a.thumbnail_url ?? ''} alt={a.title} className="article-card__img" />
                   </Link>
                   <div className="article-card__body">
@@ -237,7 +238,7 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
                       <span className={`badge ${BADGE[a.categories.slug] ?? 'badge--blue'}`}>{a.categories.name}</span>
                     )}
                     <h3 className="article-card__title">
-                      <Link href={`/notion/articles/${a.slug}`}>{a.title}</Link>
+                      <Link href={`/ziraku/articles/${a.slug}`}>{a.title}</Link>
                     </h3>
                     <p className="article-card__excerpt">{a.excerpt}</p>
                     <div className="article-card__meta">
@@ -276,7 +277,7 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
                     <span className={`ranking__num${i === 0 ? ' ranking__num--gold' : i === 1 ? ' ranking__num--silver' : ' ranking__num--bronze'}`}>
                       {i + 1}
                     </span>
-                    <Link href={`/notion/articles/${a.slug}`} className="ranking__link">
+                    <Link href={`/ziraku/articles/${a.slug}`} className="ranking__link">
                       <img src={a.thumbnail_url ?? ''} alt="" className="ranking__thumb" />
                       <span className="ranking__text">{a.title}</span>
                     </Link>
@@ -310,7 +311,7 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
         </div>
       </main>
 
-      <section className="newsletter-banner newsletter-banner--wide">
+      <section className="newsletter-banner newsletter-banner--wide" id="newsletter">
         <div className="newsletter-banner__inner">
           <div className="newsletter-banner__icon">✉️</div>
           <div className="newsletter-banner__content">
@@ -325,35 +326,7 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
         <p className="newsletter-banner__note">登録無料・いつでも解除OK</p>
       </section>
 
-      <footer className="footer">
-        <div className="footer__inner">
-          <div className="footer__brand">
-            <div className="footer__logo">
-              <div className="logo__icon logo__icon--network">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="5" r="2.5" fill="#fff" />
-                  <circle cx="6" cy="14" r="2.5" fill="#fff" />
-                  <circle cx="18" cy="14" r="2.5" fill="#fff" />
-                  <circle cx="12" cy="19" r="2.5" fill="#fff" />
-                </svg>
-              </div>
-              <span className="logo__name">AIビジネスメディア</span>
-            </div>
-            <p>AIを味方に、すべてのビジネスの挑戦の選択肢を増やす。</p>
-            <div className="footer__social">
-              <a href="#" className="social-btn" aria-label="X">𝕏</a>
-              <a href="#" className="social-btn" aria-label="YouTube">▶</a>
-              <a href="#" className="social-btn" aria-label="note">n</a>
-            </div>
-          </div>
-          <div className="footer__links">
-            <div><strong>コンテンツ</strong><a href="#categories">AI活用ガイド</a><a href="#categories">DX・業務改善</a><a href="#categories">実験室</a><a href="#categories">ツール比較</a></div>
-            <div><strong>サービス</strong><a href={ZIRAKU_CONTACT_URL} target="_blank" rel="noopener noreferrer">システム開発</a><a href={ZIRAKU_CONTACT_URL} target="_blank" rel="noopener noreferrer">DX支援</a><a href={ZIRAKU_CONTACT_URL} target="_blank" rel="noopener noreferrer">無料相談</a></div>
-            <div><strong>その他</strong><a href="#about">会社情報</a><a href="#">プライバシーポリシー</a><a href={ZIRAKU_CONTACT_URL} target="_blank" rel="noopener noreferrer">お問い合わせ</a></div>
-          </div>
-        </div>
-        <div className="footer__bottom"><p>© 2026 AIビジネスメディア / ZIRAKU Inc.</p></div>
-      </footer>
+      <ZirakuFooter />
     </>
   )
 }

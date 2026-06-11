@@ -1,4 +1,6 @@
 import './ziraku.css'
+import '../article-shared.css'
+import '../company-shared.css'
 import '../mobile-shared.css'
 
 export default function ZirakuLayout({ children }: { children: React.ReactNode }) {

@@ -2,11 +2,11 @@ import SiteHeader from '@/components/SiteHeader'
 import { ZIRAKU_CONTACT_URL } from '@/lib/theme-links'
 
 const NAV = [
-  { label: '記事を探す ▾', href: '/ziraku' },
+  { label: '記事を探す', href: '/ziraku/articles' },
   { label: 'カテゴリー ▾', href: '/ziraku#categories' },
-  { label: '導入事例', href: '/ziraku#articles' },
-  { label: 'セミナー', href: '/ziraku' },
-  { label: '会社情報', href: '/ziraku#about' },
+  { label: 'サービス', href: '/ziraku/services' },
+  { label: 'セミナー', href: '/ziraku/seminar' },
+  { label: '会社情報', href: '/ziraku/company' },
 ]
 
 const LOGO = (
