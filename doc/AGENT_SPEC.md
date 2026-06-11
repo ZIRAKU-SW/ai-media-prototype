@@ -147,6 +147,7 @@ python3 platform_meta/seed.py --register-bug \
 
 | 日付 | 区分 | 内容 |
 |------|------|------|
+| 2026-06-11 | feat | ziraku トップをドラフト『親しみ路線』に寄せ込み — ヒーロー刷新（黄色マーカーH1＋自作フラットSVGイラスト＋浮遊カード）、統計を薄青バンドへ分離、バリューカード白化、PC/モバイル調整（`ziraku.css`/`ZirakuTopContent.tsx` のみ） |
 | 2026-06-11 | feat | ziraku バックボーン実装 — 記事一覧/詳細・カテゴリ・サービス・会社情報・セミナー・プライバシー7ページ追加、SiteTheme に ziraku 追加、デッドリンク解消（4917c60） |
 | 2026-06-10 | fix | Vercelビルド失敗 — `ThemeSiteHeader.tsx` 未コミットを追加 |
 | 2026-06-10 | fix | Zapier記事カード画像のみ — `ZapierArticleCard` + モバイルリスト |

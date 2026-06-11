@@ -24,6 +24,12 @@ CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-06-11",
         "category": "feat",
+        "title": "ziraku トップをドラフト『親しみ路線』に寄せ込み",
+        "body": "ヒーローを全面刷新（eyebrow ピル＋黄色マーカーの『AI』ハイライト H1＋自作フラットSVGイラスト＋浮遊カード2枚）。統計バンドをヒーロー直下の薄青帯へ分離、4バリューカードを白＋青アイコン化。PC/モバイル両対応（テキスト→イラスト→全幅CTAの縦積み）。ziraku.css と ZirakuTopContent.tsx のみ編集（他3テーマ非影響）。",
+    },
+    {
+        "entry_date": "2026-06-11",
+        "category": "feat",
         "title": "ziraku テーマのバックボーン実装",
         "body": "記事一覧/詳細・カテゴリ別・サービス・会社情報・セミナー・プライバシーの7ページ追加。SiteTheme に ziraku を追加し ThemeArticlePage/CompanyPage を共用。トップのデッドリンク・notion 行きリンクを解消。コミット 4917c60。",
     },

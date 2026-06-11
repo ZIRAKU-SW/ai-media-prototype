@@ -18,3 +18,4 @@ venv/
 next-env.d.ts
 out/
 tsconfig.tsbuildinfo
+ai_media_agent/__pycache__/

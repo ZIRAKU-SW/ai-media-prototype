@@ -65,6 +65,97 @@ const CATEGORIES = [
   },
 ]
 
+function HeroIllustration() {
+  return (
+    <svg className="hero__art" viewBox="0 0 440 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden role="img">
+      {/* soft background blobs */}
+      <ellipse cx="225" cy="205" rx="185" ry="170" fill="#eff6ff" />
+      <path d="M118 70c46-22 104-8 120 36s-6 96-58 104S62 196 60 146 72 92 118 70Z" fill="#fef3c7" opacity="0.85" />
+      <path d="M330 250c40 6 70 44 58 84s-66 40-104 18-44-66-22-92 28-16 68-10Z" fill="#dbeafe" opacity="0.8" />
+
+      {/* floating sparkles */}
+      <g fill="#facc15">
+        <path d="M96 150l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" />
+        <path d="M356 120l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" />
+      </g>
+      <circle cx="78" cy="226" r="5" fill="#93c5fd" />
+      <circle cx="368" cy="210" r="6" fill="#fcd34d" />
+
+      {/* chat bubbles */}
+      <g>
+        <rect x="60" y="92" width="78" height="48" rx="14" fill="#ffffff" stroke="#dbeafe" strokeWidth="2" />
+        <circle cx="84" cy="116" r="4" fill="#60a5fa" />
+        <circle cx="100" cy="116" r="4" fill="#60a5fa" />
+        <circle cx="116" cy="116" r="4" fill="#60a5fa" />
+        <path d="M84 138l-6 14 20-10z" fill="#ffffff" stroke="#dbeafe" strokeWidth="2" />
+      </g>
+
+      {/* robot icon */}
+      <g>
+        <line x1="356" y1="86" x2="356" y2="74" stroke="#2563eb" strokeWidth="3" strokeLinecap="round" />
+        <circle cx="356" cy="70" r="5" fill="#2563eb" />
+        <rect x="326" y="86" width="60" height="50" rx="14" fill="#ffffff" stroke="#2563eb" strokeWidth="3" />
+        <circle cx="343" cy="110" r="6" fill="#2563eb" />
+        <circle cx="369" cy="110" r="6" fill="#2563eb" />
+        <path d="M345 124h22" stroke="#2563eb" strokeWidth="3" strokeLinecap="round" />
+      </g>
+
+      {/* desk shadow */}
+      <ellipse cx="225" cy="338" rx="150" ry="20" fill="#cbd5e1" opacity="0.35" />
+
+      {/* person — hoodie */}
+      <g>
+        {/* back chair hint */}
+        <rect x="150" y="226" width="150" height="90" rx="40" fill="#1d4ed8" />
+        <path d="M150 320c0-44 34-78 75-78s75 34 75 78z" fill="#2563eb" />
+        {/* arms */}
+        <path d="M168 300c-8-26 6-52 30-58l8 26c-12 4-18 18-14 32z" fill="#1d4ed8" />
+        <path d="M282 300c8-26-6-52-30-58l-8 26c12 4 18 18 14 32z" fill="#1d4ed8" />
+        {/* neck */}
+        <rect x="212" y="196" width="26" height="34" rx="13" fill="#f4c9a3" />
+        {/* head */}
+        <circle cx="225" cy="172" r="40" fill="#f8d6b8" />
+        {/* hair */}
+        <path d="M186 168c-2-30 20-50 39-50s41 20 39 50c-6-14-16-22-22-22-4 8-30 10-38 0-6 4-14 10-18 22z" fill="#1e293b" />
+        {/* ear + hands resting (thinking) */}
+        <circle cx="186" cy="176" r="7" fill="#f4c9a3" />
+        {/* face */}
+        <circle cx="212" cy="176" r="3.4" fill="#1e293b" />
+        <circle cx="240" cy="176" r="3.4" fill="#1e293b" />
+        <path d="M218 190c4 4 12 4 16 0" stroke="#1e293b" strokeWidth="2.6" strokeLinecap="round" />
+        <circle cx="205" cy="186" r="5" fill="#fca5a5" opacity="0.55" />
+        <circle cx="247" cy="186" r="5" fill="#fca5a5" opacity="0.55" />
+      </g>
+
+      {/* laptop */}
+      <g>
+        <rect x="168" y="296" width="114" height="70" rx="8" fill="#1e293b" />
+        <rect x="176" y="304" width="98" height="54" rx="4" fill="#3b82f6" />
+        <rect x="184" y="312" width="50" height="6" rx="3" fill="#ffffff" opacity="0.9" />
+        <rect x="184" y="324" width="82" height="5" rx="2.5" fill="#ffffff" opacity="0.55" />
+        <rect x="184" y="334" width="64" height="5" rx="2.5" fill="#ffffff" opacity="0.55" />
+        <rect x="184" y="344" width="40" height="5" rx="2.5" fill="#fcd34d" />
+        <path d="M150 366h150l10 14H140z" fill="#cbd5e1" />
+        <rect x="150" y="366" width="150" height="6" rx="3" fill="#94a3b8" />
+      </g>
+
+      {/* plant */}
+      <g>
+        <path d="M348 322c4-22 22-30 30-26-2 18-16 28-30 26z" fill="#34d399" />
+        <path d="M360 326c-2-20 10-34 22-34-4 18-12 30-22 34z" fill="#10b981" />
+        <path d="M352 322h26l-4 28h-18z" fill="#f59e0b" />
+      </g>
+
+      {/* coffee cup */}
+      <g>
+        <rect x="92" y="330" width="30" height="24" rx="5" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2" />
+        <path d="M122 336h6a6 6 0 0 1 0 12h-6" stroke="#cbd5e1" strokeWidth="2" fill="none" />
+        <path d="M100 322c2-6-2-8 0-12M110 322c2-6-2-8 0-12" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
+      </g>
+    </svg>
+  )
+}
+
 function filterByTab(articles: Article[], tab: string) {
   if (tab === 'all') return articles
   if (tab === 'cases') return articles.filter(a => CASE_SLUGS.has(a.categories?.slug ?? ''))
@@ -89,70 +180,73 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
       <section className="hero">
         <div className="hero__inner">
           <div className="hero__content">
-            <p className="hero__eyebrow">最新のAI活用術とDX事例が毎日わかる</p>
+            <p className="hero__eyebrow">最新のAI活用術とDX事例が毎日わかる！</p>
             <h1 className="hero__title">
-              <span className="hero__title-accent">AI</span>でビジネスを加速する
+              毎日の業務に、
               <br />
-              <em>最前線のメディア</em>
+              <span className="hero__title-mark">AI</span>という味方を。
             </h1>
             <p className="hero__desc">
               中小企業や1人社長のための、実践的なAI活用術とDX情報を毎日お届け。
               最新ツールの使い方から業務自動化のノウハウ、導入事例まで、ビジネスの成長につながる情報がここに。
             </p>
-            <div className="hero__cta">
-              <a href="#newsletter" className="btn btn--primary btn--lg">
-                会員登録して最新情報を受け取る（無料）
-                <span className="btn__arrow">›</span>
-              </a>
-              <Link href="/ziraku/articles" className="btn btn--outline btn--lg">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                  <circle cx="11" cy="11" r="7" />
-                  <path d="M20 20l-4-4" />
-                </svg>
-                記事を探す
-              </Link>
-            </div>
           </div>
 
           <div className="hero__visual">
-            <div className="hero__laptop" aria-hidden>
-              <div className="hero__laptop-screen">
-                <div className="hero__laptop-bar" />
-                <div className="hero__laptop-chart">
-                  <div className="hero__chart-bar" style={{ height: '40%' }} />
-                  <div className="hero__chart-bar" style={{ height: '65%' }} />
-                  <div className="hero__chart-bar" style={{ height: '50%' }} />
-                  <div className="hero__chart-bar" style={{ height: '80%' }} />
-                  <div className="hero__chart-bar" style={{ height: '60%' }} />
-                </div>
-              </div>
-              <div className="hero__laptop-base" />
+            <HeroIllustration />
+            <div className="hero__float-card hero__float-card--idea">
+              <span className="hero__float-card-emoji">💡</span>
+              <span>今日使えるAIアイデアが見つかる</span>
             </div>
-            <div className="hero__deco hero__deco--plant">🪴</div>
-            <div className="hero__deco hero__deco--cup">☕</div>
+            <div className="hero__float-card hero__float-card--gift">
+              <span className="hero__float-card-emoji">🎁</span>
+              <span>会員限定の特典もたくさん！</span>
+            </div>
           </div>
 
-          <div className="hero__stats">
-            <p className="hero__stats-label">今、AIを活用する企業が増えています</p>
-            <div className="hero__stats-grid">
-              <div className="stat">
-                <div className="stat__icon">📊</div>
+          <div className="hero__cta">
+            <a href="#newsletter" className="btn btn--primary btn--lg hero__cta-signup">
+              無料で会員登録する
+              <span className="hero__cta-badge">かんたん1分！</span>
+            </a>
+            <Link href="/ziraku/articles" className="btn btn--outline btn--lg">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <circle cx="11" cy="11" r="7" />
+                <path d="M20 20l-4-4" />
+              </svg>
+              記事を探す
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="stats-band">
+        <div className="stats-band__inner">
+          <p className="stats-band__label">今、AIを活用する企業が増えています</p>
+          <div className="stats-band__grid">
+            <div className="stat">
+              <div className="stat__icon">📊</div>
+              <div className="stat__body">
                 <div className="stat__num">82<span>%</span></div>
                 <div className="stat__label">小規模企業のAI導入率</div>
               </div>
-              <div className="stat">
-                <div className="stat__icon">⚡</div>
+            </div>
+            <div className="stat">
+              <div className="stat__icon">⚡</div>
+              <div className="stat__body">
                 <div className="stat__num">約45<span>%</span></div>
                 <div className="stat__label">平均的な生産性向上</div>
               </div>
-              <div className="stat">
-                <div className="stat__icon">💰</div>
+            </div>
+            <div className="stat">
+              <div className="stat__icon">💰</div>
+              <div className="stat__body">
                 <div className="stat__num">95–98<span>%</span></div>
                 <div className="stat__label">AIスタック導入でのコスト削減</div>
               </div>
             </div>
-            <p className="hero__stats-source">※出典：各種調査レポートより</p>
           </div>
+          <p className="stats-band__source">※出典：各種調査レポートより</p>
         </div>
       </section>
 
