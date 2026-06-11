@@ -209,6 +209,7 @@ python3 platform_meta/seed.py --register-bug \
 | 2026-06-11 | content | 新記事8件追加（Fable 5特集）: claude-fable-5-overview / claude-fable-5-subagent-strategy / fable-5-self-correction-loops / anthropic-31-ai-skills / claude-fable-5-notebooklm / claude-autopilot-14-steps / kubell-ceo-fable-5-prompt / ai-agent-company-management。X 話題ポスト出典明記、英語2本翻訳 |
 | 2026-06-11 | feat | `lib/render-markdown.ts` に画像（`![alt](url)` → `<img class="article-detail__img" loading="lazy">`）とリンク（`[text](url)` → `<a target="_blank" rel="noopener noreferrer">`）対応追加。CSS（`app/article-shared.css` / `app/(notion)/notion.css`）に `.article-detail__img` 追加 |
 | 2026-06-11 | feat | 記事追加ワークフロー確立 — 本文 Markdown を `data/articles-md/{slug}.md` で管理、`scripts/articles/upsert-articles.mjs` + `npm run articles:upsert` で Supabase に upsert |
+| 2026-06-11 | feat | ziraku トップ配置をドラフト準拠に — カテゴリをリンクカード化し記事下へ移動（ランキング上段復帰）、統計バンド縮小（台帳 #20） |
 | 2026-06-11 | feat | ziraku 会員バナー刷新（全幅・人物イラスト・横並び特典・緑ピル）+ CTAピル化 + 角丸拡大（--radius 16px）で親しみ路線統一 |
 | 2026-06-11 | feat | ziraku ロゴ統一 + ファビコン刷新 — `ZirakuLogoMark` 新設（ヘッダー青/フッター白）、`app/icon.png`・`favicon.ico` を青角丸+白マークに（全テーマ共通） |
 | 2026-06-11 | feat | ziraku ヒーローをドラフト原画イラストに差し替え — `サイトイメージ1.png` から切り出した `public/ziraku-hero.png` を使用、HTML浮遊カード削除 |

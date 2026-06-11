@@ -27,42 +27,12 @@ const TABS = [
 const CASE_SLUGS = new Set(['solo-business', 'lab', 'ai-news'])
 
 const CATEGORIES = [
-  {
-    icon: '📘',
-    title: 'AI活用ガイド / ハウツー',
-    desc: '初心者向けの基礎知識から、業務別の具体的な活用方法まで',
-    items: ['AIの基礎知識・用語解説', '業務別の活用方法', 'ツールの使い方', 'プロンプト集'],
-  },
-  {
-    icon: '🏢',
-    title: '1人社長・中小企業のAI活用事例',
-    desc: '実際の導入事例・成功/失敗談・業種別の活用法',
-    items: ['導入事例・成功/失敗談', '業種別の活用法', '経営者インタビュー'],
-  },
-  {
-    icon: '📰',
-    title: 'AIニュース / トレンド',
-    desc: '最新のAI業界ニュース・新サービス・海外トレンド',
-    items: ['最新ニュース', '業界動向', '新サービス・新機能', '海外トレンド'],
-  },
-  {
-    icon: '🔬',
-    title: 'AI実験室 / 検証ブログ',
-    desc: 'AIツールの実際の検証・比較・プロンプト実験',
-    items: ['ツール検証・比較', 'プロンプト実験', '自動化フロー検証'],
-  },
-  {
-    icon: '🚀',
-    title: '起業・副業 × AI',
-    desc: 'AIを活用した起業・副業のノウハウとアイデア',
-    items: ['AI起業の始め方', '副業アイデア', '収益化のヒント'],
-  },
-  {
-    icon: '🛠',
-    title: 'ツール・リソース集',
-    desc: 'おすすめツール一覧・テンプレート・学習リソース',
-    items: ['おすすめツール一覧', 'テンプレート配布', '学習リソース'],
-  },
+  { icon: '📘', slug: 'ai-guide', title: 'AI活用ガイド / ハウツー', desc: '基礎知識から業務別の活用方法・プロンプト集まで' },
+  { icon: '🏢', slug: 'dx-improvement', title: '中小企業のAI活用・DX事例', desc: '導入事例・成功/失敗談・業種別の活用法' },
+  { icon: '📰', slug: 'ai-news', title: 'AIニュース / トレンド', desc: '最新ニュース・新サービス・海外トレンド' },
+  { icon: '🔬', slug: 'lab', title: 'AI実験室 / 検証ブログ', desc: 'ツール検証・比較・プロンプト実験' },
+  { icon: '🚀', slug: 'solo-business', title: '起業・副業 × AI', desc: '1人社長のAI活用・副業アイデア・収益化のヒント' },
+  { icon: '🛠', slug: 'tools', title: 'ツール・リソース集', desc: 'おすすめツール一覧・テンプレート・学習リソース' },
 ]
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
@@ -193,29 +163,6 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
         </div>
       )}
 
-      <section className="categories" id="categories">
-        <div className="categories__inner">
-          <div className="categories__header">
-            <h2 className="section-title">メディア構成</h2>
-            <p className="categories__lead">AI活用で、ビジネスの可能性を広げる — 6つのコンテンツカテゴリ</p>
-          </div>
-          <div className="categories__grid">
-            {CATEGORIES.map(c => (
-              <article key={c.title} className="category-card">
-                <div className="category-card__icon">{c.icon}</div>
-                <h3 className="category-card__title">{c.title}</h3>
-                <p className="category-card__desc">{c.desc}</p>
-                <ul className="category-card__list">
-                  {c.items.map(item => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <main className="main" id="articles">
         <div className="main__inner">
           <div className="main__content">
@@ -329,6 +276,26 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
               無料で会員登録する
               <span className="btn__circle" aria-hidden>›</span>
             </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="categories" id="categories">
+        <div className="categories__inner">
+          <div className="categories__header">
+            <h2 className="section-title">カテゴリから探す</h2>
+          </div>
+          <div className="categories__grid">
+            {CATEGORIES.map(c => (
+              <Link key={c.slug} href={`/ziraku/category/${c.slug}`} className="category-card">
+                <div className="category-card__head">
+                  <span className="category-card__icon">{c.icon}</span>
+                  <h3 className="category-card__title">{c.title}</h3>
+                </div>
+                <p className="category-card__desc">{c.desc}</p>
+                <span className="category-card__more">記事一覧へ →</span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
