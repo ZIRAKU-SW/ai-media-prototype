@@ -4,7 +4,7 @@
 > Claude Codeで進めてきた開発をCursor Agentに移行するための完全な引き継ぎ資料。  
 > 「何を作ったか」「何が動いているか」「何が残っているか」を全部ここに書く。
 
-最終更新: 2026-06-10（gcp-vm→dify-vm SSH・運用コマンド追記）
+最終更新: 2026-06-11（ziraku 本番想定・X 自動投稿 PoC 追記）
 
 ---
 
@@ -55,6 +55,16 @@
 | `.env.local` | Next.js + AI開発コンソール（VM パス設定済み） |
 
 Mac ローカル dev 時は `DEV_CONSOLE_PROJECT_ROOT` / `DEV_CONSOLE_PYTHON` を Mac パスに差し替える。
+
+**X 自動投稿**（`scripts/x/`）用の追加変数:
+
+| 変数 | 用途 |
+|------|------|
+| `CURSOR_API_KEY` | 投稿文の AI 生成（`.env.local` と共通可） |
+| `X_API_KEY` / `X_API_SECRET` / `X_ACCESS_TOKEN` / `X_ACCESS_TOKEN_SECRET` | X API v2 投稿（Developer Portal で取得） |
+| `X_HANDLE` / `X_POST_SITE_URL` | 文面テンプレート用 |
+
+手順: [`docs/X_AUTOMATION.md`](./docs/X_AUTOMATION.md)
 
 ---
 

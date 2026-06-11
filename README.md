@@ -6,7 +6,8 @@ AIでビジネスを加速する実践メディアのサイトデザイン比較
 > 📄 参考発信者・参考メディアの調査まとめは **[docs/参考発信者メディア調査まとめ.pdf](./docs/参考発信者メディア調査まとめ.pdf)** を参照。  
 > 🤖 Cursor Agent / 新しいAIエージェントへの引き継ぎは **[CURSOR_HANDOFF.md](./CURSOR_HANDOFF.md)** を参照。  
 > 📋 エージェント統一仕様・バグ台帳は **[doc/AGENT_SPEC.md](./doc/AGENT_SPEC.md)**（運用: `/admin/operations`、[過去トラブルまとめ](./docs/過去トラブルまとめ.md)）を参照。  
-> 🖥️ GCP VM・oceanosfleet 公開は **[docs/GCP_VM_HANDOFF.md](./docs/GCP_VM_HANDOFF.md)** / **[docs/OCEANOSFLEET_NGINX.md](./docs/OCEANOSFLEET_NGINX.md)** を参照。
+> 🖥️ GCP VM・oceanosfleet 公開は **[docs/GCP_VM_HANDOFF.md](./docs/GCP_VM_HANDOFF.md)** / **[docs/OCEANOSFLEET_NGINX.md](./docs/OCEANOSFLEET_NGINX.md)** を参照。  
+> 🐦 X 自動投稿（@AIbusinessmedia）は **[docs/X_AUTOMATION.md](./docs/X_AUTOMATION.md)** を参照。
 
 ---
 
@@ -82,6 +83,26 @@ npm run dify:ssh-test     # ssh dify-vm hostname
 - **パスワード不要**（VM では `DEV_CONSOLE_PASSWORD` 未設定。ライブラリの任意認証のみ）
 - 送信: ⌘/Ctrl + Enter
 
+### X 自動投稿（@AIbusinessmedia）
+
+コンセプト図の「集客チャネル → X」向け PoC。Cursor SDK で投稿文を生成し、X API v2 で1日5回投稿する。
+
+```bash
+npm run x:slots                  # スロット一覧（7:30 / 12:00 / 18:00 / 22:00 / 23:00 JST）
+npm run x:post:dry -- lunch      # 文面だけ生成（投稿しない）
+npm run x:post -- lunch          # 本番投稿（X API トークン4つが必要）
+```
+
+| 項目 | 内容 |
+|------|------|
+| スクリプト | `scripts/x/`（`run-slot.ts` がエントリ） |
+| 履歴 | `data/x-post-history.json` |
+| cron 例 | `scripts/x/crontab.example` |
+| 環境変数 | `.env` の `CURSOR_API_KEY` + `X_API_*` 4つ（詳細は `.env.example`） |
+| 手順書 | [docs/X_AUTOMATION.md](./docs/X_AUTOMATION.md) |
+
+> X への投稿は **Developer Portal の API トークン** が必須。アカウントのログインパスワードでは API 投稿できない。
+
 ---
 
 ## 背景・目的
@@ -140,14 +161,26 @@ npm run dify:ssh-test     # ssh dify-vm hostname
 
 ---
 
-## ディレクトリ構成
+## ディレクトリ構成（抜粋）
 
 ```
 ai-media-prototype/
 ├── README.md               # このファイル
+├── doc/AGENT_SPEC.md       # エージェント統一仕様・変更履歴
 ├── docs/
-│   └── concept.md          # メディアコンセプト・要件まとめ
-├── pattern-a-wired/
+│   ├── concept.md          # メディアコンセプト
+│   └── X_AUTOMATION.md     # X 自動投稿の手順・仕様
+├── app/
+│   ├── (wired|notion|zapier|ziraku)/   # テーマ別ルート
+│   └── admin/              # 管理・運用・AI開発コンソール
+├── scripts/
+│   ├── x/                  # X 自動投稿（Cursor SDK + X API）
+│   └── vm/                 # VM 再起動・サイト検証
+├── components/top/         # 各テーマ TopContent
+├── data/
+│   ├── platform.db         # 運用・バグ台帳
+│   └── x-post-history.json # X 投稿履歴
+├── pattern-a-wired/        # レガシー静的プロトタイプ
 │   ├── index.html          # トップページ
 │   ├── article.html        # 記事詳細ページ
 │   └── style.css
@@ -208,6 +241,7 @@ ai-media-prototype/
 | 公開 | oceanosfleet.com nginx プロキシ → `/Ziraku/*` |
 | リリース用 | Vercel（任意・`git push`） |
 | AI開発コンソール | `@oceanos/dev-console` + Python `cursor-sdk` |
+| X 自動投稿 | `@cursor/sdk` + `twitter-api-v2` + cron（VM） |
 
 レガシーの静的 HTML プロトタイプ（`pattern-a-wired/` 等）もリポジトリに残っているが、**本番実装は `app/` 配下の Next.js**。
 

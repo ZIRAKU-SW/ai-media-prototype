@@ -22,5 +22,6 @@ alwaysApply: true
 |:---|:---|
 | 仕様・変更履歴要約 | `doc/AGENT_SPEC.md` §6 |
 | バグ・再発・インシデント | SQLite `data/platform.db` + **運用**タブ `/admin/operations` |
+| X 自動投稿 | `scripts/x/` + `docs/X_AUTOMATION.md` + `data/x-post-history.json` |
 
-仕様を変えたら `doc/AGENT_SPEC.md` §6 と `platform_meta/seed.py` の `CHANGELOG_ENTRIES` を両方更新する。
+仕様を変えたら `doc/AGENT_SPEC.md` §6 と `platform_meta/seed.py` の `CHANGELOG_ENTRIES` を両方更新する。README / `docs/X_AUTOMATION.md` も必要に応じて同期する。

@@ -53,7 +53,8 @@ X_ACCESS_TOKEN_SECRET=xxxxxxxx
 
 # 任意
 X_HANDLE=@AIbusinessmedia
-X_POST_SITE_URL=https://project-7bhii.vercel.app/ziraku
+X_USERNAME=AIbusinessmedia
+X_POST_SITE_URL=https://oceanosfleet.com/Ziraku/ziraku
 ```
 
 > **セキュリティ**: チャットや Git にパスワードを載せないこと。漏洩した場合は X 側でパスワード変更を推奨。
@@ -102,4 +103,14 @@ crontab -e
 
 ## 全体像との対応
 
-コンセプト図の「集客チャネル → X」に対応。記事サイト（`/ziraku`）への導線 URL を毎投稿に含めます。
+コンセプト図の「集客チャネル → X」に対応。記事サイト（`https://oceanosfleet.com/Ziraku/ziraku`）への導線 URL を毎投稿に含めます。
+
+## 関連ドキュメント
+
+| ファイル | 内容 |
+|---------|------|
+| `README.md` | 日常運用コマンド・技術スタック |
+| `doc/AGENT_SPEC.md` §3-1 | エージェント向け仕様要約 |
+| `CURSOR_HANDOFF.md` | 環境変数・URL 一覧 |
+| `.env.example` | 必要な環境変数テンプレート |
+| `ROADMAP.md` §拡散戦略 | X チャネルの位置づけ |

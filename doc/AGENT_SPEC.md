@@ -3,7 +3,7 @@
 > Cursor Agent / Claude Code が作業を始める前に読む統一仕様。  
 > ルールの要約は `.cursor/rules/agent-spec.mdc` にもある。
 
-最終更新: 2026-06-10
+最終更新: 2026-06-11
 
 ---
 
@@ -11,8 +11,10 @@
 
 | 項目 | 内容 |
 |------|------|
-| 目的 | 3デザインパターン（wired / notion / zapier）の比較・本番選定 |
+| 目的 | 3デザインパターン比較 + **ziraku 本番想定UI** の実装 |
 | 本番（日常確認） | https://oceanosfleet.com/Ziraku/ |
+| 本番想定トップ | https://oceanosfleet.com/Ziraku/ziraku |
+| X 公式アカウント | @AIbusinessmedia（自動投稿 PoC: `scripts/x/`） |
 | Vercel（リリース時） | https://project-7bhii.vercel.app |
 | DB（記事） | Supabase PostgreSQL |
 | DB（運用・バグ） | SQLite `data/platform.db` + エクスポート `data/platform-bugs.json` |
@@ -83,6 +85,20 @@ VM 再起動: `npm run dev:vm-restart`
 - **参照**: 管理画面 **運用**タブ `/admin/operations`、または `data/platform-bugs.json`
 - **登録手順**: `.cursor/rules/bug-registration.mdc`
 
+### 2-6. デザイン実装ルール（ドラフトがあるとき・テイスト変更時の共通鉄則）
+
+> 2026-06-11 の ziraku 寄せ込みで繰り返し手戻りになった内容の一般化（台帳 #14〜#18）。
+> 別テイストのサイトを作るときも、このプロセスを**指示なしで**踏むこと。
+
+1. **ドラフト原画が正。** `docs/assets/` のデザイン画像（例: `サイトイメージ1.png` = 親しみ路線、`サイトイメージ2.png` = プロ路線）を最初に Read で見てから実装する。記憶や雰囲気で作らない。
+2. **イラスト・ロゴ等の複雑なアセットは自作しない。** 原画から PIL で該当領域を切り出して `public/` に置き実画像として使う（例: `ziraku-hero.png`, `ziraku-member.png`）。SVG 自作はアイコンレベルの単純図形のみ。
+3. **色はドラフトからピクセルサンプリングして決める**（`im.getpixel()`）。「緑っぽい」で `#10b981` を置かない（ziraku の緑は `#0a9180` 系ティール）。
+4. **デザイントーンの確認項目**: 角丸の大きさ（親しみ路線 = `--radius: 16px` 以上）/ ボタン形状（ピル `border-radius: 999px`）/ アイコンの形（丸・角丸スクエア）/ バッジ（白丸バースト）。要素単位でドラフトと見比べる。
+5. **スクショ比較ループ必須。** `bash scripts/vm/shot.sh <URL> <out.png> <幅> [full]`（未構築なら自動で `setup-screenshot-env.sh` が走る。playwright + 日本語/絵文字フォント、sudo 不要）で PC 1280px / モバイル 390px を撮り、原画と並べて確認してから完了報告。
+6. **ページを作ったらリンクから先に潰す。** トップだけ作って記事リンクを他テーマ URL や `#` のまま残さない。バックページ（一覧・詳細・カテゴリ・サービス・会社情報・法務）を骨格でも先に用意する。
+7. **本番想定テーマの記事詳細は SSR + generateMetadata + OGP を最初から**（クライアントフェッチのみは SEO 非対応。共通コンポーネントにはオプショナル initial props で他テーマ無影響に）。
+8. **ロゴは1コンポーネントに集約**（例: `ZirakuLogoMark`、青/白mono variant）。ヘッダー・フッター・**ファビコン**（`app/icon.png` + `favicon.ico`）まで同一マークで揃える。ファビコン差し替えを忘れない。
+
 ---
 
 ## 3. コンポーネント対応表
@@ -94,9 +110,29 @@ VM 再起動: `npm run dev:vm-restart`
 | `components/top/NotionTopContent.tsx` | notion |
 | `components/top/WiredTopContent.tsx` | wired |
 | `components/top/ZapierTopContent.tsx` | zapier |
+| `components/top/ZirakuTopContent.tsx` | ziraku（本番想定） |
+| `components/ziraku/ZirakuSiteHeader.tsx` | ziraku |
 | `app/(notion)/notion.css` + `app/mobile-shared.css` | notion |
 | `app/(wired)/wired.css` | wired |
 | `app/(zapier)/zapier.css` | zapier |
+| `app/(ziraku)/ziraku.css` + `app/mobile-shared.css` | ziraku |
+
+---
+
+## 3-1. X 自動投稿（@AIbusinessmedia）
+
+拡散戦略（ROADMAP §拡散）の X チャネル向け PoC。詳細は [`docs/X_AUTOMATION.md`](../docs/X_AUTOMATION.md)。
+
+| 項目 | 内容 |
+|------|------|
+| 実行 | VM 上で cron → `npm run x:post -- <slot>` |
+| スロット | 1日5回（7:30 / 12:00 / 18:00 / 22:00 / 23:00 JST） |
+| 文面生成 | `@cursor/sdk` の `Agent.prompt`（`CURSOR_API_KEY`） |
+| 投稿 | `twitter-api-v2`（`X_API_*` トークン4つ） |
+| 履歴 | `data/x-post-history.json`（48h 重複防止） |
+| ドライラン | `npm run x:post:dry -- lunch` |
+
+環境変数は `.env` / `.env.example` を参照。**ログインパスワードは使わない。**
 
 ---
 
@@ -178,4 +214,5 @@ python3 platform_meta/seed.py --register-bug \
 | `docs/GCP_VM_HANDOFF.md` | VM・SSH |
 | `docs/OCEANOSFLEET_NGINX.md` | oceanosfleet 公開・nginx |
 | `docs/concept.md` | メディアコンセプト |
+| `docs/X_AUTOMATION.md` | X 自動投稿のセットアップ・仕様 |
 | `.cursor/rules/bug-registration.mdc` | バグ登録ルール |
