@@ -65,94 +65,17 @@ const CATEGORIES = [
   },
 ]
 
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
+
 function HeroIllustration() {
   return (
-    <svg className="hero__art" viewBox="0 0 440 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden role="img">
-      {/* soft background blobs */}
-      <ellipse cx="225" cy="205" rx="185" ry="170" fill="#eff6ff" />
-      <path d="M118 70c46-22 104-8 120 36s-6 96-58 104S62 196 60 146 72 92 118 70Z" fill="#fef3c7" opacity="0.85" />
-      <path d="M330 250c40 6 70 44 58 84s-66 40-104 18-44-66-22-92 28-16 68-10Z" fill="#dbeafe" opacity="0.8" />
-
-      {/* floating sparkles */}
-      <g fill="#facc15">
-        <path d="M96 150l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" />
-        <path d="M356 120l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" />
-      </g>
-      <circle cx="78" cy="226" r="5" fill="#93c5fd" />
-      <circle cx="368" cy="210" r="6" fill="#fcd34d" />
-
-      {/* chat bubbles */}
-      <g>
-        <rect x="60" y="92" width="78" height="48" rx="14" fill="#ffffff" stroke="#dbeafe" strokeWidth="2" />
-        <circle cx="84" cy="116" r="4" fill="#60a5fa" />
-        <circle cx="100" cy="116" r="4" fill="#60a5fa" />
-        <circle cx="116" cy="116" r="4" fill="#60a5fa" />
-        <path d="M84 138l-6 14 20-10z" fill="#ffffff" stroke="#dbeafe" strokeWidth="2" />
-      </g>
-
-      {/* robot icon */}
-      <g>
-        <line x1="356" y1="86" x2="356" y2="74" stroke="#2563eb" strokeWidth="3" strokeLinecap="round" />
-        <circle cx="356" cy="70" r="5" fill="#2563eb" />
-        <rect x="326" y="86" width="60" height="50" rx="14" fill="#ffffff" stroke="#2563eb" strokeWidth="3" />
-        <circle cx="343" cy="110" r="6" fill="#2563eb" />
-        <circle cx="369" cy="110" r="6" fill="#2563eb" />
-        <path d="M345 124h22" stroke="#2563eb" strokeWidth="3" strokeLinecap="round" />
-      </g>
-
-      {/* desk shadow */}
-      <ellipse cx="225" cy="338" rx="150" ry="20" fill="#cbd5e1" opacity="0.35" />
-
-      {/* person — hoodie */}
-      <g>
-        {/* back chair hint */}
-        <rect x="150" y="226" width="150" height="90" rx="40" fill="#1d4ed8" />
-        <path d="M150 320c0-44 34-78 75-78s75 34 75 78z" fill="#2563eb" />
-        {/* arms */}
-        <path d="M168 300c-8-26 6-52 30-58l8 26c-12 4-18 18-14 32z" fill="#1d4ed8" />
-        <path d="M282 300c8-26-6-52-30-58l-8 26c12 4 18 18 14 32z" fill="#1d4ed8" />
-        {/* neck */}
-        <rect x="212" y="196" width="26" height="34" rx="13" fill="#f4c9a3" />
-        {/* head */}
-        <circle cx="225" cy="172" r="40" fill="#f8d6b8" />
-        {/* hair */}
-        <path d="M186 168c-2-30 20-50 39-50s41 20 39 50c-6-14-16-22-22-22-4 8-30 10-38 0-6 4-14 10-18 22z" fill="#1e293b" />
-        {/* ear + hands resting (thinking) */}
-        <circle cx="186" cy="176" r="7" fill="#f4c9a3" />
-        {/* face */}
-        <circle cx="212" cy="176" r="3.4" fill="#1e293b" />
-        <circle cx="240" cy="176" r="3.4" fill="#1e293b" />
-        <path d="M218 190c4 4 12 4 16 0" stroke="#1e293b" strokeWidth="2.6" strokeLinecap="round" />
-        <circle cx="205" cy="186" r="5" fill="#fca5a5" opacity="0.55" />
-        <circle cx="247" cy="186" r="5" fill="#fca5a5" opacity="0.55" />
-      </g>
-
-      {/* laptop */}
-      <g>
-        <rect x="168" y="296" width="114" height="70" rx="8" fill="#1e293b" />
-        <rect x="176" y="304" width="98" height="54" rx="4" fill="#3b82f6" />
-        <rect x="184" y="312" width="50" height="6" rx="3" fill="#ffffff" opacity="0.9" />
-        <rect x="184" y="324" width="82" height="5" rx="2.5" fill="#ffffff" opacity="0.55" />
-        <rect x="184" y="334" width="64" height="5" rx="2.5" fill="#ffffff" opacity="0.55" />
-        <rect x="184" y="344" width="40" height="5" rx="2.5" fill="#fcd34d" />
-        <path d="M150 366h150l10 14H140z" fill="#cbd5e1" />
-        <rect x="150" y="366" width="150" height="6" rx="3" fill="#94a3b8" />
-      </g>
-
-      {/* plant */}
-      <g>
-        <path d="M348 322c4-22 22-30 30-26-2 18-16 28-30 26z" fill="#34d399" />
-        <path d="M360 326c-2-20 10-34 22-34-4 18-12 30-22 34z" fill="#10b981" />
-        <path d="M352 322h26l-4 28h-18z" fill="#f59e0b" />
-      </g>
-
-      {/* coffee cup */}
-      <g>
-        <rect x="92" y="330" width="30" height="24" rx="5" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2" />
-        <path d="M122 336h6a6 6 0 0 1 0 12h-6" stroke="#cbd5e1" strokeWidth="2" fill="none" />
-        <path d="M100 322c2-6-2-8 0-12M110 322c2-6-2-8 0-12" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
-      </g>
-    </svg>
+    <img
+      className="hero__art"
+      src={`${BASE_PATH}/ziraku-hero.png`}
+      alt="ノートPCでAIを活用する人のイラスト — 今日から使えるAI活用アイデアが見つかる！会員限定の特典もたくさん！"
+      width={640}
+      height={384}
+    />
   )
 }
 
@@ -194,14 +117,6 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
 
           <div className="hero__visual">
             <HeroIllustration />
-            <div className="hero__float-card hero__float-card--idea">
-              <span className="hero__float-card-emoji">💡</span>
-              <span>今日使えるAIアイデアが見つかる</span>
-            </div>
-            <div className="hero__float-card hero__float-card--gift">
-              <span className="hero__float-card-emoji">🎁</span>
-              <span>会員限定の特典もたくさん！</span>
-            </div>
           </div>
 
           <div className="hero__cta">

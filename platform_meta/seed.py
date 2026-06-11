@@ -24,6 +24,12 @@ CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-06-11",
         "category": "feat",
+        "title": "ziraku ヒーローをドラフト原画イラストに差し替え",
+        "body": "自作SVGイラストをやめ、docs/assets/サイトイメージ1.png から手描き風イラスト（人物＋PC＋吹き出しテキスト入り）を原寸切り出して public/ziraku-hero.png として使用。HTML側の浮遊カードはテキストが画像に含まれるため削除。",
+    },
+    {
+        "entry_date": "2026-06-11",
+        "category": "feat",
         "title": "ziraku トップをドラフト『親しみ路線』に寄せ込み",
         "body": "ヒーローを全面刷新（eyebrow ピル＋黄色マーカーの『AI』ハイライト H1＋自作フラットSVGイラスト＋浮遊カード2枚）。統計バンドをヒーロー直下の薄青帯へ分離、4バリューカードを白＋青アイコン化。PC/モバイル両対応（テキスト→イラスト→全幅CTAの縦積み）。ziraku.css と ZirakuTopContent.tsx のみ編集（他3テーマ非影響）。",
     },
