@@ -142,14 +142,16 @@ $$ language sql security definer;
 -- ============================================================
 -- プロフィール自動作成トリガー
 -- ============================================================
+-- 注意: auth サービスから呼ばれるため search_path 指定が必須
+-- （無いと profiles を解決できず signup が「Database error saving new user」で失敗する）
 create or replace function handle_new_user()
 returns trigger as $$
 begin
-  insert into profiles (id, display_name)
+  insert into public.profiles (id, display_name)
   values (new.id, new.raw_user_meta_data->>'display_name');
   return new;
 end;
-$$ language plpgsql security definer;
+$$ language plpgsql security definer set search_path = public;
 
 create trigger on_auth_user_created
   after insert on auth.users

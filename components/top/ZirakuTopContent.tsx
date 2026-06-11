@@ -90,10 +90,10 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
           </div>
 
           <div className="hero__cta">
-            <a href="#newsletter" className="btn btn--primary btn--lg btn--pill hero__cta-signup">
+            <Link href="/ziraku/signup" className="btn btn--primary btn--lg btn--pill hero__cta-signup">
               無料で会員登録する
               <span className="hero__cta-badge" aria-hidden>かんたん<br />1分！</span>
-            </a>
+            </Link>
             <Link href="/ziraku/articles" className="btn btn--outline btn--lg btn--pill">
               記事を探す
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
@@ -272,10 +272,10 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
                 <li><span className="members-banner__check" aria-hidden>✓</span><span>セミナー・イベントに優先ご招待</span></li>
               </ul>
             </div>
-            <a href="#newsletter" className="btn btn--signup-green btn--pill members-banner__btn">
+            <Link href="/ziraku/signup" className="btn btn--signup-green btn--pill members-banner__btn">
               無料で会員登録する
               <span className="btn__circle" aria-hidden>›</span>
-            </a>
+            </Link>
           </div>
         </div>
       </section>

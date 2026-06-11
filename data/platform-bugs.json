@@ -1,6 +1,22 @@
 {
-  "exported_at": "2026-06-11T08:45:34.888569+00:00",
+  "exported_at": "2026-06-11T14:08:02.070682+00:00",
   "bugs": [
+    {
+      "id": 21,
+      "title": "Supabase signup が「Database error saving new user」で全件失敗",
+      "symptom": "会員登録APIが500。新規ユーザーが一切作成できない状態だった",
+      "root_cause": "profiles 自動作成トリガー関数 handle_new_user に search_path 未設定。auth サービス経由の呼び出しでは public スキーマを解決できず insert が失敗",
+      "fix": "alter function set search_path = public を本番DBへ適用 + supabase/schema.sql にも恒久修正。プーラー(aws-1-ap-northeast-1)経由でVMからDB接続する手順を確立",
+      "affected_themes": "ziraku",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-06-11",
+      "fixed_at": "2026-06-11",
+      "commit_hash": null,
+      "tags": null,
+      "created_at": "2026-06-11 14:08:02",
+      "updated_at": "2026-06-11 14:08:02"
+    },
     {
       "id": 20,
       "title": "メディア構成セクションが巨大化しドラフトの配置（記事+右ランキング上段）を崩していた",
@@ -323,6 +339,14 @@
     }
   ],
   "changelog": [
+    {
+      "id": 13,
+      "entry_date": "2026-06-11",
+      "category": "feat",
+      "title": "ziraku 会員ログイン・会員登録を実装（Supabase Auth）",
+      "body": "/ziraku/login・/ziraku/signup を新設（メール+パスワード、エラー日本語化、メール確認フロー対応）。ヘッダーがログイン状態を検知しユーザー表示+ログアウトに切替（SiteHeader にオプショナル authArea props 追加・他テーマ不変）。ヒーロー/会員バナーCTAを signup へ接続。",
+      "created_at": "2026-06-11 14:08:02"
+    },
     {
       "id": 12,
       "entry_date": "2026-06-11",

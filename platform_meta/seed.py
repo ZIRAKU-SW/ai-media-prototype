@@ -24,6 +24,12 @@ CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-06-11",
         "category": "feat",
+        "title": "ziraku 会員ログイン・会員登録を実装（Supabase Auth）",
+        "body": "/ziraku/login・/ziraku/signup を新設（メール+パスワード、エラー日本語化、メール確認フロー対応）。ヘッダーがログイン状態を検知しユーザー表示+ログアウトに切替（SiteHeader にオプショナル authArea props 追加・他テーマ不変）。ヒーロー/会員バナーCTAを signup へ接続。",
+    },
+    {
+        "entry_date": "2026-06-11",
+        "category": "feat",
         "title": "ziraku トップのセクション配置をドラフトに準拠（カテゴリ移動・統計縮小）",
         "body": "カテゴリ6カードをクリック可能なコンパクトリンクカード（/ziraku/category/[slug]）にして記事セクション下へ移動。新着記事+右ランキングがドラフト通り上段に。統計バンドを max-width 820px のコンパクトパネルへ縮小。台帳 #20。",
     },

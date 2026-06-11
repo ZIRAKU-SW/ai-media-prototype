@@ -1,4 +1,5 @@
 import SiteHeader from '@/components/SiteHeader'
+import ZirakuAuthButtons from '@/components/ziraku/ZirakuAuthButtons'
 import ZirakuLogoMark from '@/components/ziraku/ZirakuLogoMark'
 import { ZIRAKU_CONTACT_URL } from '@/lib/theme-links'
 
@@ -29,6 +30,8 @@ export default function ZirakuSiteHeader() {
       navItems={NAV}
       signupLabel="会員登録（無料）"
       logo={LOGO}
+      authArea={<ZirakuAuthButtons />}
+      authAreaMobile={<ZirakuAuthButtons block />}
     />
   )
 }

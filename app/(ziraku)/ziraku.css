@@ -859,6 +859,114 @@
   .ziraku-root .footer__links { grid-template-columns: 1fr; gap: 20px; }
 }
 
+/* ---- Auth (login / signup) ---- */
+.ziraku-root .auth {
+  min-height: 60vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 24px 64px;
+  background: var(--bg);
+}
+.ziraku-root .auth__card {
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-md);
+  padding: 36px 32px 28px;
+}
+.ziraku-root .auth__brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.ziraku-root .auth__brand-name {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+}
+.ziraku-root .auth__title { font-size: 1.3rem; font-weight: 800; text-align: center; margin-bottom: 8px; color: var(--text); }
+.ziraku-root .auth__lead { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-bottom: 18px; }
+.ziraku-root .auth__benefits {
+  list-style: none;
+  background: #f4fbf8;
+  border: 1px solid #d8efe5;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  font-size: 0.8rem;
+  color: var(--text);
+  display: grid;
+  gap: 8px;
+}
+.ziraku-root .auth__benefits li { display: flex; align-items: center; gap: 8px; }
+.ziraku-root .auth__check {
+  width: 20px; height: 20px;
+  border: 2px solid var(--green);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--green);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.ziraku-root .auth__form { display: grid; gap: 14px; }
+.ziraku-root .auth__label { font-size: 0.78rem; font-weight: 700; color: var(--text); display: grid; gap: 6px; }
+.ziraku-root .auth__hint { font-weight: 400; color: var(--text-muted); }
+.ziraku-root .auth__form .input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+.ziraku-root .auth__form .input:focus { outline: none; border-color: var(--accent); }
+.ziraku-root .auth__error {
+  font-size: 0.78rem;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+.ziraku-root .auth__notice {
+  font-size: 0.85rem;
+  color: var(--green-dark);
+  background: #f4fbf8;
+  border: 1px solid #d8efe5;
+  border-radius: var(--radius);
+  padding: 16px;
+  line-height: 1.7;
+}
+.ziraku-root .auth__switch { font-size: 0.8rem; text-align: center; margin-top: 18px; color: var(--text-muted); }
+.ziraku-root .auth__switch a { color: var(--accent); font-weight: 700; }
+.ziraku-root .auth__back { font-size: 0.76rem; text-align: center; margin-top: 10px; }
+.ziraku-root .auth__back a { color: var(--text-muted); }
+.ziraku-root .auth__back a:hover { color: var(--accent); }
+.ziraku-root .auth-user {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ziraku-root .auth-placeholder { visibility: hidden; }
+@media (max-width: 640px) {
+  .ziraku-root .auth { padding: 24px 16px 40px; }
+  .ziraku-root .auth__card { padding: 28px 20px 22px; }
+}
+
 /* ============================================================
    バックページ（記事一覧・カテゴリ・サービス・セミナー・法務）
    ============================================================ */

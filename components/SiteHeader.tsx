@@ -11,6 +11,10 @@ export type SiteHeaderProps = {
   navItems: NavLink[]
   loginLabel?: string
   signupLabel: string
+  /** 指定時、ログイン/会員登録ボタンの代わりに描画（デスクトップ） */
+  authArea?: ReactNode
+  /** 指定時、モバイルドロワーのボタン群の代わりに描画 */
+  authAreaMobile?: ReactNode
 }
 
 export default function SiteHeader({
@@ -19,6 +23,8 @@ export default function SiteHeader({
   navItems,
   loginLabel = 'ログイン',
   signupLabel,
+  authArea,
+  authAreaMobile,
 }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
@@ -53,8 +59,12 @@ export default function SiteHeader({
                 <path d="M20 20l-4-4" />
               </svg>
             </button>
-            <button type="button" className="btn btn--ghost">{loginLabel}</button>
-            <button type="button" className="btn btn--primary">{signupLabel}</button>
+            {authArea ?? (
+              <>
+                <button type="button" className="btn btn--ghost">{loginLabel}</button>
+                <button type="button" className="btn btn--primary">{signupLabel}</button>
+              </>
+            )}
           </div>
           <div className="header__mobile">
             <button
@@ -107,8 +117,12 @@ export default function SiteHeader({
               ))}
             </nav>
             <div className="mobile-drawer__actions">
-              <button type="button" className="btn btn--ghost btn--block">{loginLabel}</button>
-              <button type="button" className="btn btn--primary btn--block">{signupLabel}</button>
+              {authAreaMobile ?? (
+                <>
+                  <button type="button" className="btn btn--ghost btn--block">{loginLabel}</button>
+                  <button type="button" className="btn btn--primary btn--block">{signupLabel}</button>
+                </>
+              )}
             </div>
           </div>
         </>

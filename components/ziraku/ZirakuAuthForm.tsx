@@ -1,0 +1,136 @@
+'use client'
+
+import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { supabase } from '@/lib/supabase'
+import ZirakuSiteHeader from '@/components/ziraku/ZirakuSiteHeader'
+import ZirakuFooter from '@/components/ziraku/ZirakuFooter'
+import ZirakuLogoMark from '@/components/ziraku/ZirakuLogoMark'
+
+const BENEFITS = [
+  '会員限定記事が読み放題',
+  'AI活用チェックリストをプレゼント',
+  '便利なプロンプト集を無料配布',
+  'セミナー・イベントに優先ご招待',
+]
+
+function translateError(message: string): string {
+  if (/invalid login credentials/i.test(message)) return 'メールアドレスまたはパスワードが違います'
+  if (/already registered/i.test(message)) return 'このメールアドレスは既に登録されています'
+  if (/rate limit/i.test(message)) return '試行回数が多すぎます。しばらく待ってからお試しください'
+  if (/valid email/i.test(message)) return 'メールアドレスの形式が正しくありません'
+  return `エラーが発生しました（${message}）`
+}
+
+export default function ZirakuAuthForm({ mode }: { mode: 'login' | 'signup' }) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [notice, setNotice] = useState('')
+  const [busy, setBusy] = useState(false)
+  const router = useRouter()
+  const isLogin = mode === 'login'
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setNotice('')
+    if (!isLogin && password.length < 8) {
+      setError('パスワードは8文字以上で設定してください')
+      return
+    }
+    setBusy(true)
+    try {
+      if (isLogin) {
+        const { error } = await supabase.auth.signInWithPassword({ email, password })
+        if (error) { setError(translateError(error.message)); return }
+        router.push('/ziraku')
+      } else {
+        const { data, error } = await supabase.auth.signUp({ email, password })
+        if (error) { setError(translateError(error.message)); return }
+        if (data.session) {
+          router.push('/ziraku')
+        } else {
+          setNotice('確認メールを送信しました。メール内のリンクをクリックして登録を完了してください。')
+        }
+      }
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <>
+      <ZirakuSiteHeader />
+      <main className="auth">
+        <div className="auth__card">
+          <div className="auth__brand">
+            <ZirakuLogoMark size={40} />
+            <span className="auth__brand-name">AIビジネスメディア</span>
+          </div>
+          <h1 className="auth__title">{isLogin ? 'ログイン' : '会員登録（無料）'}</h1>
+          <p className="auth__lead">
+            {isLogin
+              ? '登録済みのメールアドレスとパスワードを入力してください。'
+              : '登録は1分で完了します。'}
+          </p>
+
+          {!isLogin && (
+            <ul className="auth__benefits">
+              {BENEFITS.map(b => (
+                <li key={b}><span className="auth__check" aria-hidden>✓</span>{b}</li>
+              ))}
+            </ul>
+          )}
+
+          {notice ? (
+            <p className="auth__notice">📧 {notice}</p>
+          ) : (
+            <form onSubmit={handleSubmit} className="auth__form">
+              <label className="auth__label">
+                メールアドレス
+                <input
+                  type="email"
+                  className="input"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                  required
+                />
+              </label>
+              <label className="auth__label">
+                パスワード{!isLogin && <span className="auth__hint">（8文字以上）</span>}
+                <input
+                  type="password"
+                  className="input"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  autoComplete={isLogin ? 'current-password' : 'new-password'}
+                  minLength={isLogin ? undefined : 8}
+                  required
+                />
+              </label>
+              {error && <p className="auth__error" role="alert">⚠ {error}</p>}
+              <button type="submit" className="btn btn--primary btn--lg btn--pill btn--block" disabled={busy}>
+                {busy ? '処理中...' : isLogin ? 'ログイン' : '無料で会員登録する'}
+              </button>
+            </form>
+          )}
+
+          <p className="auth__switch">
+            {isLogin ? (
+              <>アカウントをお持ちでない方は <Link href="/ziraku/signup">会員登録（無料）→</Link></>
+            ) : (
+              <>すでにアカウントをお持ちの方は <Link href="/ziraku/login">ログイン →</Link></>
+            )}
+          </p>
+          <p className="auth__back"><Link href="/ziraku">← トップに戻る</Link></p>
+        </div>
+      </main>
+      <ZirakuFooter />
+    </>
+  )
+}
