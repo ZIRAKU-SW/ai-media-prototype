@@ -62,7 +62,11 @@ UIのバグ修正・見た目の変更・新機能追加を行ったら、**必�
 
 ## Vercel デプロイ（リリース時のみ）
 
-**開発中は Vercel を使わない。** 公開・共有が必要なときだけ push する。
+**開発中は Vercel を使わない。**
+
+**2026-06-11 から `vercel.json` で main の自動デプロイを無効化済み。**
+`git push` はバックアップ専用になり、Vercel ビルドは発火しない（無料枠を消費しない）。
+Vercel へリリースしたいときだけ: ①`vercel.json` の `deploymentEnabled.main` を `true` にして push、または ②Vercel ダッシュボードから手動 Deploy。
 
 | 日常確認 | https://oceanosfleet.com/Ziraku/... |
 | Tunnel（直接） | `npm run dev:vm-url` |

@@ -257,7 +257,22 @@ ai-media-prototype/
 - [x] Vercel公開
 - [x] GCP VM + oceanosfleet.com/Ziraku 公開（nginx プロキシ済み）
 - [x] gcp-vm → dify-vm SSH（nginx 自動更新）
+- [x] ZIRAKU 本番想定UI（2026-06-11）— バックボーン7ページ + 親しみ路線デザイン + 記事詳細SSR/OGP + ロゴ/ファビコン統一
 - [ ] 3パターン比較・最終デザイン選定
+
+### ZIRAKU 本番想定テーマ（2026-06-11 実装）
+
+`/Ziraku/ziraku` はデザインドラフト（`docs/assets/サイトイメージ1.png` = 親しみ路線）準拠の本番想定UI。
+
+| ページ | パス |
+|--------|------|
+| トップ（ヒーロー原画イラスト・会員バナー・統計バンド） | `/ziraku` |
+| 記事一覧 / 記事詳細（**SSR + OGP + ISR**） | `/ziraku/articles`, `/ziraku/articles/[slug]` |
+| カテゴリ別一覧 | `/ziraku/category/[slug]` |
+| サービス紹介 / 会社情報 / セミナー / プライバシー | `/ziraku/services` ほか |
+
+- デザイントークン: 角丸 `--radius:16px`・ピルボタン・ティール緑 `#0a9180`・分子ロゴ `ZirakuLogoMark`（ファビコン込み）
+- **ドラフト準拠実装のルールは `doc/AGENT_SPEC.md` §2-6**（原画切り出し・色サンプリング・`scripts/vm/shot.sh` でのスクショ比較）
 
 ---
 
