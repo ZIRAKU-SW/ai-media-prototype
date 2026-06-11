@@ -20,3 +20,4 @@ venv/
 next-env.d.ts
 out/
 tsconfig.tsbuildinfo
+__pycache__/
