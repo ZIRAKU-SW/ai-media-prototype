@@ -120,16 +120,16 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
           </div>
 
           <div className="hero__cta">
-            <a href="#newsletter" className="btn btn--primary btn--lg hero__cta-signup">
+            <a href="#newsletter" className="btn btn--primary btn--lg btn--pill hero__cta-signup">
               無料で会員登録する
-              <span className="hero__cta-badge">かんたん1分！</span>
+              <span className="hero__cta-badge" aria-hidden>かんたん<br />1分！</span>
             </a>
-            <Link href="/ziraku/articles" className="btn btn--outline btn--lg">
+            <Link href="/ziraku/articles" className="btn btn--outline btn--lg btn--pill">
+              記事を探す
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
                 <circle cx="11" cy="11" r="7" />
                 <path d="M20 20l-4-4" />
               </svg>
-              記事を探す
             </Link>
           </div>
         </div>
@@ -261,19 +261,27 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
 
             <div className="members-banner">
               <div className="members-banner__illus" aria-hidden>
-                <div className="members-banner__character">👩‍💼</div>
+                <img
+                  src={`${BASE_PATH}/ziraku-member.png`}
+                  alt=""
+                  width={180}
+                  height={126}
+                  className="members-banner__img"
+                />
               </div>
               <div className="members-banner__body">
-                <p className="members-banner__label">まずは無料で試してみよう！</p>
-                <h3 className="members-banner__title">会員登録すると、すべての機能が使えます！</h3>
+                <h3 className="members-banner__title">会員登録すると、すべての機能が使えます！✨</h3>
                 <ul className="members-banner__list">
-                  <li>✅ 会員限定記事が読み放題</li>
-                  <li>✅ AI活用チェックリストをプレゼント</li>
-                  <li>✅ 便利なプロンプト集を無料配布</li>
-                  <li>✅ セミナー・イベントに優先ご招待</li>
+                  <li><span className="members-banner__check" aria-hidden>✓</span><span>会員限定記事が読み放題</span></li>
+                  <li><span className="members-banner__check" aria-hidden>✓</span><span>AI活用チェックリストをプレゼント</span></li>
+                  <li><span className="members-banner__check" aria-hidden>✓</span><span>便利なプロンプト集を無料配布</span></li>
+                  <li><span className="members-banner__check" aria-hidden>✓</span><span>セミナー・イベントに優先ご招待</span></li>
                 </ul>
               </div>
-              <button type="button" className="btn btn--signup-green btn--lg">無料で会員登録する →</button>
+              <a href="#newsletter" className="btn btn--signup-green btn--pill members-banner__btn">
+                無料で会員登録する
+                <span className="btn__circle" aria-hidden>›</span>
+              </a>
             </div>
           </div>
 
