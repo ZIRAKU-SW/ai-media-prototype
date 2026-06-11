@@ -17,7 +17,10 @@
     "articles:upsert": "node scripts/articles/upsert-articles.mjs",
     "x:slots": "tsx scripts/x/run-slot.ts --list",
     "x:post": "tsx scripts/x/run-slot.ts",
-    "x:post:dry": "tsx scripts/x/run-slot.ts --dry-run"
+    "x:post:dry": "tsx scripts/x/run-slot.ts --dry-run",
+    "x:browser": "tsx scripts/x/browser-post.ts",
+    "x:browser:trial": "tsx scripts/x/browser-post.ts --solo-business-trial",
+    "x:browser:dry": "tsx scripts/x/browser-post.ts --solo-business-trial --dry-run"
   },
   "dependencies": {
     "@oceanos/dev-console": "file:./packages/dev-console",

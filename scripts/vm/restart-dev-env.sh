@@ -6,6 +6,9 @@ ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
 
 echo "==> 孤立 next プロセスを停止"
+# ビルド中に PM2 の autorestart がクラッシュループして pm2 restart と競合するため、
+# 先に PM2 管理のプロセスを止めてから build する（Process not found 対策）
+pm2 stop ai-media-dev 2>/dev/null || true
 pkill -f "next-server" 2>/dev/null || true
 sleep 2
 

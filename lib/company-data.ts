@@ -34,8 +34,8 @@ export const ZIRAKU_COMPANY = {
   ],
   services: [
     { name: 'システム開発', href: 'https://www.ziraku.co.jp/service/system-development' },
-    { name: 'AIプロダクト開発', href: 'https://www.ziraku.co.jp/service/ai-product' },
-    { name: 'EC・ホームページ制作', href: 'https://www.ziraku.co.jp/service/ec-hp' },
+    { name: 'AIプロダクト開発', href: 'https://www.ziraku.co.jp/service/ai' },
+    { name: 'EC・ホームページ制作', href: 'https://www.ziraku.co.jp/service/web' },
     { name: '補助金リサーチ', href: 'https://www.ziraku.co.jp/service/subsidy' },
   ],
   mapUrl: 'https://maps.google.com/?q=東京都中央区銀座一丁目22番11号',

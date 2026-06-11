@@ -10,6 +10,8 @@
 run/
 logs/
 data/dev-console/
+data/x-browser-state.json
+data/x-browser-screenshots/
 
 # Next.js
 .next/
@@ -18,4 +20,3 @@ venv/
 next-env.d.ts
 out/
 tsconfig.tsbuildinfo
-ai_media_agent/__pycache__/
