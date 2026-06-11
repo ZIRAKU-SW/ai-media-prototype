@@ -97,9 +97,20 @@ ai-media-prototype/
 ├── lib/
 │   └── supabase.ts             ← クライアント・型・API関数
 │
+├── data/
+│   ├── articles-md/            ← 記事本文 Markdown（{slug}.md、git 管理・Supabase content の正）
+│   ├── platform.db             ← 運用・バグ台帳 SQLite
+│   └── x-post-history.json    ← X 投稿履歴
+│
+├── scripts/
+│   ├── articles/
+│   │   └── upsert-articles.mjs ← Supabase 記事 upsert（npm run articles:upsert）
+│   ├── x/                      ← X 自動投稿
+│   └── vm/                     ← VM 再起動・サイト検証
+│
 ├── supabase/
 │   ├── schema.sql              ← テーブル定義（9テーブル）
-│   └── seeds/articles.sql     ← 記事シードSQL（12本）
+│   └── seeds/articles.sql     ← 記事シードSQL（20本）
 │
 ├── docs/
 │   ├── concept.md              ← メディアコンセプト・要件定義
@@ -152,10 +163,13 @@ ai-media-prototype/
 
 - **anon key（`sb_publishable_`）**: SELECT・UPDATE は可、INSERT は **不可**
 - **service_role key（`sb_secret_`）**: 全操作可能
-- 新記事をAPIで追加する場合は必ず `SUPABASE_SERVICE_ROLE_KEY` を使うこと
+- 新記事を追加する場合は必ず `npm run articles:upsert` を使うこと（`SUPABASE_SERVICE_ROLE_KEY` を使用）
 
 ```bash
-# 記事INSERT例（service_role keyが必要）
+# 推奨: スクリプト経由で upsert（slug で on_conflict merge）
+npm run articles:upsert   # scripts/articles/upsert-articles.mjs
+
+# 直接 INSERT が必要な場合（service_role keyが必要）
 curl -X POST "https://wqlelowutbxplrzforcc.supabase.co/rest/v1/articles" \
   -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
   -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
@@ -166,7 +180,7 @@ curl -X POST "https://wqlelowutbxplrzforcc.supabase.co/rest/v1/articles" \
 
 ---
 
-## 5. 現在の記事一覧（Supabase 12本）
+## 5. 現在の記事一覧（Supabase 20本）
 
 | # | slug | カテゴリ | 本文 |
 |---|------|---------|------|
@@ -182,8 +196,17 @@ curl -X POST "https://wqlelowutbxplrzforcc.supabase.co/rest/v1/articles" \
 | 10 | president-ai-first-tasks | 1人社長・副業 | **あり** |
 | 11 | sme-ai-adoption-first-steps | DX・業務改善 | **あり** |
 | 12 | enterprise-ai-cost-web-agent-vs-seat | 実験室 | **あり**（コスト比較表） |
+| 13 | claude-fable-5-overview | AIニュース | **あり**（`data/articles-md/`） |
+| 14 | claude-fable-5-subagent-strategy | AI活用ガイド | **あり**（`data/articles-md/`） |
+| 15 | fable-5-self-correction-loops | AIニュース | **あり**（翻訳・`data/articles-md/`） |
+| 16 | anthropic-31-ai-skills | DX・業務改善 | **あり**（`data/articles-md/`） |
+| 17 | claude-fable-5-notebooklm | ツール比較 | **あり**（`data/articles-md/`） |
+| 18 | claude-autopilot-14-steps | AI活用ガイド | **あり**（翻訳・`data/articles-md/`） |
+| 19 | kubell-ceo-fable-5-prompt | AIニュース | **あり**（`data/articles-md/`） |
+| 20 | ai-agent-company-management | 1人社長・副業・起業 | **あり**（`data/articles-md/`） |
 
-> 本文なしの記事は「本文準備中です」と表示される。
+> 本文なしの記事は「本文準備中です」と表示される。  
+> #13〜#20 は 2026-06-11 追加。本文 Markdown は `data/articles-md/{slug}.md` で管理（git 管理）。
 
 ---
 
@@ -191,21 +214,29 @@ curl -X POST "https://wqlelowutbxplrzforcc.supabase.co/rest/v1/articles" \
 
 ### 6-1. 記事詳細ページ（ArticlePage.tsx）
 
-Markdownを**行単位のステートマシン**でHTMLに変換：
+Markdownを**行単位のステートマシン**でHTMLに変換（`lib/render-markdown.ts`）：
 
 ```
-機能:
+対応記法:
 - コードブロック（```）→ <pre><code> にエスケープ処理済み
 - テーブル（|...|形式）→ <table>（セパレーター行は除去、ヘッダー行は<th>）
 - 見出し（#/##/###）
 - 太字（**）
 - インラインコード（`）
 - リスト（-/1.）
+- 画像（![alt](url)）→ <img class="article-detail__img" loading="lazy">（リンクより先に処理）
+- リンク（[text](url)）→ <a target="_blank" rel="noopener noreferrer">
+
+未対応: 斜体・引用（>）・水平線・ネストリスト
+
+テーマ機能:
 - テーマ別CTA（カテゴリに応じてボタン文言を変える）
 - 記事末尾のシェアボタン（X）
 - 関連記事セクション
 - ニュースレター登録フォーム
 ```
+
+> `.article-detail__img` の CSS は `app/article-shared.css`（wired/zapier/ziraku）と `app/(notion)/notion.css` の両方に追加済み。
 
 ### 6-2. 記事カード（ArticleCard.tsx）
 
@@ -296,10 +327,13 @@ python3 platform_meta/seed.py --register-bug --title "..." ...  # 新規登録
 
 | 作業 | 対象ファイル |
 |------|------------|
-| 記事追加 | `components/pages/TopPage.tsx` のDUMMY + `app/(zapier)/zapier/page.tsx` のDUMMY + `supabase/seeds/articles.sql` |
+| 記事追加 | `data/articles-md/{slug}.md`（本文 Markdown）+ `lib/dummy-articles.ts`（フォールバック）+ `supabase/seeds/articles.sql` + `scripts/articles/upsert-articles.mjs` の ARTICLES 配列 → `npm run articles:upsert` で Supabase に反映 |
 | 共通バグ修正 | `components/pages/ArticlePage.tsx` (全テーマ共通) |
 | Zapier固有 | `app/(zapier)/zapier.css` + `app/(zapier)/zapier/page.tsx` |
 | デプロイ後確認 | 3パターン全てのURLで動作確認 |
+
+> **TopContent 各テーマ（`components/top/`）は修正不要**（記事データは props 経由で渡すため）。  
+> anon key では INSERT 不可。本番反映は必ず `npm run articles:upsert`（`.env.local` の `SUPABASE_SERVICE_ROLE_KEY` を使用）。
 
 ---
 
@@ -367,7 +401,7 @@ npm run dev  # → http://localhost:3000
 1. **このファイル（CURSOR_HANDOFF.md）と CLAUDE.md を最初に読むこと**
 2. **GCP VM で AI 開発する場合は [`docs/GCP_VM_HANDOFF.md`](./docs/GCP_VM_HANDOFF.md) を読むこと**
 3. **3パターン全対応ルールは絶対** — 1パターンだけ直して終わりにしない
-4. **新記事追加は service_role key で INSERT** — anon key では弾かれる
+4. **新記事追加は `npm run articles:upsert`** — anon key では INSERT 不可。本文 Markdown を `data/articles-md/{slug}.md` に置き、メタデータを `lib/dummy-articles.ts` / `supabase/seeds/articles.sql` / `scripts/articles/upsert-articles.mjs` の3箇所に追加してから実行
 5. **Zapierページは独自コンポーネント** — TopPage.tsx を使っていないので別途対応
 6. **記事の content は Markdown 記法** — renderContent() でHTMLに変換している
 7. **Vercel デプロイは git push で自動発火** — 手動デプロイ不要

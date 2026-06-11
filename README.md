@@ -175,9 +175,11 @@ ai-media-prototype/
 │   └── admin/              # 管理・運用・AI開発コンソール
 ├── scripts/
 │   ├── x/                  # X 自動投稿（Cursor SDK + X API）
+│   ├── articles/           # 記事 upsert スクリプト（upsert-articles.mjs）
 │   └── vm/                 # VM 再起動・サイト検証
 ├── components/top/         # 各テーマ TopContent
 ├── data/
+│   ├── articles-md/        # 記事本文 Markdown（slug.md、git 管理・Supabase content の正）
 │   ├── platform.db         # 運用・バグ台帳
 │   └── x-post-history.json # X 投稿履歴
 ├── pattern-a-wired/        # レガシー静的プロトタイプ
@@ -257,22 +259,7 @@ ai-media-prototype/
 - [x] Vercel公開
 - [x] GCP VM + oceanosfleet.com/Ziraku 公開（nginx プロキシ済み）
 - [x] gcp-vm → dify-vm SSH（nginx 自動更新）
-- [x] ZIRAKU 本番想定UI（2026-06-11）— バックボーン7ページ + 親しみ路線デザイン + 記事詳細SSR/OGP + ロゴ/ファビコン統一
 - [ ] 3パターン比較・最終デザイン選定
-
-### ZIRAKU 本番想定テーマ（2026-06-11 実装）
-
-`/Ziraku/ziraku` はデザインドラフト（`docs/assets/サイトイメージ1.png` = 親しみ路線）準拠の本番想定UI。
-
-| ページ | パス |
-|--------|------|
-| トップ（ヒーロー原画イラスト・会員バナー・統計バンド） | `/ziraku` |
-| 記事一覧 / 記事詳細（**SSR + OGP + ISR**） | `/ziraku/articles`, `/ziraku/articles/[slug]` |
-| カテゴリ別一覧 | `/ziraku/category/[slug]` |
-| サービス紹介 / 会社情報 / セミナー / プライバシー | `/ziraku/services` ほか |
-
-- デザイントークン: 角丸 `--radius:16px`・ピルボタン・ティール緑 `#0a9180`・分子ロゴ `ZirakuLogoMark`（ファビコン込み）
-- **ドラフト準拠実装のルールは `doc/AGENT_SPEC.md` §2-6**（原画切り出し・色サンプリング・`scripts/vm/shot.sh` でのスクショ比較）
 
 ---
 
@@ -290,13 +277,35 @@ ai-media-prototype/
 | 6 | 営業メール作成ツールを30分で作ってみた | 実験室 | lab-sales-email-tool-30min |
 | 7 | AIが変える意外な世界｜匂い生成・犬語翻訳 | AIニュース | ai-surprising-usecases-2026 |
 | 8 | おすすめAIツール30選【2026年最新版】 | ツール比較 | best-ai-tools-2026 |
-| 9 | 無料AIツールだけで営業資料・SNS投稿・議事録を作る方法 ★新着 | AI活用ガイド | free-ai-tools-sales-content |
-| 10 | 社長がAIを使うと最初に手放せる業務5つ ★新着 | 1人社長・副業 | president-ai-first-tasks |
-| 11 | 中小企業がAI導入で最初にやるべき3つの業務改善 ★新着 | DX・業務改善 | sme-ai-adoption-first-steps |
-| 12 | 席課金 vs 社内Webエージェント｜企業AIコストを最大97%削減 ★新着 | 実験室 | enterprise-ai-cost-web-agent-vs-seat |
+| 9 | 無料AIツールだけで営業資料・SNS投稿・議事録を作る方法 | AI活用ガイド | free-ai-tools-sales-content |
+| 10 | 社長がAIを使うと最初に手放せる業務5つ | 1人社長・副業 | president-ai-first-tasks |
+| 11 | 中小企業がAI導入で最初にやるべき3つの業務改善 | DX・業務改善 | sme-ai-adoption-first-steps |
+| 12 | 席課金 vs 社内Webエージェント｜企業AIコストを最大97%削減 | 実験室 | enterprise-ai-cost-web-agent-vs-seat |
+| 13 | 【速報解説】Claude Fable 5登場──「Mythos-class」史上最高性能モデルは何がすごいのか ★新着 | AIニュース | claude-fable-5-overview |
+| 14 | Claude Fable 5は「高すぎる」のか？──サブエージェント分業でコストを抑える使い方 ★新着 | AI活用ガイド | claude-fable-5-subagent-strategy |
+| 15 | Anthropic公式が明かすFable 5の真の使い方──プロンプトではなく「自己修正ループ」を設計せよ【翻訳解説】 ★新着 | AIニュース | fable-5-self-correction-loops |
+| 16 | Anthropicが「31人分のAI社員」を無料公開──中小企業は採用の前に業務のAI化を ★新着 | DX・業務改善 | anthropic-31-ai-skills |
+| 17 | Claude Fable 5×NotebookLM活用術──「究極の頭脳」に「最強の知識」を接続する ★新着 | ツール比較 | claude-fable-5-notebooklm |
+| 18 | Claudeを「完全自動運転」にする14ステップ──/loopとRoutinesで自動化スタックを組む【海外記事翻訳】 ★新着 | AI活用ガイド | claude-autopilot-14-steps |
+| 19 | 上場企業CEOも実践──高コストなFable 5を「一文のプロンプト」で実用的に使う ★新着 | AIニュース | kubell-ceo-fable-5-prompt |
+| 20 | 【保存版】AIエージェントで会社を経営する手順──リサーチ・コンテンツ・事務をAIに任せる ★新着 | 1人社長・副業・起業 | ai-agent-company-management |
 
-> ★新着記事は参考発信者調査PDF・社内試算資料（`docs/ENTERPRISE_WEB_AGENT_COST.md`）をもとに追加。  
-> Supabaseへの本番追加は `supabase/seeds/articles.sql` をダッシュボードのSQL Editorで実行してください（管理者権限が必要）。
+> ★新着（#13〜#20）は 2026-06-11 追加。X(Twitter) の話題ポストを出典明記のうえ記事化（#15・#18 は英語記事翻訳）。  
+> 本文 Markdown は `data/articles-md/{slug}.md` で管理。Supabase への本番反映は下記コマンドを使う（anon key では INSERT 不可）。
+
+### 記事追加・Supabase 反映
+
+```bash
+# 1. data/articles-md/{slug}.md に本文 Markdown を作成（git 管理）
+# 2. 以下の3箇所にメタデータを追加:
+#    - lib/dummy-articles.ts（フォールバック用）
+#    - supabase/seeds/articles.sql
+#    - scripts/articles/upsert-articles.mjs の ARTICLES 配列
+# 3. Supabase に upsert（slug で on_conflict merge）:
+npm run articles:upsert
+```
+
+> `.env.local` の `SUPABASE_SERVICE_ROLE_KEY` が必要。TopContent 各テーマへの反映は props 経由のため修正不要。
 
 ---
 

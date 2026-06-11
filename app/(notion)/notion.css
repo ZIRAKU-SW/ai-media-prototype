@@ -497,6 +497,7 @@ button { cursor: pointer; font-family: inherit; }
 .article-detail__h3 { font-size: 1.15rem; font-weight: 700; margin: 2rem 0 0.75rem; }
 .article-detail__ul { list-style: disc; padding-left: 1.5rem; margin: 1rem 0; }
 .article-detail__code { background: #1e1e1e; color: #d4d4d4; padding: 1.25rem; border-radius: 8px; overflow-x: auto; font-size: 0.85rem; margin: 1.5rem 0; }
+.article-detail__img { max-width: 100%; height: auto; border-radius: 8px; margin: 1.5rem 0; display: block; }
 .article-detail__table-wrap { overflow-x: auto; margin: 1.5rem 0; }
 .article-detail__table { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 480px; }
 .article-detail__empty { color: var(--text-muted); text-align: center; padding: 3rem 0; }

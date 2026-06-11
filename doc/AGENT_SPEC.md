@@ -37,9 +37,32 @@ UI・バグ修正・記事追加は **wired / notion / zapier すべて** に適
 
 ### 2-2. 記事コンテンツ
 
-- 追加: `lib/dummy-articles.ts` + `supabase/seeds/articles.sql` + 各テーマ TopContent
-- 本文: Markdown → `lib/render-markdown.ts` で HTML 変換
-- 本番 INSERT は `SUPABASE_SERVICE_ROLE_KEY` 必須（anon では INSERT 不可）
+**記事追加手順（2026-06-11 確立）:**
+
+1. 本文 Markdown を `data/articles-md/{slug}.md` に作成（git 管理、Supabase `content` の正）
+2. 以下の **3箇所にメタデータを追加**:
+   - `lib/dummy-articles.ts`（フォールバック用）
+   - `supabase/seeds/articles.sql`
+   - `scripts/articles/upsert-articles.mjs` の `ARTICLES` 配列
+3. Supabase に反映: `npm run articles:upsert`（slug で `on_conflict` merge）
+
+> **anon key では INSERT 不可**。本番反映は必ず `npm run articles:upsert`（`.env.local` の `SUPABASE_SERVICE_ROLE_KEY` を使用）。  
+> **TopContent 各テーマは修正不要**（記事データは props 経由のため）。
+
+**Markdown レンダラー（`lib/render-markdown.ts`）対応記法:**
+
+| 記法 | 出力 |
+|------|------|
+| コードブロック（` ``` `） | `<pre><code>` エスケープ済み |
+| テーブル（`\|...\|`） | `<table>` ヘッダー `<th>` / セパレーター行除去 |
+| 見出し（`#` / `##` / `###`） | `<h1>` / `<h2>` / `<h3>` |
+| 太字（`**`） | `<strong>` |
+| インラインコード（`` ` ``） | `<code class="article-detail__inline-code">` |
+| リスト（`-` / `1.`） | `<li>` → `<ul>` |
+| 画像（`![alt](url)`） | `<img class="article-detail__img" loading="lazy">` |
+| リンク（`[text](url)`） | `<a target="_blank" rel="noopener noreferrer">` |
+
+未対応: 斜体・引用（`>`）・水平線・ネストリスト
 
 ### 2-3. モバイル（Notion 中心）
 
@@ -183,6 +206,9 @@ python3 platform_meta/seed.py --register-bug \
 
 | 日付 | 区分 | 内容 |
 |------|------|------|
+| 2026-06-11 | content | 新記事8件追加（Fable 5特集）: claude-fable-5-overview / claude-fable-5-subagent-strategy / fable-5-self-correction-loops / anthropic-31-ai-skills / claude-fable-5-notebooklm / claude-autopilot-14-steps / kubell-ceo-fable-5-prompt / ai-agent-company-management。X 話題ポスト出典明記、英語2本翻訳 |
+| 2026-06-11 | feat | `lib/render-markdown.ts` に画像（`![alt](url)` → `<img class="article-detail__img" loading="lazy">`）とリンク（`[text](url)` → `<a target="_blank" rel="noopener noreferrer">`）対応追加。CSS（`app/article-shared.css` / `app/(notion)/notion.css`）に `.article-detail__img` 追加 |
+| 2026-06-11 | feat | 記事追加ワークフロー確立 — 本文 Markdown を `data/articles-md/{slug}.md` で管理、`scripts/articles/upsert-articles.mjs` + `npm run articles:upsert` で Supabase に upsert |
 | 2026-06-11 | feat | ziraku 会員バナー刷新（全幅・人物イラスト・横並び特典・緑ピル）+ CTAピル化 + 角丸拡大（--radius 16px）で親しみ路線統一 |
 | 2026-06-11 | feat | ziraku ロゴ統一 + ファビコン刷新 — `ZirakuLogoMark` 新設（ヘッダー青/フッター白）、`app/icon.png`・`favicon.ico` を青角丸+白マークに（全テーマ共通） |
 | 2026-06-11 | feat | ziraku ヒーローをドラフト原画イラストに差し替え — `サイトイメージ1.png` から切り出した `public/ziraku-hero.png` を使用、HTML浮遊カード削除 |

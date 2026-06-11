@@ -1,6 +1,14 @@
 {
   "posts": [
     {
+      "id": "124c3e7a-7efa-435c-b4b8-e0eeb294ad16",
+      "slot": "lunch",
+      "text": "大阪で6/11〜12開催の「日経クロステックNEXT 関西」で、AIエージェントの作成・管理・統制など最新製品が展示。初企画「DXよろず相談室」ではCIO経験者にDXの悩みを無料相談（1回20分）できます。社員数名でも、導入前に「誰が何に触れるか」を決めておくと運用が楽になります。\nhttps://project-7bhii.vercel.app/ziraku #AI #DX",
+      "sourceHeadline": "AIエージェント管理など注目の最新製品を展示 DXに関する無料相談も - 日経クロステック",
+      "postedAt": "2026-06-11T08:21:00.562Z",
+      "dryRun": true
+    },
+    {
       "id": "a13d7aa6-89b4-4019-b2f7-240ebcd20a6a",
       "slot": "lunch",
       "text": "【昼休み】Opendoor’s India exit is fueling a bigger conversation about AI and outsourcing。中小企業のAI活用・DX推進に役立つ視点で解説しています。\n#AI #DX\nhttps://project-7bhii.vercel.app/ziraku",

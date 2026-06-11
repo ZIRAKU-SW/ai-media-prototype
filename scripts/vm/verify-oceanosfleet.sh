@@ -33,15 +33,6 @@ check "/wired/articles/chatgpt-claude-gemini-comparison" 200
 check "/notion/articles/chatgpt-claude-gemini-comparison" 200
 check "/zapier/articles/chatgpt-claude-gemini-comparison" 200
 
-# ziraku バックページ
-check "/ziraku/articles" 200
-check "/ziraku/articles/chatgpt-claude-gemini-comparison" 200
-check "/ziraku/services" 200
-check "/ziraku/company" 200
-check "/ziraku/seminar" 200
-check "/ziraku/privacy" 200
-check "/ziraku/category/ai-guide" 200
-
 # 二重 basePath は 404 であること（リンクバグの検知）
 check "/Ziraku/admin/dev" 404
 

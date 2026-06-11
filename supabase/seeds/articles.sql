@@ -1,5 +1,5 @@
 -- ============================================================
--- モック記事データ（11本）
+-- モック記事データ（19本）
 -- 参考元:
 --   https://www.skillupai.com/blog/for-business/generative-ai-business/
 --   https://www.matrixflow.net/case-study/161/
@@ -87,7 +87,56 @@ from (values
    'sme-ai-adoption-first-steps',
    'AI導入に失敗する会社の共通点は「何から始めるか」を間違えること。中小企業が最初に着手すべき3つの業務改善と、無理なく定着させる手順を解説します。',
    'https://picsum.photos/seed/ai011/800/450',
-   'dx-improvement', 6, 1620, '2026-06-01T11:00:00Z')
+   'dx-improvement', 6, 1620, '2026-06-01T11:00:00Z'),
+
+  -- ▼ 2026-06-11 追加（Fable 5特集・8本）
+  ('【速報解説】Claude Fable 5登場──「Mythos-class」史上最高性能モデルは何がすごいのか',
+   'claude-fable-5-overview',
+   'Anthropicが公開した過去最高性能のAIモデル「Fable 5」。仕事の任せ方が本質的に変わると言われる新モデルの要点を速報解説。',
+   'https://pbs.twimg.com/media/HIdxS1PbEAA23lz.jpg',
+   'ai-news', 5, 120, '2026-06-11T09:40:00Z'),
+
+  ('Claude Fable 5は「高すぎる」のか？──サブエージェント分業でコストを抑える使い方',
+   'claude-fable-5-subagent-strategy',
+   '1タスク数万円という衝撃のコスト。それでも最強モデルを実務で使うために、安いモデルで設計し高いモデルで実行する「エージェントチーム」戦略を解説。',
+   'https://pbs.twimg.com/media/HKc9eg5b0AAyQvn.jpg',
+   'ai-guide', 7, 95, '2026-06-11T09:35:00Z'),
+
+  ('Anthropic公式が明かすFable 5の真の使い方──プロンプトではなく「自己修正ループ」を設計せよ【翻訳解説】',
+   'fable-5-self-correction-loops',
+   'Anthropic社員Lance Martin氏の技術記事を翻訳解説。ゴール設定・検証サブエージェント・メモリ活用でFable 5の性能を最大限引き出す。',
+   'https://pbs.twimg.com/media/HKYnS0Za8AA_BoV.jpg',
+   'ai-news', 9, 88, '2026-06-11T09:30:00Z'),
+
+  ('Anthropicが「31人分のAI社員」を無料公開──中小企業は採用の前に業務のAI化を',
+   'anthropic-31-ai-skills',
+   '請求書追跡、契約書レビュー、営業資料作成…実務スキル31種が公式公開。「作業を手伝うAI」から「仕事を任せるAI」への転換点。',
+   'https://pbs.twimg.com/media/HKYAtFVbIAAnxNK.jpg',
+   'dx-improvement', 6, 76, '2026-06-11T09:25:00Z'),
+
+  ('Claude Fable 5×NotebookLM活用術──「究極の頭脳」に「最強の知識」を接続する',
+   'claude-fable-5-notebooklm',
+   '史上最強モデルの弱点は「あなたの会社のことを知らない」こと。NotebookLMと組み合わせて自社専用AIに変える活用術。',
+   'https://pbs.twimg.com/media/HKeTevybUAAgzLM.jpg',
+   'tools', 8, 64, '2026-06-11T09:20:00Z'),
+
+  ('Claudeを「完全自動運転」にする14ステップ──/loopとRoutinesで自動化スタックを組む【海外記事翻訳】',
+   'claude-autopilot-14-steps',
+   '月200ドル払ってChatGPTの有料版のように使っていないか？海外で話題のClaude自動化スタック構築ガイドを日本語で全解説。',
+   'https://pbs.twimg.com/media/HKD8XW4W0AAHp-f.jpg',
+   'ai-guide', 12, 59, '2026-06-11T09:15:00Z'),
+
+  ('上場企業CEOも実践──高コストなFable 5を「一文のプロンプト」で実用的に使う',
+   'kubell-ceo-fable-5-prompt',
+   'kubell（旧Chatwork）山本CEOの投稿が話題に。メインセッションは設計とレビューに専念させ、実装はOpus/Sonnetに切り出す分業プロンプトとは。',
+   'https://picsum.photos/seed/fable-prompt/800/450',
+   'ai-news', 4, 47, '2026-06-11T09:10:00Z'),
+
+  ('【保存版】AIエージェントで会社を経営する手順──リサーチ・コンテンツ・事務をAIに任せる',
+   'ai-agent-company-management',
+   '「AIに任せてるつもりで結局全部自分でやってる」を卒業。東大AIエージェントラボSwarmによる、経営業務をAIに任せる実践手順。',
+   'https://pbs.twimg.com/media/HHtptx_a8AARAev.jpg',
+   'solo-business', 10, 31, '2026-06-11T09:05:00Z')
 
 ) as v(title, slug, excerpt, thumbnail_url, cat_slug, reading_time_minutes, view_count, published_at)
 join categories c on c.slug = v.cat_slug
