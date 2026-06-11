@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import ZirakuSiteHeader from '@/components/ziraku/ZirakuSiteHeader'
 import ZirakuFooter from '@/components/ziraku/ZirakuFooter'
 import { useZirakuUser } from '@/components/ziraku/useZirakuUser'
+import { supabase, type Article } from '@/lib/supabase'
 
 const CHECKLIST = [
   '社内の定型文書（議事録・報告書・メール）のどれかをAIで下書きしている',
@@ -49,7 +50,7 @@ const PROMPTS = [
 const MEMBER_BENEFITS = [
   { icon: '📋', title: 'AI活用チェックリスト', desc: '自社のAI活用レベルを10項目で診断', href: '#checklist', ready: true },
   { icon: '📝', title: '営業効率化プロンプト集', desc: 'コピペで使える実務プロンプト6本', href: '#prompts', ready: true },
-  { icon: '🔒', title: '会員限定記事', desc: '深掘り解説・実装ノウハウ', href: '#exclusive', ready: false },
+  { icon: '🔒', title: '会員限定記事', desc: '深掘り解説・実装ノウハウ', href: '#exclusive', ready: true },
   { icon: '🎓', title: 'セミナー優先案内', desc: '開催決定時に優先的にご案内', href: '#seminar', ready: false },
 ]
 
@@ -78,6 +79,18 @@ function PromptCard({ title, body }: { title: string; body: string }) {
 export default function ZirakuMembersContent() {
   const { user, ready } = useZirakuUser()
   const [checked, setChecked] = useState<boolean[]>(() => CHECKLIST.map(() => false))
+  const [memberArticles, setMemberArticles] = useState<Article[]>([])
+
+  useEffect(() => {
+    if (!user) return
+    supabase
+      .from('articles')
+      .select('*, categories(name, slug, color)')
+      .eq('is_published', true)
+      .eq('is_members_only', true)
+      .order('published_at', { ascending: false })
+      .then(({ data }) => setMemberArticles((data as Article[]) ?? []))
+  }, [user])
   const score = checked.filter(Boolean).length
 
   const scoreComment =
@@ -169,12 +182,24 @@ export default function ZirakuMembersContent() {
           </div>
         </section>
 
-        <section className="members__section members__section--soon" id="exclusive">
+        <section className="members__section" id="exclusive">
           <h2 className="members__section-title">🔒 会員限定記事</h2>
-          <p className="members__section-lead">
-            実装の裏側まで踏み込んだ会員限定の深掘り記事を準備中です。公開までは
-            <Link href="/ziraku/articles" className="members__inline-link">通常記事の一覧</Link>をご覧ください。
-          </p>
+          <p className="members__section-lead">編集部の深掘り解説つき。会員の方だけが読める記事です。</p>
+          {memberArticles.length === 0 ? (
+            <p className="members__section-lead">読み込み中...</p>
+          ) : (
+            <div className="members__articles">
+              {memberArticles.map(a => (
+                <Link key={a.id} href={`/ziraku/articles/${a.slug}`} className="members__article-card">
+                  <img src={a.thumbnail_url ?? ''} alt="" className="members__article-thumb" />
+                  <span className="members__article-body">
+                    <strong className="members__article-title">🔒 {a.title}</strong>
+                    <span className="members__article-excerpt">{a.excerpt}</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          )}
         </section>
 
         <section className="members__section members__section--soon" id="seminar">

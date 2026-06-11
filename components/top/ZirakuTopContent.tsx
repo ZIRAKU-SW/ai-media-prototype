@@ -114,36 +114,6 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
         </div>
       </section>
 
-      <section className="stats-band">
-        <div className="stats-band__inner">
-          <p className="stats-band__label">今、AIを活用する企業が増えています</p>
-          <div className="stats-band__grid">
-            <div className="stat">
-              <div className="stat__icon">📊</div>
-              <div className="stat__body">
-                <div className="stat__num">82<span>%</span></div>
-                <div className="stat__label">小規模企業のAI導入率</div>
-              </div>
-            </div>
-            <div className="stat">
-              <div className="stat__icon">⚡</div>
-              <div className="stat__body">
-                <div className="stat__num">約45<span>%</span></div>
-                <div className="stat__label">平均的な生産性向上</div>
-              </div>
-            </div>
-            <div className="stat">
-              <div className="stat__icon">💰</div>
-              <div className="stat__body">
-                <div className="stat__num">95–98<span>%</span></div>
-                <div className="stat__label">AIスタック導入でのコスト削減</div>
-              </div>
-            </div>
-          </div>
-          <p className="stats-band__source">※出典：各種調査レポートより</p>
-        </div>
-      </section>
-
       <section className="values">
         <div className="values__inner">
           {[

@@ -16,6 +16,24 @@ select
   true, v.reading_time_minutes, v.view_count,
   v.published_at::timestamptz
 from (values
+  ('Fable 5×Hyperagent: 目標を渡すだけで数時間働く「自律エージェント」の実例3つ【会員限定】',
+   'fable-5-hyperagent-autonomous',
+   'NASAデータの小惑星可視化、100エーカーの施設設計、PDFからのパネル再現──人が触らず完結する働き方と、中小企業が今やるべき2つの準備を深掘り。',
+   'https://pbs.twimg.com/amplify_video_thumb/2064407893022019584/img/vb-5Z-ZXaHQvzapN.jpg',
+   'ai-news', 7, 28, '2026-06-11T16:00:00Z'),
+
+  ('Fable 5がYouTube編集〜SNS投稿を一本通しで実行──「業務の塊」をAIに渡す設計図【会員限定】',
+   'fable-5-youtube-pipeline',
+   'ダウンロード→バズ検出→キャプション→リフレーム→予約投稿の5工程を1つのAIが連鎖実行。自社の「塊で渡せる業務」の見つけ方を編集部が解説。',
+   'https://pbs.twimg.com/amplify_video_thumb/2064569986702553088/img/NOKbGKboBn_6Xzn0.jpg',
+   'lab', 7, 31, '2026-06-11T15:50:00Z'),
+
+  ('MicrosoftがFable 5を採用、Copilotにも展開──「AIチーム」時代が中小企業に届く順番【会員限定】',
+   'microsoft-adopts-fable-5',
+   'FoundryとGitHub Copilotに「次世代の自律型AIエージェント」として導入。いつものOfficeにエージェントが入ってくる意味を深掘り解説。',
+   'https://pbs.twimg.com/amplify_video_thumb/2064757396577431552/img/fXfTolMqXUz5ohoI.jpg',
+   'ai-news', 6, 24, '2026-06-11T15:40:00Z'),
+
   ('Claude Fable 5、5つのUIワンショット生成に全合格──「コードを書かないデザイナー」の仕事が変わる',
    'fable-5-ui-oneshot-designer',
    'GSAP/Three.js込みの高品質UIが1プロンプトで。著名UI/UX教育者の検証全合格が示す「デザイン→実装」分業の崩壊と、発注側が知るべき3つの変化。',
@@ -192,3 +210,6 @@ on conflict (slug) do update set
   thumbnail_url = excluded.thumbnail_url,
   title = excluded.title,
   excerpt = excluded.excerpt;
+
+-- 会員限定フラグ（2026-06-11）
+update articles set is_members_only = true where slug in ('fable-5-hyperagent-autonomous','fable-5-youtube-pipeline','microsoft-adopts-fable-5');

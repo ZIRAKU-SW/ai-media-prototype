@@ -47,6 +47,7 @@ export function renderMarkdown(raw: string): string {
     .replace(/^# (.+)$/gm, '<h1 class="article-detail__h1">$1</h1>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/`([^`]+)`/g, '<code class="article-detail__inline-code">$1</code>')
+    .replace(/!video\[([^\]]*)\]\(([^)]+)\)/g, '<video src="$2" poster="$1" controls playsinline preload="none" class="article-detail__video"></video>')
     .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="article-detail__img" loading="lazy" />')
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
     .replace(/^[-*] (.+)$/gm, '<li>$1</li>')

@@ -112,11 +112,13 @@ create policy "profiles_insert" on profiles for insert with check (auth.uid() = 
 create policy "articles_select_public" on articles
   for select using (is_published = true and is_members_only = false);
 
+-- 会員限定: ログイン済みユーザーなら閲覧可（プロトタイプ仕様。
+-- 有料会員制にする場合は profiles.is_member 条件に戻す）
 create policy "articles_select_members" on articles
   for select using (
     is_published = true
     and is_members_only = true
-    and exists (select 1 from profiles where id = auth.uid() and is_member = true)
+    and auth.uid() is not null
   );
 
 -- bookmarks: 本人のみ操作可

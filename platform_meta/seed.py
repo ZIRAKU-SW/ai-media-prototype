@@ -24,6 +24,12 @@ CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-06-11",
         "category": "feat",
+        "title": "会員限定記事3本 + 限定記事の閲覧ゲート実装、統計バンド削除",
+        "body": "is_members_only 記事（Hyperagent自律実例/YouTube一気通貫/Microsoft採用、いずれも動画埋め込み・編集部深掘り付き）。RLSを『ログイン済みなら閲覧可』に変更、未ログインは🔒ゲート（service_roleでタイトルのみ取得）、会員エリアに限定記事一覧。render-markdown に !video[poster](mp4) 記法追加。ドラフトに無い統計バンドは完全削除（台帳 #25）。",
+    },
+    {
+        "entry_date": "2026-06-11",
+        "category": "feat",
         "title": "ziraku 会員限定エリア実装 + ログイン後のCTA切替",
         "body": "/ziraku/members 新設（未ログインはゲート表示）。実体特典2つ: AI活用チェックリスト（10項目診断・スコア判定）と営業効率化プロンプト集（コピー機能付き6本）。会員限定記事・セミナー優先は準備中表示。ログイン中はヒーローCTA・緑バナーが会員エリア誘導に切替（『ログイン後も会員登録表示』の不整合を解消）。E2Eログインフローで検証済み。",
     },

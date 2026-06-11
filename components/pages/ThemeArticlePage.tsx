@@ -18,11 +18,14 @@ export default function ThemeArticlePage({
   slug,
   initialArticle,
   initialRelated,
+  notFoundFallback,
 }: {
   theme: SiteTheme
   slug: string
   initialArticle?: Article | null
   initialRelated?: Article[]
+  /** 記事が取得できなかったとき、デフォルトの not-found の代わりに描画 */
+  notFoundFallback?: React.ReactNode
 }) {
   const [article, setArticle] = useState<Article | null>(initialArticle !== undefined ? initialArticle : null)
   const [related, setRelated] = useState<Article[]>(initialRelated ?? [])
@@ -59,6 +62,7 @@ export default function ThemeArticlePage({
   }
 
   if (!article) {
+    if (notFoundFallback) return <>{notFoundFallback}</>
     return (
       <div className="article-page article-page--not-found">
         <p>記事が見つかりませんでした</p>

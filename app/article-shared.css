@@ -68,3 +68,12 @@
 @media (max-width: 1024px) {
   .article-layout { grid-template-columns: 1fr; }
 }
+
+.article-detail__video {
+  width: 100%;
+  max-width: 720px;
+  border-radius: 12px;
+  display: block;
+  margin: 20px auto;
+  background: #0f172a;
+}
