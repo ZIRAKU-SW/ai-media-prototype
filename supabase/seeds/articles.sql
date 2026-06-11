@@ -16,6 +16,42 @@ select
   true, v.reading_time_minutes, v.view_count,
   v.published_at::timestamptz
 from (values
+  ('Obsidian×Claude Skillsで「第二の脳」を構築する──元OpenAI Karpathy式・3フォルダ最小実装',
+   'obsidian-claude-skills-second-brain',
+   '議事録もSlackも死蔵させない。AIを「コンパイラと図書館係」として動かし、自分の業務を覚え続けるナレッジベースを週末2日で立ち上げる手順。',
+   'https://pbs.twimg.com/media/HIjfOY2bMAAqnvB.jpg',
+   'ai-guide', 9, 58, '2026-06-11T13:00:00Z'),
+
+  ('Claudeを最強化するMCPサーバー30選──「コピペ中継」を卒業する接続ガイド',
+   'mcp-servers-30-selection',
+   'DBの確認もSlack要約もGitHubのIssueも、人間が中継する必要はもうない。海外で130万回読まれたMCPサーバーまとめをビジネス目線で整理。',
+   'https://pbs.twimg.com/media/HGPeW6ubsAAmNP-.jpg',
+   'tools', 8, 72, '2026-06-11T12:50:00Z'),
+
+  ('【超初心者向け】Claude Fable 5完全ガイド──何がすごいのか・いくらかかるのか・どう使うのか',
+   'claude-fable-5-beginner-guide',
+   'Opusの上「Mythos級」初の一般提供モデルを、公式発表ベースで分かりやすく解説。6月22日までの無料期間と、真価を体感するコピペ実験つき。',
+   'https://pbs.twimg.com/media/HKZ5tkzagAAnGcX.jpg',
+   'ai-guide', 9, 104, '2026-06-11T12:40:00Z'),
+
+  ('Claude Code Skills徹底ガイド──AIに仕事のやり方を覚えさせる「判断の資産化」',
+   'claude-code-skills-guide',
+   '毎回のお膳立てを卒業。SKILL.mdファイル1つで「上司は3ページ読まない」のような自社ルールをAIにセットし、チームで共有して属人化を解消する。',
+   'https://pbs.twimg.com/media/HGu1Vrab0AA9goz.jpg',
+   'dx-improvement', 9, 66, '2026-06-11T12:30:00Z'),
+
+  ('Claude Fable 5の実力と導入前の注意点──コスト3.6倍・ZDRなしでも使うべきか',
+   'claude-fable-5-business-cautions',
+   'シニアエンジニア水準91点の実力の裏で、トークン大食い・30日データ保持必須・ZDRなし。企業導入の判断に必要な情報を公式発表と実測値から整理。',
+   'https://pbs.twimg.com/media/HKbuXPHaMAAavTJ.jpg',
+   'ai-news', 8, 49, '2026-06-11T12:20:00Z'),
+
+  ('デザイン画像1枚からLPを作る──Fable 5×画像生成AIの分業ワークフロー',
+   'fable-5-lp-reproduction-workflow',
+   'LP画像をNext.jsで再現させたら一致度が圧倒的。数値ゴール・自己検証ループ・素材生成まで設計した「AIへの仕事の任せ方」の型を実例プロンプト付きで。',
+   'https://picsum.photos/seed/lp-workflow/800/450',
+   'lab', 6, 38, '2026-06-11T12:10:00Z'),
+
   ('【2026年最新】生成AIをビジネスで活用する方法｜用途別に徹底解説',
    'generative-ai-business-guide-2026',
    '生成AIは急速に進化し、ビジネス現場での活用が広がっています。文章生成・画像生成・音声AI・コード生成・データ分析の用途別に今すぐ使える活用方法を解説します。',
