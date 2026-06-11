@@ -79,9 +79,9 @@ export async function fetchHeadlines(slot: PostSlotId, limit = 8): Promise<NewsI
   }
 
   if (unique.length === 0) {
-    const slot = POST_SLOTS[slot]
+    const slotDef = POST_SLOTS[slot]
     unique.push({
-      title: `${slot.label}のAIビジネスニュース`,
+      title: `${slotDef.label}のAIビジネスニュース`,
       link: '',
       source: 'fallback',
       score: 0,
