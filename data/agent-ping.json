@@ -1,8 +1,8 @@
 {
   "status": "ok",
-  "message": "接続テスト成功",
-  "timestamp": "2026-06-12T05:00:00Z",
+  "message": "機能確認OK",
+  "timestamp": "2026-06-12T08:44:09Z",
   "agent": "cursor",
-  "test": 2,
+  "test": 3,
   "themes": ["wired", "notion", "zapier"]
 }

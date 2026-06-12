@@ -180,6 +180,27 @@ function sessionTitleFromMessage(msg: string): string {
   return t.length > 28 ? `${t.slice(0, 28)}…` : t || "新しい会話";
 }
 
+/** サイドバー開閉アイコン（パネル + 開閉方向の矢印） */
+function PanelToggleIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <rect x="3" y="4" width="18" height="16" rx="2.5" />
+      <line x1="9.5" y1="4" x2="9.5" y2="20" />
+      {open ? <path d="M16.5 9.5 14 12l2.5 2.5" /> : <path d="M14 9.5 16.5 12 14 14.5" />}
+    </svg>
+  );
+}
+
 function DevConsoleClientInner() {
   const { api, keys, branding, welcomeText, autoDeployDefault } = useDevConsoleConfig();
   // welcome の参照が毎レンダー変わると初期化 effect が再実行され、
@@ -776,11 +797,11 @@ function DevConsoleClientInner() {
           <button
             type="button"
             onClick={toggleLeftSidebar}
-            className="rounded-lg border border-[var(--cl-border)] bg-[var(--cl-input)] px-2.5 py-1.5 text-xs text-[var(--cl-muted)] transition hover:border-[var(--cl-accent)] hover:text-[var(--cl-text)]"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--cl-border)] bg-[var(--cl-input)] text-[var(--cl-muted)] transition hover:border-[var(--cl-accent)] hover:text-[var(--cl-text)]"
             title={leftVisible ? "会話履歴を隠す" : "会話履歴を表示"}
             aria-expanded={leftVisible}
           >
-            {leftVisible ? "⟨" : "⟩"}
+            <PanelToggleIcon open={leftVisible} />
           </button>
           <div>
             <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--cl-muted)]">
@@ -809,19 +830,19 @@ function DevConsoleClientInner() {
       <div className="flex min-h-0 flex-1">
         {/* 左: 折りたたみレール（履歴非表示時） */}
         {!leftVisible && (
-          <div className="flex w-11 shrink-0 flex-col items-center gap-2 border-r border-[var(--cl-border)] bg-[var(--cl-sidebar)] py-3">
+          <div className="flex w-14 shrink-0 flex-col items-center gap-2 border-r border-[var(--cl-border)] bg-[var(--cl-sidebar)] py-3">
             <button
               type="button"
               onClick={toggleLeftSidebar}
-              className="rounded-lg px-1.5 py-2 text-sm text-[var(--cl-muted)] transition hover:bg-[var(--cl-hover)] hover:text-[var(--cl-text)]"
+              className="flex h-10 w-10 items-center justify-center rounded-xl text-[var(--cl-muted)] transition hover:bg-[var(--cl-hover)] hover:text-[var(--cl-text)]"
               title="会話履歴を表示"
             >
-              ⟩
+              <PanelToggleIcon open={false} />
             </button>
             <button
               type="button"
               onClick={addTab}
-              className="rounded-lg px-2 py-1.5 text-lg leading-none text-[var(--cl-muted)] transition hover:bg-[var(--cl-hover)] hover:text-[var(--cl-accent)]"
+              className="flex h-10 w-10 items-center justify-center rounded-xl text-xl leading-none text-[var(--cl-muted)] transition hover:bg-[var(--cl-hover)] hover:text-[var(--cl-accent)]"
               title="新しい会話"
             >
               +
@@ -842,10 +863,10 @@ function DevConsoleClientInner() {
               <button
                 type="button"
                 onClick={toggleLeftSidebar}
-                className="rounded px-1.5 py-0.5 text-xs text-[var(--cl-muted)] hover:bg-[var(--cl-hover)] hover:text-[var(--cl-text)]"
-                title="隠す"
+                className="flex h-8 w-8 items-center justify-center rounded-lg text-[var(--cl-muted)] transition hover:bg-[var(--cl-hover)] hover:text-[var(--cl-text)]"
+                title="会話履歴を隠す"
               >
-                ⟨
+                <PanelToggleIcon open />
               </button>
             </div>
             <button

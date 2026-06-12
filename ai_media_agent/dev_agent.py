@@ -188,17 +188,15 @@ def run_dev_agent(
             return
         _log_activity(act, level, text, status=status)
 
-    log(0, "依頼内容を解析", "done")
-    log(0, "git stash で作業前スナップショットを取得", "active")
+    # 内部実装の詳細（git stash / スナップショットハッシュ等）はユーザーに意味がないため
+    # ログには出さず、ユーザー視点で意味のあるステップだけを表示する
+    log(0, "依頼内容を確認", "done")
     base, pre_untracked = _snapshot_base()
-    log(0, f"スナップショット: {base[:12]}…", "done")
 
     if image_paths:
-        log(0, f"参考画像 {len(image_paths)} 件", "done")
+        log(0, f"参考画像 {len(image_paths)} 件を読み込み", "done")
 
-    preview = message.replace("\n", " ")[:72]
-    log(0, f"プロンプト: 「{preview}{'…' if len(message) > 72 else ''}」", "done")
-    log(0, f"Agent.prompt（model={DEFAULT_MODEL}）を起動", "active")
+    log(0, f"AI エージェントがコードを編集中（{DEFAULT_MODEL}）", "active")
 
     started = time.monotonic()
     try:
@@ -222,8 +220,8 @@ def run_dev_agent(
             "activity": act,
         }
 
-    log(0, "Agent 応答を受信", "done")
-    log(0, "git diff で変更ファイルを抽出", "active")
+    log(0, "応答を受信", "done")
+    log(0, "変更ファイルを確認中", "active")
     changed, diff_text, truncated = _diff_since(base, pre_untracked)
     log(0, f"変更 {len(changed)} ファイルを検出", "done")
     for f in changed[:12]:
