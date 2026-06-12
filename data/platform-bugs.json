@@ -1,6 +1,22 @@
 {
-  "exported_at": "2026-06-12T04:19:17.000926+00:00",
+  "exported_at": "2026-06-12T04:50:10.426912+00:00",
   "bugs": [
+    {
+      "id": 31,
+      "title": "ログイン中のアカウント名がメールアドレスの@前のまま（登録名未使用）",
+      "symptom": "名前を登録済みなのに、ヘッダーと会員ページの表示名が ryo.maeda などメール抽出名になる",
+      "root_cause": "ZirakuAuthButtons / ZirakuMembersContent が profiles.display_name を参照せず (user.email).split('@')[0] を直接表示していた",
+      "fix": "useZirakuUser に displayName を追加（profiles.display_name → user_metadata.display_name → メール@前の優先順で解決）し、両コンポーネントで「{displayName} 様」表示に変更",
+      "affected_themes": "ziraku",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-06-12",
+      "fixed_at": "2026-06-12",
+      "commit_hash": null,
+      "tags": null,
+      "created_at": "2026-06-12 04:50:10",
+      "updated_at": "2026-06-12 04:50:10"
+    },
     {
       "id": 30,
       "title": "/admin/dev・/admin/operations が 500（client reference manifest 不在）",

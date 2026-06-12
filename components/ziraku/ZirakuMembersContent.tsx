@@ -78,7 +78,7 @@ function PromptCard({ title, body }: { title: string; body: string }) {
 }
 
 export default function ZirakuMembersContent() {
-  const { user, ready } = useZirakuUser()
+  const { user, ready, displayName } = useZirakuUser()
   const [checked, setChecked] = useState<boolean[]>(() => CHECKLIST.map(() => false))
   const [memberArticles, setMemberArticles] = useState<Article[]>([])
 
@@ -142,7 +142,7 @@ export default function ZirakuMembersContent() {
             <div>
               <p className="corp-eyebrow">MEMBERS LOUNGE</p>
               <h1 className="members__title">会員限定コンテンツ</h1>
-              <p className="members__lead">ようこそ、{(user.email ?? '').split('@')[0]} さん。以下の特典をご利用いただけます。</p>
+              <p className="members__lead">ようこそ、{displayName} 様。以下の特典をご利用いただけます。</p>
             </div>
             <Link href="/ziraku/settings" className="btn btn--ghost btn--pill members__settings-link">
               <IconSettings size={16} /> アカウント設定
