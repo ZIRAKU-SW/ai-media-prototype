@@ -86,6 +86,13 @@ git commit & push origin main   # ユーザー依頼時またはリリース時
 | Tunnel 直 URL だけ 200 で完了報告 | oceanosfleet nginx が古い URL のまま 530 になりうる |
 | curl 未実行で「繋がっています」 | 過去に誤報が発生済み |
 
+#### ⚠️ 再発パターン: `scripts/` 配下の型エラーがビルド全体を落とす（台帳 #19・#29）
+
+`scripts/x/` 等の補助スクリプトも `tsconfig.json` の対象なので、**自分が触っていないファイルの型エラーでも `next build` が丸ごと失敗する**。並行 Cursor セッションが追加したコード（`fetch-news.ts` の自己参照、`post-tweet.ts` の `media_ids` 型）で2回発生済み。
+
+- ビルドが「自分の変更と無関係なファイル」で落ちたら、まず `./node_modules/.bin/tsc --noEmit` で全体の型エラーを確認する。
+- ビルドが temp ファイルの `ENOENT` で繰り返し失敗するときは、`ps aux | grep "next build"` で**ゾンビビルドプロセスの重複起動**を疑い kill → `.next` 削除 → 単一ビルド（台帳 #29）。
+
 oceanosfleet が 530 → `data/ziraku-backend-url.txt` を oceanosfleet nginx に反映（`scripts/oceanosfleet/update-ziraku-proxy.sh`）。
 
 手順: `.cursor/rules/site-verification.mdc`
