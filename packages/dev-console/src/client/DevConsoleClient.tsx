@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { welcomeMessage } from "../config";
 import { DevConsoleProvider, useDevConsoleConfig } from "../context";
@@ -182,7 +182,9 @@ function sessionTitleFromMessage(msg: string): string {
 
 function DevConsoleClientInner() {
   const { api, keys, branding, welcomeText, autoDeployDefault } = useDevConsoleConfig();
-  const welcome = welcomeMessage(welcomeText);
+  // welcome の参照が毎レンダー変わると初期化 effect が再実行され、
+  // localStorage から旧セッションを再ロードして送信直後のメッセージを巻き戻してしまう
+  const welcome = useMemo(() => welcomeMessage(welcomeText), [welcomeText]);
 
   const [sessions, setSessions] = useState<DevSession[]>([]);
   const [activeId, setActiveId] = useState("");
@@ -210,6 +212,8 @@ function DevConsoleClientInner() {
   const deployBusy = BUSY_DEPLOY.has(deploy.phase);
 
   useEffect(() => {
+    // 初期化（localStorage からの復元）は一度だけ。再実行すると会話 state が巻き戻る
+    if (hydrated) return;
     const savedToken = readToken(keys);
     if (savedToken) {
       setPwInput(savedToken);
@@ -234,7 +238,7 @@ function DevConsoleClientInner() {
       storedAuto === null ? (autoDeployDefault ?? true) : storedAuto !== "false",
     );
     setHydrated(true);
-  }, [keys, welcome, autoDeployDefault]);
+  }, [hydrated, keys, welcome, autoDeployDefault]);
 
   useEffect(() => {
     if (!hydrated) return;

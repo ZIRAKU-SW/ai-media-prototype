@@ -1,11 +1,13 @@
 ---
-description: 変更後は oceanosfleet 本番で確認し、リリース時のみ git push
+description: 変更後は oceanosfleet 本番で確認する（Vercel は廃止・VM のみで運用）
 alwaysApply: true
 ---
 
 # デプロイ・確認（必須）
 
 機能追加・バグ修正・UI変更を完了したら、**本番 URL で動作確認する**。ローカルで動いただけでは完了としない。
+
+**Vercel は廃止済み。** 本番含めすべて VM（oceanosfleet.com/Ziraku）で運用する。
 
 ## 本番URL（日常の確認はこちら）
 
@@ -17,8 +19,6 @@ alwaysApply: true
 | Notion | https://oceanosfleet.com/Ziraku/notion |
 | Zapier | https://oceanosfleet.com/Ziraku/zapier |
 | AI開発コンソール | https://oceanosfleet.com/Ziraku/admin/dev |
-
-| リリース用（開発中は使わない） | https://project-7bhii.vercel.app |
 
 ## 確認手順（毎回）
 
@@ -35,12 +35,10 @@ alwaysApply: true
 
 - **oceanosfleet.com/Ziraku/** で3テーマ **curl 200** 確認済み
 - Tunnel URL は再起動で変わる — 古い URL を案内しない（`npm run dev:vm-url` で最新を確認）
-- **Vercel リリース時:** `git push` 済み + デプロイ Ready + 本番URL確認
 
 ## 注意
 
 - `localhost:3000` はローカル専用。ユーザーへの報告は **oceanosfleet.com/Ziraku** を使う
-- 開発中は Vercel を使わない（枠節約）
-- AI開発コンソールの Python エージェントは Vercel 上では動作しない
+- `git push` だけでは本番に反映されない（VM 上で `npm run dev:vm-restart` が必要）
 - oceanosfleet nginx 詳細: `docs/OCEANOSFLEET_NGINX.md`
 - VM 開発環境: `docs/GCP_VM_HANDOFF.md`

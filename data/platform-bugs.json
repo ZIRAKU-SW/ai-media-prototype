@@ -1,6 +1,38 @@
 {
-  "exported_at": "2026-06-12T04:50:10.426912+00:00",
+  "exported_at": "2026-06-12T05:18:25.638043+00:00",
   "bugs": [
+    {
+      "id": 33,
+      "title": "記事シェアボタンが旧 vercel.app 固定URLを共有していた",
+      "symptom": "𝕏 シェアボタンの共有URLが https://project-7bhii.vercel.app 固定で、現行の oceanosfleet.com/Ziraku と不一致",
+      "root_cause": "ThemeArticlePage / ArticlePage にデプロイ先ドメインがハードコードされていた",
+      "fix": "クリック時に window.location.href から共有URLを生成するよう変更（配信ドメイン非依存）",
+      "affected_themes": "all",
+      "status": "fixed",
+      "severity": "low",
+      "occurred_at": "2026-06-12",
+      "fixed_at": "2026-06-12",
+      "commit_hash": null,
+      "tags": "vercel,share,URL,ハードコード",
+      "created_at": "2026-06-12 05:18:25",
+      "updated_at": "2026-06-12 05:18:25"
+    },
+    {
+      "id": 32,
+      "title": "dev console: 送信メッセージ・AI返信が即座に消えチャットが機能しない",
+      "symptom": "/admin/dev で依頼を送信してもユーザー発言も AI 返信も画面に表示されない。API（api/dev/chat）は正常に reply を返している",
+      "root_cause": "DevConsoleClientInner の初期化 useEffect が毎レンダー新規生成される welcome オブジェクト（welcomeMessage() の戻り値）を依存配列に持ち、レンダーごとに localStorage から旧セッションを再ロードして会話 state を巻き戻していた",
+      "fix": "welcome を useMemo でメモ化し初期化 effect に if(hydrated) return ガードを追加。page.tsx の config もモジュールスコープ定数化して Provider の useMemo を有効化。教訓: effect 依存にレンダーごと新規生成オブジェクトを入れない",
+      "affected_themes": "admin",
+      "status": "fixed",
+      "severity": "high",
+      "occurred_at": "2026-06-12",
+      "fixed_at": "2026-06-12",
+      "commit_hash": null,
+      "tags": "react,dev-console,useEffect,localStorage,state巻き戻り",
+      "created_at": "2026-06-12 05:18:25",
+      "updated_at": "2026-06-12 05:18:25"
+    },
     {
       "id": 31,
       "title": "ログイン中のアカウント名がメールアドレスの@前のまま（登録名未使用）",

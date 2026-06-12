@@ -133,7 +133,16 @@ export default function ThemeArticlePage({
           <div className="article-detail__share">
             <span>この記事を共有：</span>
             <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://project-7bhii.vercel.app${base}/articles/${slug}`)}`}
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}`}
+              onClick={(e) => {
+                e.preventDefault()
+                // 配信ドメインに依存しないよう、シェアURLはクリック時の現在URLを使う
+                window.open(
+                  `https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(window.location.href)}`,
+                  '_blank',
+                  'noopener,noreferrer',
+                )
+              }}
               target="_blank"
               rel="noopener noreferrer"
               className="article-detail__share-btn"

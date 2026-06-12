@@ -262,7 +262,16 @@ export default function ArticlePage({ theme, slug }: { theme: Theme; slug: strin
         <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid #e5e7eb', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
           <span style={{ fontSize: '0.82rem', color: '#888' }}>この記事を共有：</span>
           <a
-            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://project-7bhii.vercel.app${base}/articles/${slug}`)}`}
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}`}
+            onClick={(e) => {
+              e.preventDefault()
+              // 配信ドメインに依存しないよう、シェアURLはクリック時の現在URLを使う
+              window.open(
+                `https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(window.location.href)}`,
+                '_blank',
+                'noopener,noreferrer',
+              )
+            }}
             target="_blank" rel="noopener"
             style={{ background: '#000', color: '#fff', padding: '6px 14px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 600, textDecoration: 'none' }}
           >

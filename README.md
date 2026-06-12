@@ -27,8 +27,9 @@ AIでビジネスを加速する実践メディアのサイトデザイン比較
 
 | 用途 | URL |
 |------|-----|
-| Vercel（リリース時のみ・枠節約のため開発中は使わない） | https://project-7bhii.vercel.app |
 | 既存 Oceanos（半導体株等・触らない） | https://oceanosfleet.com/AI/stock |
+
+※ 旧 Vercel デプロイ（project-7bhii.vercel.app）は廃止。本番含めすべて VM（oceanosfleet.com/Ziraku）で運用。
 
 ### 構成の要点
 
@@ -240,8 +241,7 @@ ai-media-prototype/
 | スタイル | テーマ別 CSS（wired / notion / zapier / ziraku）+ `mobile-shared.css` |
 | DB | Supabase PostgreSQL |
 | 開発実行 | GCP VM（PM2 + Cloudflare Tunnel） |
-| 公開 | oceanosfleet.com nginx プロキシ → `/Ziraku/*` |
-| リリース用 | Vercel（任意・`git push`） |
+| 公開 | oceanosfleet.com nginx プロキシ → `/Ziraku/*`（Vercel は廃止） |
 | AI開発コンソール | `@oceanos/dev-console` + Python `cursor-sdk` |
 | X 自動投稿 | `@cursor/sdk` + `twitter-api-v2` + cron（VM） |
 
@@ -256,8 +256,7 @@ ai-media-prototype/
 - [x] Pattern B (Notion) — トップ・記事詳細実装
 - [x] Pattern C (Zapier) — トップ・記事詳細実装
 - [x] Supabase DB連携（9テーブル・RLS設定済み）
-- [x] Vercel公開
-- [x] GCP VM + oceanosfleet.com/Ziraku 公開（nginx プロキシ済み）
+- [x] GCP VM + oceanosfleet.com/Ziraku 公開（nginx プロキシ済み）※旧 Vercel 公開は廃止
 - [x] gcp-vm → dify-vm SSH（nginx 自動更新）
 - [ ] 3パターン比較・最終デザイン選定
 

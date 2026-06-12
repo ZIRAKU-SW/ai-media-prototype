@@ -27,7 +27,6 @@
 | Zapier テーマ | https://oceanosfleet.com/Ziraku/zapier |
 | 管理画面 | https://oceanosfleet.com/Ziraku/admin |
 | AI開発コンソール | https://oceanosfleet.com/Ziraku/admin/dev |
-| Vercel（リリース時のみ） | https://project-7bhii.vercel.app |
 | GitHub | https://github.com/ZIRAKU-SW/ai-media-prototype |
 | Supabase | https://supabase.com/dashboard/project/wqlelowutbxplrzforcc |
 
@@ -40,8 +39,7 @@
 | フロントエンド | Next.js + TypeScript | App Router |
 | スタイリング | CSS Variables（テーマ別CSS） | Tailwind CSS補助 |
 | DB / Auth | Supabase (PostgreSQL + RLS) | Pro plan |
-| 公開 | oceanosfleet.com `/Ziraku/*` | nginx → Cloudflare Tunnel → ZIRAKU VM |
-| リリース用 | Vercel | `git push` 時のみ（開発中は使わない） |
+| 公開 | oceanosfleet.com `/Ziraku/*` | nginx → Cloudflare Tunnel → ZIRAKU VM（Vercel は廃止） |
 | AI 開発（Cursor Agent） | GCP VM + SSH | Remote SSH（22番）+ PM2 常駐 |
 | パッケージ管理 | npm | Node.js v20+ |
 
@@ -51,7 +49,7 @@
 
 | ファイル | 用途 |
 |----------|------|
-| `.env` | Vercel / Supabase DB |
+| `.env` | Supabase DB |
 | `.env.local` | Next.js + AI開発コンソール（VM パス設定済み） |
 
 Mac ローカル dev 時は `DEV_CONSOLE_PROJECT_ROOT` / `DEV_CONSOLE_PYTHON` を Mac パスに差し替える。
@@ -120,7 +118,7 @@ ai-media-prototype/
 │
 ├── scripts/vm/                 ← VM セットアップ（検証用・README 参照）
 │
-├── app/admin/dev/              ← AI開発コンソール UI（Vercel では Python 不可）
+├── app/admin/dev/              ← AI開発コンソール UI（VM 上で動作）
 ├── packages/dev-console/       ← 開発コンソール共有パッケージ
 ├── ai_media_agent/dev_agent.py ← Cursor SDK Python エージェント
 │
@@ -297,7 +295,7 @@ python3 platform_meta/seed.py                              # 初期化・エク�
 python3 platform_meta/seed.py --register-bug --title "..." ...  # 新規登録
 ```
 
-管理画面: https://project-7bhii.vercel.app/admin/operations
+管理画面: https://oceanosfleet.com/Ziraku/admin/operations
 
 ---
 
@@ -393,7 +391,7 @@ python3 platform_meta/seed.py --register-bug --title "..." ...  # 新規登録
 git add <files>
 git commit -m "feat/fix/docs: 変更内容の説明"
 git push origin main
-# → Vercelが自動デプロイ（1〜2分）
+# → 本番反映は VM 上で npm run dev:vm-restart（verify:sites まで実行される）
 
 # TypeScriptエラー確認
 ./node_modules/.bin/tsc --noEmit --project tsconfig.json
@@ -412,8 +410,8 @@ npm run dev  # → http://localhost:3000
 4. **新記事追加は `npm run articles:upsert`** — anon key では INSERT 不可。本文 Markdown を `data/articles-md/{slug}.md` に置き、メタデータを `lib/dummy-articles.ts` / `supabase/seeds/articles.sql` / `scripts/articles/upsert-articles.mjs` の3箇所に追加してから実行
 5. **Zapierページは独自コンポーネント** — TopPage.tsx を使っていないので別途対応
 6. **記事の content は Markdown 記法** — renderContent() でHTMLに変換している
-7. **Vercel デプロイは git push で自動発火** — 手動デプロイ不要
-8. **`/admin/dev` の Web エージェントは Vercel では動かない** — 本番 AI 作業は **Remote SSH → gcp-vm**
+7. **本番反映は VM 上で `npm run dev:vm-restart`** — Vercel は廃止済み（git push だけでは本番に反映されない）
+8. **`/admin/dev` の Web エージェントは VM 上で動作** — 本番 AI 作業は **Remote SSH → gcp-vm**
 
 ---
 
@@ -428,7 +426,7 @@ npm run dev  # → http://localhost:3000
 | **日常の確認・スマホ共有** | **oceanosfleet.com/Ziraku/** |
 | 開発・ビルド | **ZIRAKU VM**（PM2 + Tunnel） |
 | Cursor Agent によるコード変更 | **GCP VM + SSH（Remote SSH）** |
-| リリース | Vercel（`git push`、枠節約のため開発中は使わない） |
+| リリース | VM（`npm run dev:vm-restart`）。Vercel は廃止 |
 
 ```bash
 npm run dev:vm-restart      # build + PM2 再起動（Tunnel 維持）

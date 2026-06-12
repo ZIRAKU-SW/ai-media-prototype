@@ -15,7 +15,6 @@
 | 本番（日常確認） | https://oceanosfleet.com/Ziraku/ |
 | 本番想定トップ | https://oceanosfleet.com/Ziraku/ziraku |
 | X 公式アカウント | @AIbusinessmedia（自動投稿 PoC: `scripts/x/`） |
-| Vercel（リリース時） | https://project-7bhii.vercel.app |
 | DB（記事） | Supabase PostgreSQL |
 | DB（運用・バグ） | SQLite `data/platform.db` + エクスポート `data/platform-bugs.json` |
 | 開発 | GCP VM + Cursor Remote SSH（`docs/GCP_VM_HANDOFF.md`） |
@@ -89,16 +88,16 @@ git commit & push origin main   # ユーザー依頼時またはリリース時
 
 oceanosfleet が 530 → `data/ziraku-backend-url.txt` を oceanosfleet nginx に反映（`scripts/oceanosfleet/update-ziraku-proxy.sh`）。
 
-手順: `.cursor/rules/site-verification.mdc` / `.cursor/rules/vercel-deploy.mdc`
+手順: `.cursor/rules/site-verification.mdc`
 
-### 開発環境（VM が主・Vercel はリリース時のみ）
+### 開発環境（VM のみ・Vercel は廃止）
 
 | 用途 | 場所 |
 |------|------|
 | 日常開発・3テーマ確認 | https://oceanosfleet.com/Ziraku/... |
 | AI開発コンソール | https://oceanosfleet.com/Ziraku/admin/dev |
 | Tunnel URL（直接） | `npm run dev:vm-url` |
-| リリース | `git push` → Vercel（開発中は使わない） |
+| リリース | VM 上で `npm run dev:vm-restart`（Vercel は廃止） |
 
 VM 再起動: `npm run dev:vm-restart`
 
