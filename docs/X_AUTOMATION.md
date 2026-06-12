@@ -1,6 +1,8 @@
-# X（Twitter）自動投稿 — Cursor SDK + X API
+# X（Twitter）自動投稿 — セットアップ・運用
 
 `@AIbusinessmedia` 向けに、1日5回のAIビジネスニュース投稿を自動化する PoC です。
+
+> 手段の比較・検討経緯（API / Buffer / 半自動 / ブラウザ自動化）は **[X_POSTING_RESEARCH.md](./X_POSTING_RESEARCH.md)** を参照。
 
 ## 仕組み
 
@@ -104,6 +106,52 @@ crontab -e
 ## 全体像との対応
 
 コンセプト図の「集客チャネル → X」に対応。記事サイト（`https://oceanosfleet.com/Ziraku/ziraku`）への導線 URL を毎投稿に含めます。
+
+## ブラウザ自動投稿（API 不要・BAN リスクあり）
+
+X API の従量課金を避ける PoC 方式です。**利用規約違反・凍結リスク**があるため捨てアカウント想定で運用してください。
+
+### コマンド
+
+```bash
+# 3記事分の文面プレビュー（投稿しない）
+npm run x:browser:dry
+
+# 1人社長・副業・起業の試験投稿3件（90秒間隔）
+npm run x:browser:trial
+
+# 任意1件
+npm run x:browser -- --text "投稿文"
+```
+
+### 必要な環境変数
+
+| 変数 | 説明 |
+|------|------|
+| `X_USERNAME` / `X_HANDLE` | ログインID |
+| `X_PASSWORD` | ログインパスワード |
+| `X_POST_SITE_URL` | 記事ベース URL（デフォルト: Ziraku） |
+| `X_BROWSER_HEADLESS` | `1`=ヘッドレス（デフォルト） |
+| `X_BROWSER_POST_DELAY_MS` | 連投間隔 ms（デフォルト 90000） |
+
+セッションは `data/x-browser-state.json` に保存されます（`.gitignore` 済み）。
+
+### VM で Playwright が起動しない場合
+
+```bash
+sudo bash scripts/x/install-browser-deps.sh
+npm run x:browser:trial
+```
+
+Mac ローカルでは `npx playwright install chromium` のあと `npm run x:browser:trial` が確実です。
+
+### 試験投稿3件（`solo-business-posts.ts`）
+
+| slug | 記事 |
+|------|------|
+| `solo-president-chatgpt-100man` | 1人社長がChatGPTだけで月商100万… |
+| `president-ai-first-tasks` | 社長がAIを使うと最初に手放せる業務5つ |
+| `ai-agent-company-management` | AIエージェントで会社を経営する手順 |
 
 ## 関連ドキュメント
 
