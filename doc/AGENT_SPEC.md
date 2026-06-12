@@ -188,9 +188,16 @@ VM 再起動: `npm run dev:vm-restart`
 - 過去セッションで直したが未登録のもの → 会話履歴・コミットログから漏れを埋める
 - 一覧: `/admin/operations`（運用タブ） / `data/platform-bugs.json`
 
-### 過去バグの参照方法
+### 過去バグの参照方法（実装前必須）
+
+`.cursor/rules/past-troubles.mdc` に作業種別ごとのキーワード一覧あり。
 
 ```bash
+# キーワード検索（推奨）
+npm run platform:bugs:search -- X browser
+npm run platform:bugs:search -- mobile --theme notion
+npm run platform:bugs                              # 直近15件
+
 # SQLite 直接
 sqlite3 data/platform.db "SELECT id, title, status, affected_themes FROM bugs ORDER BY id DESC LIMIT 20;"
 

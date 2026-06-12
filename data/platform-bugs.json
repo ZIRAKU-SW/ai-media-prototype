@@ -1,6 +1,22 @@
 {
-  "exported_at": "2026-06-12T03:14:51.787296+00:00",
+  "exported_at": "2026-06-12T04:19:17.000926+00:00",
   "bugs": [
+    {
+      "id": 30,
+      "title": "/admin/dev・/admin/operations が 500（client reference manifest 不在）",
+      "symptom": "本番とlocalhostで /admin/dev と /admin/operations が 500。verify:sites が fail=2",
+      "root_cause": "api/dev/* の path.resolve(process.cwd()) を Turbopack の NFT トレースが拾いプロジェクト全体（ビルド中の .next 含む）をトレース。並行ビルドと相まって client reference manifest が欠落した壊れた .next が生成された",
+      "fix": "app/api/dev/{chat,deploy,health,upload}/route.ts の path.resolve に /*turbopackIgnore: true*/ を付与し、.next 削除後にクリーンビルド。commit 4167ccf",
+      "affected_themes": "all",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-06-12",
+      "fixed_at": "2026-06-12",
+      "commit_hash": "4167ccf",
+      "tags": null,
+      "created_at": "2026-06-12 04:19:16",
+      "updated_at": "2026-06-12 04:19:16"
+    },
     {
       "id": 29,
       "title": "next build がゾンビ build プロセス競合 + scripts/x の型エラーで失敗、本番502",

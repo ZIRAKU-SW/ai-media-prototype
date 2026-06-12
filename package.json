@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "platform:seed": "python3 platform_meta/seed.py",
+    "platform:bugs": "python3 platform_meta/seed.py --list 15",
+    "platform:bugs:search": "python3 platform_meta/seed.py --query",
     "dev:vm-url": "bash scripts/vm/dev-url.sh",
     "dev:vm-restart": "bash scripts/vm/restart-dev-env.sh",
     "verify:sites": "bash scripts/vm/verify-sites.sh",

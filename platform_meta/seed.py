@@ -367,6 +367,57 @@ def register_bug(conn: sqlite3.Connection, args: argparse.Namespace) -> int:
     return int(row["id"])
 
 
+def query_bugs(
+    conn: sqlite3.Connection,
+    keywords: list[str],
+    theme: str | None = None,
+    limit: int = 20,
+) -> list[dict]:
+    """キーワード（カンマ区切り可）で bugs を検索。実装前の過去トラブル参照用。"""
+    terms = []
+    for raw in keywords:
+        terms.extend(t.strip() for t in raw.split(",") if t.strip())
+    if not terms and not theme:
+        rows = conn.execute(
+            "SELECT * FROM bugs ORDER BY id DESC LIMIT ?",
+            (limit,),
+        ).fetchall()
+        return [dict(row) for row in rows]
+
+    clauses: list[str] = []
+    params: list[object] = []
+    for term in terms:
+        like = f"%{term}%"
+        clauses.append(
+            "(title LIKE ? OR symptom LIKE ? OR root_cause LIKE ? OR fix LIKE ? OR tags LIKE ? OR affected_themes LIKE ?)"
+        )
+        params.extend([like] * 6)
+    where = " AND ".join(f"({c})" for c in clauses) if clauses else "1=1"
+    if theme:
+        where += " AND affected_themes LIKE ?"
+        params.append(f"%{theme}%")
+    params.append(limit)
+    rows = conn.execute(
+        f"SELECT * FROM bugs WHERE {where} ORDER BY id DESC LIMIT ?",
+        params,
+    ).fetchall()
+    return [dict(row) for row in rows]
+
+
+def print_bug_hits(bugs: list[dict]) -> None:
+    if not bugs:
+        print("（該当なし）")
+        return
+    for b in bugs:
+        print(f"\n#{b['id']} [{b.get('affected_themes', '')}] {b['title']}")
+        if b.get("symptom"):
+            print(f"  症状: {b['symptom']}")
+        if b.get("root_cause"):
+            print(f"  原因: {b['root_cause']}")
+        if b.get("fix"):
+            print(f"  対策: {b['fix']}")
+
+
 def export_json(conn: sqlite3.Connection) -> None:
     bugs = [dict(row) for row in conn.execute("SELECT * FROM bugs ORDER BY id DESC")]
     changelog = [
@@ -402,6 +453,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--fixed-at", dest="fixed_at", default=None)
     parser.add_argument("--commit", default=None)
     parser.add_argument("--tags", default=None)
+    parser.add_argument(
+        "--query",
+        nargs="*",
+        metavar="KEYWORD",
+        help="過去トラブル検索（title/symptom/root_cause/fix/tags/themes）。複数可・カンマ区切り可",
+    )
+    parser.add_argument("--theme", help="affected_themes で絞り込み（例: notion, ziraku）")
+    parser.add_argument("--list", type=int, metavar="N", help="直近 N 件を表示（--query なし時）")
     return parser.parse_args()
 
 
@@ -412,6 +471,14 @@ def main() -> None:
 
     conn = connect()
     init_schema(conn)
+
+    if args.query is not None and len(args.query) > 0:
+        print_bug_hits(query_bugs(conn, args.query, args.theme, limit=args.list or 20))
+        return
+    if args.list:
+        print_bug_hits(query_bugs(conn, [], args.theme, limit=args.list))
+        return
+
     seed_changelog(conn)
     seed_bugs(conn)
 

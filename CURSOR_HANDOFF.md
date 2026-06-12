@@ -283,7 +283,14 @@ zapier.css で全スタイル管理。主な要素：
 | `data/platform.db` | エージェント向け SQLite 台帳 |
 | `data/platform-bugs.json` | 本番 `/admin/operations` 表示用エクスポート |
 | `doc/AGENT_SPEC.md` | 仕様・変更履歴 §6 |
+| `.cursor/rules/past-troubles.mdc` | **実装前の関連事例検索（必須）** |
 | `.cursor/rules/bug-registration.mdc` | バグ登録手順 |
+
+**実装前に必ず関連する過去事例を検索する**（再発防止・必須）:
+
+```bash
+npm run platform:bugs:search -- <キーワード>   # 例: build / mobile / nginx
+```
 
 ```bash
 python3 platform_meta/seed.py                              # 初期化・エクスポート

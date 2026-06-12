@@ -45,7 +45,7 @@ python3 platform_meta/seed.py --register-bug \
 
 ## 作業開始時・終了時のチェック
 
-1. **開始時**: `data/platform-bugs.json` または SQLite で同種バグを検索
+1. **開始時**: `.cursor/rules/past-troubles.mdc` に従い `npm run platform:bugs:search -- <キーワード>` で同種バグを検索
 2. **修正後**: 上記登録手順を実行（省略禁止）
 3. **終了時**: 今回のセッションで直したものがすべて台帳に載っているか確認
 

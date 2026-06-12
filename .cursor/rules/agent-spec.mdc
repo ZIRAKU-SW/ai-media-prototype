@@ -9,6 +9,7 @@ alwaysApply: true
 
 ## 鉄則
 
+- **過去トラブル** → 実装前に SQLite 台帳を検索（`.cursor/rules/past-troubles.mdc`）。`npm run platform:bugs:search -- <キーワード>`
 - **バグ台帳** → 直したトラブルは必ず SQLite に登録（`.cursor/rules/bug-registration.mdc`）。push 前に `data/platform-bugs.json` 更新まで完了
 - **3テーマ** → wired / notion / zapier すべてに適用し本番URLで確認（`CLAUDE.md`）
 - **Notion モバイル記事リスト** → 1024px以下は左サムネ96px + 右テキスト（`app/mobile-shared.css`）。Grid 単独レイアウトに戻さない

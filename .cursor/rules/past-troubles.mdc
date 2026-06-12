@@ -1,0 +1,51 @@
+---
+description: 実装前に SQLite 過去トラブル台帳を必ず参照する
+alwaysApply: true
+---
+
+# 過去トラブル参照（実装前必須）
+
+**コードを書く前に**、同種の過去事例を台帳で検索する。再発防止のため省略禁止。
+
+## 参照先（優先順）
+
+1. `npm run platform:bugs:search -- <キーワード>`（SQLite 直検索・推奨）
+2. `data/platform-bugs.json`（エクスポート・grep 可）
+3. `docs/過去トラブルまとめ.md`（カテゴリ別サマリー）
+
+## 実装前の手順
+
+1. 作業内容からキーワードを1〜3個決める（下表参照）
+2. `npm run platform:bugs:search -- <キーワード>` を実行し、該当 #id の **対策** を読む
+3. 該当があれば、その対策を今回の実装方針に反映してから着手
+4. 修正完了後は `.cursor/rules/bug-registration.mdc` で台帳に登録
+
+## 作業種別 → 検索キーワード・台帳 #id
+
+| 作業 | 検索例 | 代表 #id |
+|------|--------|----------|
+| X 投稿・ブラウザ自動化 | `X browser login` | #27 #28 |
+| `scripts/x/*` 追加・型 | `scripts build tsconfig` | #19 #29 |
+| モバイル記事カード CSS | `mobile article-card` | #1 #7 #8 |
+| カテゴリタブ・縦書き | `category-tabs 縦` | #2 #9 #6 |
+| nginx / Tunnel / 本番URL | `nginx tunnel 530` | #12 #13 #14 |
+| `npm run build` 失敗 | `build zombie SIGKILL` | #16 #29 |
+| Supabase Auth / DB 接続 | `supabase pooler signup` | #21 #23 |
+| ziraku ドラフト準拠 UI | `ドラフト ロゴ ヒーロー` | #14〜#18 #20 #25 |
+| 記事・動画 URL | `動画 URL 切り詰め` | #26 |
+| Vercel デプロイ | `Vercel commit` | #10 |
+
+## X 自動投稿の鉄則（#27 #28）
+
+- 本番投稿は **API**（`npm run x:post`）優先。ブラウザ自動化は不安定
+- ログイン失敗は **1回で停止・報告**。`data/x-login-lock.json` を勝手に解除して再試行しない
+- `scripts/x/*` は tsconfig 配下 → 型エラー1つで **全体ビルドが落ちる**（#19 #29）
+
+## コマンド例
+
+```bash
+npm run platform:bugs                          # 直近15件
+npm run platform:bugs:search -- X browser      # キーワード検索
+npm run platform:bugs:search -- mobile --theme notion
+python3 platform_meta/seed.py --list 30
+```

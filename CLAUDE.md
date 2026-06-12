@@ -1,5 +1,18 @@
 # CLAUDE.md — このプロジェクトでの作業ルール
 
+## 実装前に SQLite 過去トラブル台帳で「関連する過去事例」を必ず読む
+
+過去のバグ・トラブルは SQLite `data/platform.db` に集約されている（29件以上）。
+**コードを書く・直す前に、作業内容のキーワードで台帳を検索し、該当する過去事例の対策を読んでから着手する。**
+
+```bash
+npm run platform:bugs:search -- <キーワード>   # 例: build / mobile / nginx / X browser
+npm run platform:bugs                          # 直近15件
+```
+
+検索キーワードの対応表は `.cursor/rules/past-troubles.mdc` 参照。
+バグを直したら `python3 platform_meta/seed.py --register-bug ...` で台帳登録（`.cursor/rules/bug-registration.mdc`）。
+
 ## X ログイン失敗は1回でやめて報告する（連続試行＝アカウント凍結）
 
 ブラウザ自動投稿（`x:browser` 系）の**ログインに失敗したら、1回で停止してユーザーに報告し、指示を仰ぐ**。
