@@ -57,65 +57,62 @@ async function ensureLoggedIn(page: Page, context: BrowserContext): Promise<void
   await page.goto('https://x.com/i/flow/login', { waitUntil: 'domcontentloaded', timeout: 60_000 })
   await sleep(2000)
 
-  // X はログイン画面の手前に『サインアップ促進モーダル』を被せることがある。
-  // 背景に本物のログインフォーム（username_or_email + password）があるため、
-  // モーダルを閉じてから *最初*（=背景）のフォームを使う。
+  // X の現行ログイン（2026-06 時点）は「ユーザー名 → 続ける → パスワード → 続ける」
+  // の2段階。送信ボタンは両ステップとも『続ける』。
+  // 注意点:
+  //  - 同一フォームが手前モーダルと背景に重複描画される → 入力は最初の可視要素でOK
+  //    （fill は value を直接セットするため、どちらでも続けるボタンが有効化される）
+  //  - ボタンは *完全一致* で押す。`has-text("続ける")` は「電話番号で続ける」にも
+  //    マッチして電話番号認証へ逸れる（実害が出た不具合）
   await sleep(1500)
-  for (const closer of ['button[aria-label="戻る"]', 'button[aria-label="Back"]', 'div[aria-label="閉じる"]', 'button[aria-label="閉じる"]']) {
-    const el = page.locator(closer).first()
-    if (await el.isVisible().catch(() => false)) { await el.click().catch(() => {}); await sleep(800); break }
+
+  const clickContinue = async () => {
+    const btn = page.getByRole('button', { name: '続ける', exact: true }).first()
+    if (await btn.count()) { await btn.click(); return true }
+    const en = page.getByRole('button', { name: /^(Next|Log in)$/ }).first()
+    if (await en.count()) { await en.click(); return true }
+    return false
   }
-  await page.keyboard.press('Escape').catch(() => {})
-  await sleep(800)
+
+  // STEP 1: ユーザー名/メール
   const userInput = page
-    .locator('input[name="username_or_email"]:visible, input[autocomplete^="username"]:visible, input[name="text"]:visible')
+    .locator('input[name="username_or_email"], input[name="text"], input[autocomplete^="username"]')
     .first()
   await userInput.waitFor({ state: 'visible', timeout: 30_000 })
   await userInput.fill(username)
-  await sleep(800)
+  await sleep(700)
+  if (!(await clickContinue())) await userInput.press('Enter')
+  await sleep(3500)
 
-  const samePagePass = page.locator('input[name="password"]:visible').first()
-  if (await samePagePass.count()) {
-    // 新レイアウト: 同一画面でパスワードまで入力
-    await samePagePass.fill(password)
-    await sleep(600)
-    const submit = page
-      .locator('button[type="submit"]:visible, button:visible:has-text("続ける"), button:visible:has-text("ログイン"), button:visible:has-text("Log in")')
-      .first()
-    await submit.click()
-    await sleep(5000)
-  } else {
-    // 旧レイアウト: 多段フロー
-    const nextBtn = page.locator('button:visible', { hasText: /次へ|Next/ }).last()
-    if (await nextBtn.count()) {
-      await nextBtn.click()
-    } else {
-      await userInput.press('Enter')
-    }
-    await sleep(2000)
-
-    // 追加ユーザー名確認（電話・メール確認ステップ）
-    const verifyInput = page.locator('input[data-testid="ocfEnterTextTextInput"]')
-    if (await verifyInput.isVisible().catch(() => false)) {
-      await verifyInput.fill(username)
-      const verifyNext = page.locator('button:has-text("次へ"), button:has-text("Next")').first()
-      await verifyNext.click()
-      await sleep(2000)
-    }
-
-    const passInput = page.locator('input[name="password"]:visible, input[type="password"]:visible').last()
-    await passInput.waitFor({ state: 'visible', timeout: 30_000 })
-    await passInput.fill(password)
-    await sleep(800)
-
-    const loginBtn = page.locator('button[data-testid="LoginForm_Login_Button"], button:has-text("ログイン"), button:has-text("Log in")').first()
-    await loginBtn.click()
-    await sleep(5000)
+  // 追加のユーザー名確認（不審ログイン時のみ）
+  const verifyInput = page.locator('input[data-testid="ocfEnterTextTextInput"]')
+  if (await verifyInput.isVisible().catch(() => false)) {
+    await verifyInput.fill(username)
+    await clickContinue()
+    await sleep(3000)
   }
 
-  if (page.url().includes('/login') || page.url().includes('/flow/login')) {
+  // STEP 2: パスワード
+  const passInput = page.locator('input[name="password"]:visible, input[type="password"]:visible').first()
+  await passInput.waitFor({ state: 'visible', timeout: 30_000 })
+  await passInput.fill(password)
+  await sleep(700)
+  if (!(await clickContinue())) await passInput.press('Enter')
+  await sleep(6000)
+
+  // レート制限・認証失敗の検知
+  const restricted = await page
+    .getByText(/ログインを一時的に制限|temporarily limited|認証コード|verification code/i)
+    .first()
+    .isVisible()
+    .catch(() => false)
+  if (restricted) {
+    await screenshot(page, 'login-restricted')
+    throw new Error('Xにログインを一時制限されました（短時間の連続試行が原因。時間をおいて再実行してください）。または2FAコード要求の可能性')
+  }
+  if (page.url().includes('/flow/login') || page.url().includes('/onboarding/')) {
     await screenshot(page, 'login-failed')
-    throw new Error('ログイン失敗（CAPTCHA・2FA・パスワード誤りの可能性）。スクリーンショットを確認してください')
+    throw new Error('ログイン失敗（パスワード誤り・2FA・追加認証の可能性）。スクリーンショットを確認してください')
   }
 
   await page.goto('https://x.com/home', { waitUntil: 'domcontentloaded' })
@@ -129,8 +126,8 @@ async function ensureLoggedIn(page: Page, context: BrowserContext): Promise<void
     .isVisible()
     .catch(() => false)
   if (!editorReady || page.url().includes('/flow/login') || page.url().includes('/onboarding/')) {
-    await screenshot(page, 'login-rejected-bot-defense')
-    throw new Error('ログインは通過したがcompose到達不可（Xのボット対策で追加認証要求の可能性）。API方式（npm run x:post）を推奨')
+    await screenshot(page, 'login-incomplete')
+    throw new Error('ログイン後 compose に到達できませんでした。スクリーンショットを確認してください（2FA・追加認証・セレクタ要調整の可能性）')
   }
   await context.storageState({ path: STATE_PATH })
   console.log('[browser] ログイン成功・compose到達確認、セッション保存')
