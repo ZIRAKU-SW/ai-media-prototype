@@ -1,6 +1,22 @@
 {
-  "exported_at": "2026-06-12T02:03:18.869629+00:00",
+  "exported_at": "2026-06-12T03:14:51.787296+00:00",
   "bugs": [
+    {
+      "id": 29,
+      "title": "next build がゾンビ build プロセス競合 + scripts/x の型エラーで失敗、本番502",
+      "symptom": "会社情報ページ更新後、本番が502。PM2 ai-media-dev が停止。npm run build が _buildManifest.js.tmp の ENOENT で繰り返し失敗",
+      "root_cause": "①過去の dev:vm-restart が起動した next build プロセスがゾンビ化し .next を奪い合って temp ファイル競合。②並行 Cursor セッションが追加した scripts/x/post-tweet.ts に型エラー（media_ids が固定長タプル要求なのに string[]）があり tsconfig 配下のためビルド全体をブロック（#19 と同型）",
+      "fix": "ゾンビ next build プロセスを kill→.next削除→単一ビルド。post-tweet.ts の mediaIds を [string] タプルに as キャスト。教訓: ビルド失敗時は ps で next build の重複起動を疑う",
+      "affected_themes": "ziraku",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-06-12",
+      "fixed_at": "2026-06-12",
+      "commit_hash": null,
+      "tags": null,
+      "created_at": "2026-06-12 03:14:51",
+      "updated_at": "2026-06-12 03:14:51"
+    },
     {
       "id": 28,
       "title": "X連続ログイン試行でアカウントが一時凍結（レート制限）",
@@ -451,6 +467,14 @@
     }
   ],
   "changelog": [
+    {
+      "id": 20,
+      "entry_date": "2026-06-12",
+      "category": "feat",
+      "title": "会社情報ページを白基調に刷新 + サーバー写真をAIチップ写真に差替",
+      "body": "ダークテーマから白基調（淡いブルーグラデ+細グリッドのヒーロー、白KPIカード、ソフトブルーのサービス帯、紺の差し色MEDIAバンド/CTA）に変更。『選ばれる理由』のミスマッチなサーバー写真を半導体クローズアップ（public/corp/ai-chip.jpg）に差替。ビルド競合(#29)も解消。",
+      "created_at": "2026-06-12 03:14:51"
+    },
     {
       "id": 19,
       "entry_date": "2026-06-12",

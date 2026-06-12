@@ -23,6 +23,12 @@ EXPORT_PATH = ROOT / "data" / "platform-bugs.json"
 CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-06-12",
+        "category": "feat",
+        "title": "会社情報ページを白基調に刷新 + サーバー写真をAIチップ写真に差替",
+        "body": "ダークテーマから白基調（淡いブルーグラデ+細グリッドのヒーロー、白KPIカード、ソフトブルーのサービス帯、紺の差し色MEDIAバンド/CTA）に変更。『選ばれる理由』のミスマッチなサーバー写真を半導体クローズアップ（public/corp/ai-chip.jpg）に差替。ビルド競合(#29)も解消。",
+    },
+    {
+        "entry_date": "2026-06-12",
         "category": "fix",
         "title": "X ログインのセレクタ不具合修正 + 失敗ロックで連続試行を防止",
         "body": "真因は『続ける』ボタンの部分一致が『電話番号で続ける』に誤マッチしていたセレクタバグ（#27のbot検知判定は誤り）。getByRole exact に修正し、現行フロー（ユーザー名→続ける→パスワード→続ける）に対応。連続試行でレート制限を招いた反省から、ログイン失敗ロック（data/x-login-lock.json、--clear-login-lock で解除）を実装し、1回失敗で停止・再実行拒否。台帳 #28。",

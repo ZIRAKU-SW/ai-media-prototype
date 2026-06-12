@@ -1,8 +1,10 @@
+import { readFile } from 'node:fs/promises'
 import { TwitterApi } from 'twitter-api-v2'
 
 export type PostResult = {
   tweetId: string
   text: string
+  mediaIds?: string[]
 }
 
 export function hasXCredentials(): boolean {
@@ -14,7 +16,7 @@ export function hasXCredentials(): boolean {
   )
 }
 
-export async function postTweet(text: string): Promise<PostResult> {
+function createClient() {
   const appKey = process.env.X_API_KEY
   const appSecret = process.env.X_API_SECRET
   const accessToken = process.env.X_ACCESS_TOKEN
@@ -28,13 +30,20 @@ export async function postTweet(text: string): Promise<PostResult> {
     )
   }
 
-  const client = new TwitterApi({
-    appKey,
-    appSecret,
-    accessToken,
-    accessSecret,
-  })
+  return new TwitterApi({ appKey, appSecret, accessToken, accessSecret })
+}
 
-  const { data } = await client.v2.tweet(text)
-  return { tweetId: data.id, text }
+export async function uploadMedia(imagePath: string): Promise<string> {
+  const client = createClient()
+  const buf = await readFile(imagePath)
+  const mediaId = await client.v1.uploadMedia(buf, { mimeType: 'image/jpeg' })
+  return mediaId
+}
+
+export async function postTweet(text: string, imagePath?: string): Promise<PostResult> {
+  const client = createClient()
+  // twitter-api-v2 の media_ids は固定長タプル型（[string] 等）を要求するため as で合わせる
+  const mediaIds = imagePath ? ([await uploadMedia(imagePath)] as [string]) : undefined
+  const { data } = await client.v2.tweet(text, mediaIds ? { media: { media_ids: mediaIds } } : undefined)
+  return { tweetId: data.id, text, mediaIds }
 }

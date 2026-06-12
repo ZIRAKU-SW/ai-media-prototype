@@ -59,7 +59,7 @@ export default function ZirakuCompanyContent() {
       <main className="c2" ref={ref as React.RefObject<HTMLElement>}>
 
         {/* HERO */}
-        <section className="c2-hero" style={{ backgroundImage: `url(${BASE_PATH}/corp/hero-network.jpg)` }}>
+        <section className="c2-hero">
           <div className="c2-hero__veil" />
           <div className="c2-hero__inner">
             <p className="c2-eyebrow reveal">ZIRAKU Inc. — TECHNOLOGY × IMAGINATION</p>
@@ -106,7 +106,7 @@ export default function ZirakuCompanyContent() {
         </section>
 
         {/* SERVICES */}
-        <section className="c2-services" style={{ backgroundImage: `url(${BASE_PATH}/corp/circuit.jpg)` }}>
+        <section className="c2-services">
           <div className="c2-services__veil" />
           <div className="c2-services__inner">
             <div className="c2-center reveal">
@@ -149,14 +149,14 @@ export default function ZirakuCompanyContent() {
               ))}
             </div>
             <figure className="c2-strengths__visual reveal">
-              <img src={`${BASE_PATH}/corp/server.jpg`} alt="" loading="lazy" />
-              <figcaption>AI AGENT × ENGINEERING</figcaption>
+              <img src={`${BASE_PATH}/corp/ai-chip.jpg`} alt="AIチップ・半導体のクローズアップ" loading="lazy" />
+              <figcaption>AI × SEMICONDUCTOR</figcaption>
             </figure>
           </div>
         </section>
 
         {/* MEDIA BAND */}
-        <section className="c2-media" style={{ backgroundImage: `url(${BASE_PATH}/corp/code-dark.jpg)` }}>
+        <section className="c2-media">
           <div className="c2-media__veil" />
           <div className="c2-media__inner reveal">
             <p className="c2-eyebrow">MEDIA</p>
