@@ -23,6 +23,12 @@ EXPORT_PATH = ROOT / "data" / "platform-bugs.json"
 CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-06-12",
+        "category": "fix",
+        "title": "X ログインのセレクタ不具合修正 + 失敗ロックで連続試行を防止",
+        "body": "真因は『続ける』ボタンの部分一致が『電話番号で続ける』に誤マッチしていたセレクタバグ（#27のbot検知判定は誤り）。getByRole exact に修正し、現行フロー（ユーザー名→続ける→パスワード→続ける）に対応。連続試行でレート制限を招いた反省から、ログイン失敗ロック（data/x-login-lock.json、--clear-login-lock で解除）を実装し、1回失敗で停止・再実行拒否。台帳 #28。",
+    },
+    {
+        "entry_date": "2026-06-12",
         "category": "feat",
         "title": "会社情報ページをプロ品質ダークコーポレートに全面刷新",
         "body": "『AIが書いたページ感』脱却。Unsplashの未来感写真6枚（地球夜景ヒーロー/回路基板/サーバー/コード）を public/corp/ に取得し、ダークテーマ+グラスKPIストリップ+スクロール連動フェード（IntersectionObserver、JS無効時は常時表示・prefers-reduced-motion対応）+アウトライン数字+オフセットフレーム写真で構成。c2-* 名前空間で実装、会員エリアの corp-* とは独立。",

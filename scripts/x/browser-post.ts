@@ -10,7 +10,8 @@
  */
 
 import 'dotenv/config'
-import { mkdir, writeFile } from 'node:fs/promises'
+import { mkdir, writeFile, readFile, rm } from 'node:fs/promises'
+import { existsSync } from 'node:fs'
 import { dirname } from 'node:path'
 import { randomUUID } from 'node:crypto'
 import { chromium, type BrowserContext, type Page } from 'playwright'
@@ -21,6 +22,34 @@ const STATE_PATH = 'data/x-browser-state.json'
 const SCREENSHOT_DIR = 'data/x-browser-screenshots'
 const SITE_BASE = process.env.X_POST_SITE_URL ?? 'https://oceanosfleet.com/Ziraku/ziraku'
 const DELAY_MS = Number(process.env.X_BROWSER_POST_DELAY_MS ?? 90_000)
+
+// ── ログイン失敗ロック ────────────────────────────────────────────────
+// 連続ログイン試行は X のレート制限（一時凍結）を招く（台帳 #28）。
+// ログイン失敗時にロックを書き、解除（--clear-login-lock）するまで再実行を拒否する。
+const LOGIN_LOCK_PATH = 'data/x-login-lock.json'
+
+function checkLoginLock() {
+  if (!existsSync(LOGIN_LOCK_PATH)) return
+  let info = ''
+  try { info = readFile(LOGIN_LOCK_PATH, 'utf8') as unknown as string } catch { /* noop */ }
+  console.error(
+    '[browser] 🔒 前回ログインに失敗したためロック中です。\n' +
+    '  X のレート制限（一時凍結）を避けるため、自動では再試行しません。\n' +
+    '  時間をおいて（目安1時間）から、ロックを解除して再実行してください:\n' +
+    '    npm run x:browser -- --clear-login-lock      # ロック解除のみ\n' +
+    `  ロック内容: ${LOGIN_LOCK_PATH}`,
+  )
+  process.exit(2)
+}
+
+async function setLoginLock(reason: string) {
+  await mkdir(dirname(LOGIN_LOCK_PATH), { recursive: true }).catch(() => {})
+  await writeFile(LOGIN_LOCK_PATH, JSON.stringify({ reason, at: new Date().toISOString() }, null, 2), 'utf8').catch(() => {})
+}
+
+async function clearLoginLock() {
+  await rm(LOGIN_LOCK_PATH, { force: true }).catch(() => {})
+}
 
 function sleep(ms: number) {
   return new Promise(r => setTimeout(r, ms))
@@ -173,6 +202,15 @@ async function main() {
   const textIdx = argv.indexOf('--text')
   const customText = textIdx >= 0 ? argv[textIdx + 1] : undefined
 
+  // ロック解除のみ
+  if (argv.includes('--clear-login-lock')) {
+    await clearLoginLock()
+    console.log('[browser] ログイン失敗ロックを解除しました')
+    return
+  }
+  // 前回失敗していれば自動再試行を拒否（dry-run は実投稿しないので許可）
+  if (!dryRun) checkLoginLock()
+
   let posts: { text: string; sourceHeadline: string }[] = []
 
   if (soloTrial) {
@@ -221,7 +259,20 @@ async function main() {
   const page = await context.newPage()
 
   try {
-    await ensureLoggedIn(page, context)
+    try {
+      await ensureLoggedIn(page, context)
+      await clearLoginLock() // 成功したらロック解除
+    } catch (loginErr) {
+      // ログイン失敗は1回でロックし、自動再試行させない（台帳 #28）
+      const msg = loginErr instanceof Error ? loginErr.message : String(loginErr)
+      await setLoginLock(msg)
+      console.error(
+        '[browser] ❌ ログインに失敗しました。1回で停止します（再試行しません）。\n' +
+        '  原因をスクリーンショットで確認し、対処後に解除して再実行してください:\n' +
+        '    npm run x:browser -- --clear-login-lock',
+      )
+      throw loginErr
+    }
 
     for (const [i, post] of posts.entries()) {
       if (i > 0) {
