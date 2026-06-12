@@ -1,6 +1,22 @@
 {
-  "exported_at": "2026-06-12T05:18:25.638043+00:00",
+  "exported_at": "2026-06-12T09:00:06.829641+00:00",
   "bugs": [
+    {
+      "id": 34,
+      "title": "開発コンソールの旧 welcome 文言が残り「ロールバックした?」と誤認",
+      "symptom": "デプロイ後も /admin/dev に旧文言（DEV_CONSOLE_PASSWORD・Vercel 案内）が表示され、ユーザーがロールバックを疑った",
+      "root_cause": "会話履歴を localStorage に保存しており、welcome メッセージは会話作成時点の文言が会話データ内に保存される。ハードリロードでも localStorage は消えないため旧文言が表示され続けた",
+      "fix": "仕様として把握: 新しい会話を作成すれば最新の welcome になる。サーバー側の配信チャンクに旧文言が無いことを grep で確認してロールバックではないと切り分けた",
+      "affected_themes": "admin",
+      "status": "fixed",
+      "severity": "low",
+      "occurred_at": "2026-06-12",
+      "fixed_at": "2026-06-12",
+      "commit_hash": null,
+      "tags": "localStorage,welcome,dev-console,誤認,ロールバック",
+      "created_at": "2026-06-12 09:00:06",
+      "updated_at": "2026-06-12 09:00:06"
+    },
     {
       "id": 33,
       "title": "記事シェアボタンが旧 vercel.app 固定URLを共有していた",

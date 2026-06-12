@@ -78,12 +78,12 @@ function clampRightPanelWidth(
 
 const PHASE_LABEL: Record<string, { label: string; tone: string }> = {
   idle: { label: "待機中", tone: "text-[var(--cl-muted)]" },
-  building: { label: "ビルド中", tone: "text-amber-400/90" },
-  restarting: { label: "再起動中", tone: "text-amber-400/90" },
-  rolling_back: { label: "ロールバック中", tone: "text-orange-400/90" },
-  success: { label: "反映完了", tone: "text-[var(--cl-accent)]" },
-  build_failed: { label: "ビルド失敗", tone: "text-red-400/90" },
-  rolled_back: { label: "差し戻し済", tone: "text-orange-400/90" },
+  building: { label: "ビルド中", tone: "text-[var(--cl-warning)]" },
+  restarting: { label: "再起動中", tone: "text-[var(--cl-warning)]" },
+  rolling_back: { label: "ロールバック中", tone: "text-[var(--cl-warning)]" },
+  success: { label: "反映完了", tone: "text-[var(--cl-success)]" },
+  build_failed: { label: "ビルド失敗", tone: "text-[var(--cl-error)]" },
+  rolled_back: { label: "差し戻し済", tone: "text-[var(--cl-warning)]" },
 };
 
 const BUSY_DEPLOY = new Set(["building", "restarting", "rolling_back"]);
@@ -901,7 +901,7 @@ function DevConsoleClientInner() {
                     {sessions.length > 1 && (
                       <button
                         type="button"
-                        className="shrink-0 opacity-0 group-hover:opacity-100 text-[var(--cl-muted)] hover:text-red-400"
+                        className="shrink-0 opacity-0 group-hover:opacity-100 text-[var(--cl-muted)] hover:text-[var(--cl-error)]"
                         onClick={() => closeTab(s.id)}
                         aria-label="タブを閉じる"
                       >
@@ -988,7 +988,7 @@ function DevConsoleClientInner() {
                     <button
                       type="button"
                       onClick={() => removeImage(img.id)}
-                      className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-red-600 text-[10px] text-white"
+                      className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-[var(--cl-error)] text-[10px] text-white"
                     >
                       ×
                     </button>
@@ -1074,18 +1074,19 @@ function DevConsoleClientInner() {
                   ))}
                 </ul>
                 {lastResult.diff && (
-                  <pre className="overflow-x-auto rounded-xl border border-[var(--cl-border)] bg-[var(--cl-canvas)] p-3 font-mono text-[10px] leading-relaxed">
+                  /* diff は Claude のコードウィンドウ流儀でダーク面に表示 */
+                  <pre className="overflow-x-auto rounded-xl bg-[var(--cl-code-bg)] p-3 font-mono text-[10px] leading-relaxed">
                     {lastResult.diff.split("\n").map((line, i) => (
                       <div
                         key={i}
                         className={
                           line.startsWith("+") && !line.startsWith("+++")
-                            ? "text-emerald-400/90"
+                            ? "text-[var(--cl-success)]"
                             : line.startsWith("-") && !line.startsWith("---")
-                              ? "text-red-400/80"
+                              ? "text-[#e07a7a]"
                               : line.startsWith("@@")
-                                ? "text-[var(--cl-accent)]/80"
-                                : "text-[var(--cl-muted)]"
+                                ? "text-[var(--cl-accent)]"
+                                : "text-[var(--cl-code-muted)]"
                         }
                       >
                         {line || " "}

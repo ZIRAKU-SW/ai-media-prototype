@@ -21,7 +21,7 @@ export function DevConsoleChatBubble({ message }: { message: ChatMsg }) {
   if (message.role === "system") {
     return (
       <div className="flex justify-start">
-        <div className="max-w-[92%] rounded-2xl border border-red-500/30 bg-red-950/40 px-4 py-3 text-sm leading-relaxed text-red-200/90">
+        <div className="max-w-[92%] rounded-2xl border border-[var(--cl-error-border)] bg-[var(--cl-error-soft)] px-4 py-3 text-sm leading-relaxed text-[var(--cl-error)]">
           <p className="whitespace-pre-wrap">{message.text}</p>
         </div>
       </div>

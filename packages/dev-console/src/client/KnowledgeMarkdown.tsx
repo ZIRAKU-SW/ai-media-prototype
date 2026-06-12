@@ -53,19 +53,19 @@ export function normalizeMarkdownInput(raw: string): string {
 const markdownComponents: Components = {
   p: ({ children }) => <p className="my-3 leading-[1.75] last:mb-0">{children}</p>,
   strong: ({ children }) => (
-    <strong className="knowledge-bold font-bold text-[#fde68a] drop-shadow-sm">{children}</strong>
+    <strong className="knowledge-bold font-bold">{children}</strong>
   ),
-  em: ({ children }) => <em className="text-[#a5f3fc] not-italic">{children}</em>,
+  em: ({ children }) => <em className="text-[var(--cl-muted,#6c6a64)] not-italic">{children}</em>,
   h1: ({ children }) => (
-    <h1 className="mb-3 mt-6 font-serif text-2xl font-bold text-[var(--cl-text,#f5f5f5)]">{children}</h1>
+    <h1 className="mb-3 mt-6 font-serif text-2xl font-normal tracking-[-0.3px] text-[var(--cl-text,#141413)]">{children}</h1>
   ),
   h2: ({ children }) => (
-    <h2 className="mb-2 mt-6 border-b border-[var(--cl-border,#3d3834)] pb-2 font-serif text-xl font-semibold text-[#f0d4c8]">
+    <h2 className="mb-2 mt-6 border-b border-[var(--cl-border,#e6dfd8)] pb-2 font-serif text-xl font-normal tracking-[-0.3px] text-[var(--cl-text,#141413)]">
       {children}
     </h2>
   ),
   h3: ({ children }) => (
-    <h3 className="mb-2 mt-4 text-lg font-semibold text-[var(--cl-accent,#d97757)]">{children}</h3>
+    <h3 className="mb-2 mt-4 text-lg font-medium text-[var(--cl-accent-active,#a9583e)]">{children}</h3>
   ),
   ul: ({ children }) => <ul className="my-3 list-disc space-y-1.5 pl-5">{children}</ul>,
   ol: ({ children }) => <ol className="my-3 list-decimal space-y-1.5 pl-5">{children}</ol>,

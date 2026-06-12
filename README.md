@@ -83,6 +83,13 @@ npm run dify:ssh-test     # ssh dify-vm hostname
 - URL: https://oceanosfleet.com/Ziraku/admin/dev
 - **パスワード不要**（VM では `DEV_CONSOLE_PASSWORD` 未設定。ライブラリの任意認証のみ）
 - 送信: ⌘/Ctrl + Enter
+- **デザイン: Claude 風ライトテーマ**（クリーム地 + コーラルアクセント + コード/diff はダーク面）。
+  トークンは `packages/dev-console/src/styles/dev-console.css` の `--cl-*` 変数に集約
+  （参考: [getdesign.md/claude](https://getdesign.md/claude/design-md)）
+- 進捗表示は「実行中タスクを見出し + 完了ステップをチェックリスト」形式。
+  作業ログは `ai_media_agent/dev_agent.py` がユーザー視点の文言のみ出力（git stash 等の内部実装は非表示）
+- 会話履歴は localStorage 保存。**welcome 文言は会話作成時点のものが残る**ため、
+  文言を変えた後に古い表示が出たら「+ 新しい会話」で確認する（ロールバックではない）
 
 ### X 自動投稿（@AIbusinessmedia）
 

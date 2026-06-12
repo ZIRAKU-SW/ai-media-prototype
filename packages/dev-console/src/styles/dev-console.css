@@ -1,20 +1,36 @@
 /* Tailwind ユーティリティはホストアプリの PostCSS で処理（@import tailwindcss はここでは使わない） */
 
+/*
+ * Claude 風ライトテーマ（https://getdesign.md/claude/design-md 準拠・本プロジェクト向けにアレンジ）
+ * - クリームのキャンバス + 温かみのある墨色テキスト
+ * - コーラル（#cc785c）を主アクセント（送信ボタン・ユーザー吹き出し・リンク）
+ * - コード/diff はダークネイビー面（Claude のコードウィンドウの流儀）
+ */
 :root {
-  --cl-sidebar: #1c1917;
-  --cl-canvas: #141210;
-  --cl-input: #231f1c;
-  --cl-border: #3d3834;
-  --cl-text: #f5f0eb;
-  --cl-muted: #a8a29e;
-  --cl-accent: #22d3ee;
-  --cl-accent-soft: rgba(34, 211, 238, 0.14);
-  --cl-accent-fg: #0f172a;
-  --cl-hover: rgba(255, 255, 255, 0.05);
+  --cl-canvas: #faf9f5; /* cream canvas */
+  --cl-sidebar: #f5f0e8; /* surface-soft */
+  --cl-input: #efe9de; /* surface-card */
+  --cl-border: #e6dfd8; /* hairline */
+  --cl-text: #141413; /* ink */
+  --cl-muted: #6c6a64; /* muted */
+  --cl-accent: #cc785c; /* coral */
+  --cl-accent-active: #a9583e; /* coral active */
+  --cl-accent-soft: rgba(204, 120, 92, 0.14);
+  --cl-accent-fg: #ffffff; /* text on coral */
+  --cl-hover: rgba(20, 20, 19, 0.05);
+  --cl-success: #5db872;
+  --cl-warning: #d4a017;
+  --cl-error: #c64545;
+  --cl-error-soft: rgba(198, 69, 69, 0.08);
+  --cl-error-border: rgba(198, 69, 69, 0.35);
+  /* ダークのコード面（Claude の code-window-card） */
+  --cl-code-bg: #181715;
+  --cl-code-fg: #faf9f5;
+  --cl-code-muted: #a09d96;
 }
 
 .cl-shell {
-  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --font-serif: "Tiempos Headline", "Iowan Old Style", Garamond, "Times New Roman", serif;
 }
 
 @keyframes cl-spin {
@@ -32,7 +48,7 @@
   width: 1.25rem;
   height: 1.25rem;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(20, 20, 19, 0.12);
   border-top-color: var(--cl-accent);
   animation: cl-spin 0.75s linear infinite;
 }
@@ -47,16 +63,19 @@
 .knowledge-prose h2,
 .knowledge-prose h3 {
   color: var(--cl-text);
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.3px;
 }
 
 .knowledge-prose strong,
 .knowledge-bold {
   font-weight: 700;
-  color: #a5f3fc;
+  color: var(--cl-accent-active);
 }
 
 .knowledge-prose em {
-  color: #c4b5fd;
+  color: var(--cl-muted);
   font-style: normal;
 }
 
@@ -73,18 +92,27 @@
   color: var(--cl-muted);
 }
 
+/* コードブロックは Claude 流のダーク面 */
 .knowledge-prose pre {
   overflow-x: auto;
-  border-radius: 8px;
-  border: 1px solid var(--cl-border);
-  background: var(--cl-canvas);
-  padding: 0.75rem;
+  border-radius: 12px;
+  border: none;
+  background: var(--cl-code-bg);
+  color: var(--cl-code-fg);
+  padding: 0.85rem 1rem;
   font-size: 12px;
 }
 
 .knowledge-prose code {
-  font-family: ui-monospace, monospace;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 0.9em;
+}
+
+/* インラインコード（pre 内は除く）はクリームカード地 */
+.knowledge-prose :not(pre) > code {
+  background: var(--cl-input);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
 }
 
 .knowledge-prose table {

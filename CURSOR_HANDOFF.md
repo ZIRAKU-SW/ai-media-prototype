@@ -455,3 +455,16 @@ gcp-vm から dify-vm へ SSH: Mac の `google_compute_engine` 鍵を gcp-vm に
 - パッケージ: `@oceanos/dev-console`
 - API: `/api/dev/chat` → `ai_media_agent/dev_agent.py` → Cursor SDK
 - モデル: `CURSOR_SDK_MODEL=composer-2.5`
+
+#### UI 仕様（2026-06-12 改定）
+
+- **テーマ: Claude 風ライト**（クリーム地 `#faf9f5` + コーラル `#cc785c` + コード/diff はダーク面 `#181715`）。
+  サイトの3テーマ（wired/notion/zapier）とは独立。トークンは
+  `packages/dev-console/src/styles/dev-console.css` の `--cl-*` CSS 変数に集約されており、色変更はこのファイルだけで完結する
+  （参考: [getdesign.md/claude](https://getdesign.md/claude/design-md)）
+- コンポーネント内に Tailwind の固定色（red-400 等）を直書きしない。セマンティック色は `--cl-success / --cl-warning / --cl-error` を使う
+- サイドバー開閉はアイコン付き 40×40px ボタン（`PanelToggleIcon`）
+- 進捗パネル（`DevAgentActivityPanel`）は「実行中タスク見出し + 完了チェックリスト」形式
+- 作業ログは `dev_agent.py` がユーザー視点の文言のみ出力（git stash・スナップショットハッシュ等の内部実装は出さない）
+- 会話履歴は localStorage 保存。welcome 文言は**会話作成時点のものが会話内に固定**される（文言変更後は「+ 新しい会話」で確認）
+- DevConsole の `config` は**モジュールスコープ定数**で渡す（毎レンダー新規オブジェクトだと初期化 effect が再実行され state が巻き戻る・台帳 #32）
