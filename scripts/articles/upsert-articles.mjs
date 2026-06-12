@@ -253,6 +253,16 @@ const ARTICLES = [
     published_at: '2026-06-11T09:10:00Z',
   },
   {
+    slug: 'ai-ready-data-strategy',
+    title: '「AI-Ready」とは何か──最新モデルの契約より先に、自社ナレッジを「AIの燃料」に変える',
+    cat_slug: 'dx-improvement',
+    excerpt: 'AI活用の成否はモデルではなく、企業側の業務・データ・統制の成熟度で決まる。1stパーティーデータと業務ナレッジをAIが使える形に整える「AI-Ready」の本質を解説。',
+    thumbnail_url: 'https://pbs.twimg.com/media/HKhIFOwaQAAvM03.jpg',
+    reading_time_minutes: 6,
+    view_count: 25,
+    published_at: '2026-06-12T09:00:00Z',
+  },
+  {
     slug: 'claude-fable-5-side-business',
     title: 'Claude Fable 5で会社員が副業月30万円を目指す──AIを「戦略責任者」として雇う4ステップ',
     cat_slug: 'solo-business',

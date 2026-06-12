@@ -20,7 +20,8 @@
     "x:post:dry": "tsx scripts/x/run-slot.ts --dry-run",
     "x:browser": "tsx scripts/x/browser-post.ts",
     "x:browser:trial": "tsx scripts/x/browser-post.ts --solo-business-trial",
-    "x:browser:dry": "tsx scripts/x/browser-post.ts --solo-business-trial --dry-run"
+    "x:browser:dry": "tsx scripts/x/browser-post.ts --solo-business-trial --dry-run",
+    "x:browser:enterprise": "tsx scripts/x/browser-post.ts --enterprise-cost-trial"
   },
   "dependencies": {
     "@oceanos/dev-console": "file:./packages/dev-console",

@@ -7,7 +7,7 @@ AIでビジネスを加速する実践メディアのサイトデザイン比較
 > 🤖 Cursor Agent / 新しいAIエージェントへの引き継ぎは **[CURSOR_HANDOFF.md](./CURSOR_HANDOFF.md)** を参照。  
 > 📋 エージェント統一仕様・バグ台帳は **[doc/AGENT_SPEC.md](./doc/AGENT_SPEC.md)**（運用: `/admin/operations`、[過去トラブルまとめ](./docs/過去トラブルまとめ.md)）を参照。  
 > 🖥️ GCP VM・oceanosfleet 公開は **[docs/GCP_VM_HANDOFF.md](./docs/GCP_VM_HANDOFF.md)** / **[docs/OCEANOSFLEET_NGINX.md](./docs/OCEANOSFLEET_NGINX.md)** を参照。  
-> 🐦 X 自動投稿（@AIbusinessmedia）は **[docs/X_AUTOMATION.md](./docs/X_AUTOMATION.md)** を参照。
+> 🐦 X 自動投稿（@AIbusinessmedia）— 検討まとめ: **[docs/X_POSTING_RESEARCH.md](./docs/X_POSTING_RESEARCH.md)** / 運用手順: **[docs/X_AUTOMATION.md](./docs/X_AUTOMATION.md)**
 
 ---
 

@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 const PROJECT_ROOT =
-  process.env.DEV_CONSOLE_PROJECT_ROOT ?? path.resolve(process.cwd())
+  process.env.DEV_CONSOLE_PROJECT_ROOT ?? path.resolve(/*turbopackIgnore: true*/ process.cwd())
 
 const h = createDevChatHandlers({
   projectRoot: PROJECT_ROOT,

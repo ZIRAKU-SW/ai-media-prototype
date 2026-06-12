@@ -12,7 +12,7 @@ export async function GET(request: Request) {
   }
 
   const projectRoot =
-    process.env.DEV_CONSOLE_PROJECT_ROOT ?? path.resolve(process.cwd())
+    process.env.DEV_CONSOLE_PROJECT_ROOT ?? path.resolve(/*turbopackIgnore: true*/ process.cwd())
 
   const mod = process.env.DEV_CONSOLE_PYTHON_MODULE ?? 'ai_media_agent.dev_agent'
   const py = process.env.DEV_CONSOLE_PYTHON ?? 'python3'

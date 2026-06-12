@@ -16,7 +16,8 @@ import { dirname } from 'node:path'
 import { randomUUID } from 'node:crypto'
 import { chromium, type BrowserContext, type Page } from 'playwright'
 import { appendPost } from './history'
-import { SOLO_BUSINESS_TRIAL, buildArticleTweet } from './solo-business-posts'
+import { SOLO_BUSINESS_TRIAL, ENTERPRISE_AI_COST_PROMO, buildArticleTweet } from './solo-business-posts'
+import { ensureLocalImage } from './article-media'
 
 const STATE_PATH = 'data/x-browser-state.json'
 const SCREENSHOT_DIR = 'data/x-browser-screenshots'
@@ -162,16 +163,24 @@ async function ensureLoggedIn(page: Page, context: BrowserContext): Promise<void
   console.log('[browser] ログイン成功・compose到達確認、セッション保存')
 }
 
-async function postOne(page: Page, text: string): Promise<void> {
-  await page.goto('https://x.com/compose/tweet', { waitUntil: 'domcontentloaded', timeout: 60_000 })
-  await sleep(2000)
+async function postOne(page: Page, text: string, imagePath?: string): Promise<void> {
+  // intent URL で文面を注入（contenteditable への fill/type/貼り付けは内部状態とずれる）
+  const intentUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}`
+  await page.goto(intentUrl, { waitUntil: 'domcontentloaded', timeout: 60_000 })
+  await sleep(2500)
 
-  const editor = page.locator('[data-testid="tweetTextarea_0"] div[contenteditable="true"], [role="textbox"][data-testid="tweetTextarea_0"]').first()
-  await editor.waitFor({ state: 'visible', timeout: 30_000 })
-  await editor.click()
-  await sleep(500)
-  await editor.fill(text)
-  await sleep(1500)
+  if (imagePath) {
+    const mediaBtn = page.locator('[data-testid="fileInput"], input[type="file"]').first()
+    if (await mediaBtn.count() === 0) {
+      await page.locator('[data-testid="attachments"], [aria-label*="メディア"], [aria-label*="Media"]').first().click().catch(() => {})
+      await sleep(800)
+    }
+    const fileInput = page.locator('input[type="file"]').first()
+    await fileInput.waitFor({ state: 'attached', timeout: 10_000 })
+    await fileInput.setInputFiles(imagePath)
+    await sleep(2500)
+    console.log(`[browser] 画像添付: ${imagePath}`)
+  }
 
   const postBtn = page.locator('[data-testid="tweetButton"], [data-testid="tweetButtonInline"]').first()
   await postBtn.waitFor({ state: 'visible', timeout: 15_000 })
@@ -199,8 +208,13 @@ async function main() {
   const argv = process.argv.slice(2)
   const dryRun = argv.includes('--dry-run')
   const soloTrial = argv.includes('--solo-business-trial')
+  const enterpriseTrial = argv.includes('--enterprise-cost-trial')
   const textIdx = argv.indexOf('--text')
   const customText = textIdx >= 0 ? argv[textIdx + 1] : undefined
+  const imageIdx = argv.indexOf('--image')
+  const customImage = imageIdx >= 0 ? argv[imageIdx + 1] : undefined
+  const slugIdx = argv.indexOf('--slug')
+  const customSlug = slugIdx >= 0 ? argv[slugIdx + 1] : undefined
 
   // ロック解除のみ
   if (argv.includes('--clear-login-lock')) {
@@ -211,19 +225,32 @@ async function main() {
   // 前回失敗していれば自動再試行を拒否（dry-run は実投稿しないので許可）
   if (!dryRun) checkLoginLock()
 
-  let posts: { text: string; sourceHeadline: string }[] = []
+  let posts: { text: string; sourceHeadline: string; slug?: string; imagePath?: string }[] = []
 
   if (soloTrial) {
-    posts = SOLO_BUSINESS_TRIAL.map(p => ({
+    posts = await Promise.all(SOLO_BUSINESS_TRIAL.map(async p => ({
       text: buildArticleTweet(p, SITE_BASE),
       sourceHeadline: p.title,
-    }))
+      slug: p.slug,
+      imagePath: await ensureLocalImage(p.slug, p.thumbnail_url).catch(() => undefined),
+    })))
+  } else if (enterpriseTrial) {
+    const p = ENTERPRISE_AI_COST_PROMO
+    posts = [{
+      text: buildArticleTweet(p, SITE_BASE),
+      sourceHeadline: p.title,
+      slug: p.slug,
+      imagePath: await ensureLocalImage(p.slug, p.thumbnail_url).catch(() => undefined),
+    }]
   } else if (customText) {
-    posts = [{ text: customText, sourceHeadline: 'custom' }]
+    const imagePath = customImage
+      ?? (customSlug ? await ensureLocalImage(customSlug).catch(() => undefined) : undefined)
+    posts = [{ text: customText, sourceHeadline: 'custom', imagePath }]
   } else {
     console.error('Usage:')
     console.error('  npx tsx scripts/x/browser-post.ts --solo-business-trial [--dry-run]')
-    console.error('  npx tsx scripts/x/browser-post.ts --text "投稿文"')
+    console.error('  npx tsx scripts/x/browser-post.ts --enterprise-cost-trial [--dry-run]')
+    console.error('  npx tsx scripts/x/browser-post.ts --text "投稿文" [--image path] [--slug slug]')
     process.exit(1)
   }
 
@@ -232,6 +259,7 @@ async function main() {
     console.log(`--- [${i + 1}/${posts.length}] ---`)
     console.log(p.text)
     console.log(`(${p.text.length} chars)`)
+    if (p.imagePath) console.log(`image: ${p.imagePath}`)
   }
 
   if (dryRun) {
@@ -279,7 +307,7 @@ async function main() {
         console.log(`[browser] ${DELAY_MS / 1000}s 待機（連投防止）…`)
         await sleep(DELAY_MS)
       }
-      await postOne(page, post.text)
+      await postOne(page, post.text, post.imagePath)
       await appendPost({
         id: randomUUID(),
         slot: 'lunch',

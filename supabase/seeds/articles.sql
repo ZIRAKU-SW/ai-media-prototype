@@ -1,5 +1,5 @@
 -- ============================================================
--- モック記事データ（20本）
+-- モック記事データ（35本）
 -- 参考元:
 --   https://www.skillupai.com/blog/for-business/generative-ai-business/
 --   https://www.matrixflow.net/case-study/161/
@@ -220,7 +220,13 @@ from (values
    'claude-fable-5-side-business',
    '市場分析も商品設計も未来予測もAIに任せ、自分は実行だけ。「考えるAI」Fable 5で副業の役割分担が逆転する具体的な手順を解説。',
    'https://pbs.twimg.com/media/HKcStMIaUAAww-M.jpg',
-   'solo-business', 8, 42, '2026-06-11T09:45:00Z')
+   'solo-business', 8, 42, '2026-06-11T09:45:00Z'),
+
+  ('「AI-Ready」とは何か──最新モデルの契約より先に、自社ナレッジを「AIの燃料」に変える',
+   'ai-ready-data-strategy',
+   'AI活用の成否はモデルではなく、企業側の業務・データ・統制の成熟度で決まる。1stパーティーデータと業務ナレッジをAIが使える形に整える「AI-Ready」の本質を解説。',
+   'https://pbs.twimg.com/media/HKhIFOwaQAAvM03.jpg',
+   'dx-improvement', 6, 25, '2026-06-12T09:00:00Z')
 
 ) as v(title, slug, excerpt, thumbnail_url, cat_slug, reading_time_minutes, view_count, published_at)
 join categories c on c.slug = v.cat_slug
