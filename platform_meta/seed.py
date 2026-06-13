@@ -22,6 +22,12 @@ EXPORT_PATH = ROOT / "data" / "platform-bugs.json"
 
 CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
+        "entry_date": "2026-06-13",
+        "category": "feat",
+        "title": "記事公開→自動X投稿用に RSS 2.0 フィード(/Ziraku/feed.xml)を配信",
+        "body": "Zapier『RSS by Zapier』→『Twitter/X』連携で記事公開を自動X投稿(@AIbusinessmedia)するための RSS フィードを実装。app/feed.xml/route.ts(basePath /Ziraku で公開URLは /Ziraku/feed.xml)。getArticles({limit:20}) で公開記事のみ取得し is_published/is_members_only を二重フィルタで会員限定記事を除外。guid は slug 由来の不変URL(${X_POST_SITE_URL}/articles/{slug})で Zapier 側の重複投稿を防止。pubDate は RFC822、title/description/category は CDATA(]]>ガード付き)、link/guid/enclosure URL は xmlEscape で & 破損防止。Cache-Control s-maxage=300 + revalidate=300。getArticles 失敗時も空フィードを200で返すフォールバック。本番疎通確認済(item20件・会員限定除外・Content-Type application/rss+xml)。Zap 設定はユーザー側(doc/HANDOFF_RSS_X_AUTOPOST.md §5)。",
+    },
+    {
         "entry_date": "2026-06-12",
         "category": "feat",
         "title": "会社情報ページを白基調に刷新 + サーバー写真をAIチップ写真に差替",
