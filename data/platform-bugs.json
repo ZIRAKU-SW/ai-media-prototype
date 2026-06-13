@@ -1,5 +1,5 @@
 {
-  "exported_at": "2026-06-13T03:28:59.367429+00:00",
+  "exported_at": "2026-06-13T04:23:53.325611+00:00",
   "bugs": [
     {
       "id": 34,
@@ -547,6 +547,14 @@
     }
   ],
   "changelog": [
+    {
+      "id": 22,
+      "entry_date": "2026-06-13",
+      "category": "feat",
+      "title": "記事公開→自動X投稿を VM cron 方式で実装（Zapier公式X廃止のため方針転換）",
+      "body": "Zapier 公式の X(Twitter) アクションが廃止されていたため、Zapier を使わず VM cron で完結する方式に変更。scripts/x/post-articles.ts を新規実装し、既存 post-tweet.ts(twitter-api-v2 で OAuth 1.0a 署名処理)を再利用。Supabase REST 直叩きで is_published=true∧is_members_only=false の記事を取得(会員限定除外・二重防御)、data/x-article-history.json(slugベース・gitignore)で重複投稿防止。npm run x:articles:seed で初回ベースライン化しバースト防止(30件seed済)。文面は X 重み付き文字数(CJK=2・URL=23固定)で280以内に excerpt 自動トランケート(dry-run実測253/258/252)。1回最大3件・古い順・失敗即停止でレート対策。npm run x:articles / :dry / :seed 追加、crontab.example に15分間隔エントリ追記。稼働には X_ACCESS_TOKEN/SECRET の追加とcron有効化が必要(ユーザー側)。RSSフィード(/Ziraku/feed.xml)はSEO/読者向けに引き続き有効。",
+      "created_at": "2026-06-13 04:23:53"
+    },
     {
       "id": 21,
       "entry_date": "2026-06-13",

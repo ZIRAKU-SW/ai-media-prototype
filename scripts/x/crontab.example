@@ -18,3 +18,9 @@ CRON_TZ=Asia/Tokyo
 
 # 米国の朝ニュース 23:00（ET 9:00 頃）
 0 23 * * * cd /home/powerpass7/ai-media-prototype && /usr/bin/npm run x:post -- us_morning >> /var/log/x-post.log 2>&1
+
+# ── 新着記事の自動投稿（15分ごと、最大3件/回） ─────────────────────────────────────
+# 初回セットアップ時は以下を1回だけ手動で実行してベースラインを作ること:
+#   npm run x:articles:seed
+# （現時点の全公開記事を「投稿済み」として記録し、過去記事の一括投稿を防ぐ）
+*/15 * * * * cd /home/powerpass7/ai-media-prototype && npm run x:articles >> data/x-articles-cron.log 2>&1

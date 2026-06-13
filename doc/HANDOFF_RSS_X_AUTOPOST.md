@@ -1,5 +1,14 @@
 # 引き継ぎ: 記事公開 → 自動X投稿（RSS + Zapier）
 
+> ⚠️ **2026-06-13 追記・方針変更**: Zapier 公式の X(Twitter) アクションは**現在廃止**されている
+> （Elon の API 改変以降、Zapier 標準ディレクトリに公式統合なし。代替は Black Magic 等の有料SaaS、
+> または「Webhooks by Zapier → X API v2」だが後者は OAuth 1.0a 署名を Code by Zapier で手書きする必要があり最も複雑）。
+> **このプロジェクトには既に `scripts/x/post-tweet.ts`（twitter-api-v2 で OAuth 署名処理済み）があるため、
+> Zapier を使わず VM cron で完結する方式に変更した。**
+> - RSS フィード（§3で実装）は SEO・読者向けに**そのまま有効**（`/Ziraku/feed.xml`、本番稼働中）。
+> - X 自動投稿は `scripts/x/post-articles.ts`（`npm run x:articles`）で実装済み。下記 §8 参照。
+> - §5 の Zapier 手順は**非推奨**（公式Xアクション廃止のため）。Black Magic 経由なら可能だが有料。
+
 > 次の実装エージェント向け。このファイルだけで着手できるよう、調査済みの事実を全部書く。
 > 作成: 2026-06-12
 
@@ -152,3 +161,30 @@ return new Response(xml, {
 | 公開URLベース | `.env` の `X_POST_SITE_URL` |
 | 完了の定義・鉄則 | `doc/AGENT_SPEC.md` §2-4 |
 | 既存のX投稿実装（参考・今回は使わない） | `scripts/x/`（API方式 `x:post`、ブラウザ方式） |
+
+## 8. 採用した実装（VM cron 方式・2026-06-13）
+
+Zapier 公式 X アクション廃止を受け、VM cron で完結する方式を採用・実装済み。
+
+**スクリプト**: `scripts/x/post-articles.ts`（既存 `post-tweet.ts` の `postTweet()` を再利用＝OAuth 1.0a 署名は twitter-api-v2 が処理）
+
+```bash
+npm run x:articles:dry      # 文面確認のみ（投稿しない・トークン不要）
+npm run x:articles:seed     # 現公開記事を全て「投稿済み」化＝初回ベースライン（要1回・トークン不要）
+npm run x:articles          # 本番投稿（最大3件/回・古い順・要 X API トークン4つ）
+```
+
+- **記事ソース**: Supabase REST 直叩きで `is_published=true ∧ is_members_only=false` を取得（`getArticles` と同条件、会員限定は除外）。
+  ※`lib/supabase.ts` は `@supabase/realtime-js`(ws) 依存で素の Node から import 不可のため REST 直叩き（`upsert-articles.mjs` と同パターン）。
+- **重複防止**: `data/x-article-history.json`（slug ベース・gitignore）。同じ記事は二度投稿しない。
+- **バースト防止**: 初回に `npm run x:articles:seed` を1回流して既存記事をベースライン化済み（2026-06-13 実行済み・30件）。以降は**新規公開記事のみ**投稿。
+- **文字数**: X 重み付き（CJK=2・URL=23固定）で280以内に excerpt を自動トランケート。
+- **レート対策**: 1回最大3件、投稿失敗で即停止し残りは次回 cron へ。
+
+### 稼働に必要な残作業（ユーザー側）
+
+1. **X API トークン4つを `.env` に追加**: 現状 `X_API_KEY`/`X_API_SECRET` のみ。
+   X Developer Portal でアプリ作成し `X_ACCESS_TOKEN`/`X_ACCESS_TOKEN_SECRET`（Read and Write 権限）を発行して追記。
+2. `npm run x:articles:dry` で文面を最終確認 → 問題なければ cron 有効化。
+3. **cron 有効化**: `scripts/x/crontab.example` の `x:articles` 行を `crontab -e` に追加（15分間隔）。
+   トークン未設定のまま cron を回すとログにエラーが溜まるだけなので、トークン追加後に有効化すること。

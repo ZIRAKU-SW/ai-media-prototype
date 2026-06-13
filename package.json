@@ -23,7 +23,10 @@
     "x:browser": "tsx scripts/x/browser-post.ts",
     "x:browser:trial": "tsx scripts/x/browser-post.ts --solo-business-trial",
     "x:browser:dry": "tsx scripts/x/browser-post.ts --solo-business-trial --dry-run",
-    "x:browser:enterprise": "tsx scripts/x/browser-post.ts --enterprise-cost-trial"
+    "x:browser:enterprise": "tsx scripts/x/browser-post.ts --enterprise-cost-trial",
+    "x:articles": "tsx scripts/x/post-articles.ts",
+    "x:articles:dry": "tsx scripts/x/post-articles.ts --dry-run",
+    "x:articles:seed": "tsx scripts/x/post-articles.ts --seed"
   },
   "dependencies": {
     "@oceanos/dev-console": "file:./packages/dev-console",

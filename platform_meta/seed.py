@@ -24,6 +24,12 @@ CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-06-13",
         "category": "feat",
+        "title": "記事公開→自動X投稿を VM cron 方式で実装（Zapier公式X廃止のため方針転換）",
+        "body": "Zapier 公式の X(Twitter) アクションが廃止されていたため、Zapier を使わず VM cron で完結する方式に変更。scripts/x/post-articles.ts を新規実装し、既存 post-tweet.ts(twitter-api-v2 で OAuth 1.0a 署名処理)を再利用。Supabase REST 直叩きで is_published=true∧is_members_only=false の記事を取得(会員限定除外・二重防御)、data/x-article-history.json(slugベース・gitignore)で重複投稿防止。npm run x:articles:seed で初回ベースライン化しバースト防止(30件seed済)。文面は X 重み付き文字数(CJK=2・URL=23固定)で280以内に excerpt 自動トランケート(dry-run実測253/258/252)。1回最大3件・古い順・失敗即停止でレート対策。npm run x:articles / :dry / :seed 追加、crontab.example に15分間隔エントリ追記。稼働には X_ACCESS_TOKEN/SECRET の追加とcron有効化が必要(ユーザー側)。RSSフィード(/Ziraku/feed.xml)はSEO/読者向けに引き続き有効。",
+    },
+    {
+        "entry_date": "2026-06-13",
+        "category": "feat",
         "title": "記事公開→自動X投稿用に RSS 2.0 フィード(/Ziraku/feed.xml)を配信",
         "body": "Zapier『RSS by Zapier』→『Twitter/X』連携で記事公開を自動X投稿(@AIbusinessmedia)するための RSS フィードを実装。app/feed.xml/route.ts(basePath /Ziraku で公開URLは /Ziraku/feed.xml)。getArticles({limit:20}) で公開記事のみ取得し is_published/is_members_only を二重フィルタで会員限定記事を除外。guid は slug 由来の不変URL(${X_POST_SITE_URL}/articles/{slug})で Zapier 側の重複投稿を防止。pubDate は RFC822、title/description/category は CDATA(]]>ガード付き)、link/guid/enclosure URL は xmlEscape で & 破損防止。Cache-Control s-maxage=300 + revalidate=300。getArticles 失敗時も空フィードを200で返すフォールバック。本番疎通確認済(item20件・会員限定除外・Content-Type application/rss+xml)。Zap 設定はユーザー側(doc/HANDOFF_RSS_X_AUTOPOST.md §5)。",
     },

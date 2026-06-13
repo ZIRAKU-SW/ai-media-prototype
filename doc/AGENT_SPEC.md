@@ -228,6 +228,7 @@ python3 platform_meta/seed.py --register-bug \
 
 | 日付 | 区分 | 内容 |
 |------|------|------|
+| 2026-06-13 | feat | 記事公開→自動X投稿を **VM cron 方式**で実装（Zapier公式Xアクション廃止のため方針転換）。`scripts/x/post-articles.ts`＝既存 `post-tweet.ts`(twitter-api-v2 OAuth署名)再利用、Supabase REST直叩きで会員限定除外、`data/x-article-history.json`(slug)で重複防止、`x:articles:seed` でバースト防止(30件seed済)、X重み付き文字数で280以内トランケート、1回最大3件・失敗即停止。稼働には X_ACCESS_TOKEN/SECRET 追加＋cron有効化が必要。`npm run x:articles{,:dry,:seed}` |
 | 2026-06-13 | feat | 記事公開→自動X投稿用に RSS 2.0 フィード `app/feed.xml/route.ts`（公開URL `/Ziraku/feed.xml`）を実装。`getArticles({limit:20})`＋is_published/is_members_only 二重フィルタで会員限定を除外、guid=slug由来不変URLでZapier重複投稿防止、CDATA(`]]>`ガード)+xmlEscape、Cache-Control s-maxage=300。Zapier「RSS by Zapier」→「Twitter/X」連携用（手順 `doc/HANDOFF_RSS_X_AUTOPOST.md` §5）。本番疎通確認済 |
 | 2026-06-11 | content | 新記事8件追加（Fable 5特集）: claude-fable-5-overview / claude-fable-5-subagent-strategy / fable-5-self-correction-loops / anthropic-31-ai-skills / claude-fable-5-notebooklm / claude-autopilot-14-steps / kubell-ceo-fable-5-prompt / ai-agent-company-management。X 話題ポスト出典明記、英語2本翻訳 |
 | 2026-06-11 | feat | `lib/render-markdown.ts` に画像（`![alt](url)` → `<img class="article-detail__img" loading="lazy">`）とリンク（`[text](url)` → `<a target="_blank" rel="noopener noreferrer">`）対応追加。CSS（`app/article-shared.css` / `app/(notion)/notion.css`）に `.article-detail__img` 追加 |
