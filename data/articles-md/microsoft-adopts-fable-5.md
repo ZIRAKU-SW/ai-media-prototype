@@ -12,7 +12,7 @@
 
 > Claudeが考える。Cursorが作る。Copilotが実装する。OpenClawが自動化する。人間は確認するだけ。
 
-1つの万能AIに全部やらせるのではなく、**役割の違うAIを組み合わせて1つのチームとして回す**。これは当サイトで紹介してきた[サブエージェント分業](/ziraku/articles/claude-fable-5-subagent-strategy)や[YouTube編集パイプライン](/ziraku/articles/fable-5-youtube-pipeline)と同じ構造が、ツールベンダーのレイヤーでも起きているということです。
+1つの万能AIに全部やらせるのではなく、**役割の違うAIを組み合わせて1つのチームとして回す**。これは当サイトで紹介してきた[サブエージェント分業](/articles/claude-fable-5-subagent-strategy)や[YouTube編集パイプライン](/articles/fable-5-youtube-pipeline)と同じ構造が、ツールベンダーのレイヤーでも起きているということです。
 
 ## 編集部の深掘り: この採用が中小企業に効いてくる順番
 

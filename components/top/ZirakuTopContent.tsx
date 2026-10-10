@@ -135,7 +135,7 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
         <div className="ticker-bar">
           <span className="ticker-bar__label">NEW</span>
           <p className="ticker-bar__text">
-            <Link href={`/ziraku/articles/${latest.slug}`}>{latest.title}</Link>
+            <Link href={`/articles/${latest.slug}`}>{latest.title}</Link>
           </p>
           <span className="ticker-bar__date">{formatDate(latest.published_at)}</span>
           <Link href="/ziraku/articles" className="ticker-bar__more">一覧を見る →</Link>
@@ -165,7 +165,7 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
             <div className="articles-grid articles-grid--home">
               {filtered.map(a => (
                 <article key={a.id} className="article-card">
-                  <Link href={`/ziraku/articles/${a.slug}`} className="article-card__img-wrap">
+                  <Link href={`/articles/${a.slug}`} className="article-card__img-wrap">
                     <img src={a.thumbnail_url ?? ''} alt={a.title} className="article-card__img" />
                   </Link>
                   <div className="article-card__body">
@@ -173,7 +173,7 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
                       <span className={`badge ${BADGE[a.categories.slug] ?? 'badge--blue'}`}>{a.categories.name}</span>
                     )}
                     <h3 className="article-card__title">
-                      <Link href={`/ziraku/articles/${a.slug}`}>{a.title}</Link>
+                      <Link href={`/articles/${a.slug}`}>{a.title}</Link>
                     </h3>
                     <p className="article-card__excerpt">{a.excerpt}</p>
                     <div className="article-card__meta">
@@ -196,7 +196,7 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
                     <span className={`ranking__num${i === 0 ? ' ranking__num--gold' : i === 1 ? ' ranking__num--silver' : ' ranking__num--bronze'}`}>
                       {i + 1}
                     </span>
-                    <Link href={`/ziraku/articles/${a.slug}`} className="ranking__link">
+                    <Link href={`/articles/${a.slug}`} className="ranking__link">
                       <img src={a.thumbnail_url ?? ''} alt="" className="ranking__thumb" />
                       <span className="ranking__text">{a.title}</span>
                     </Link>
@@ -268,7 +268,7 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
           </div>
           <div className="categories__grid">
             {CATEGORIES.map(c => (
-              <Link key={c.slug} href={`/ziraku/category/${c.slug}`} className="category-card">
+              <Link key={c.slug} href={`/category/${c.slug}`} className="category-card">
                 <div className="category-card__head">
                   <span className="category-card__icon">{c.icon}</span>
                   <h3 className="category-card__title">{c.title}</h3>

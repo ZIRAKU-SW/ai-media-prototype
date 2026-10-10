@@ -23,6 +23,12 @@ EXPORT_PATH = ROOT / "data" / "platform-bugs.json"
 CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-10-10",
+        "category": "feat",
+        "title": "zirakuテーマをルート直下の単一サイト化 + /admin Basic認証",
+        "body": "デザイン比較フェーズ終了に伴い ziraku テーマを本サイト化。テーマ選択ピッカー app/page.tsx 削除、app/(ziraku)/ziraku/* → app/(ziraku)/* へ git mv（/=zirakuトップ、/articles /company /members /login /members /seminar /services /privacy /settings /signup がルート直下）。コード内の /ziraku/* リンク参照は全て /* に置換、旧 /ziraku/:path* は next.config redirects で 301 恒久リダイレクト。proxy.ts(Next16のmiddleware改名規約・export名はproxy)で /admin /api/admin を Basic 認証化: ADMIN_USER/ADMIN_PASSWORD env で有効化、未設定時は従来どおりオープン。systemd ai-media.service に ADMIN_* env 追加済。wired/notion/zapier は /wired 等のパスで残存（ピッカー撤去のため非公開リンク）。X投稿スクリプトの SITE_BASE デフォルトを media.wheeebo.com に更新。",
+    },
+    {
+        "entry_date": "2026-10-10",
         "category": "ops",
         "title": "公開窓口=Vercel・配信=自宅鯖の単一デプロイ構成",
         "body": "訪問者には ai-business-media.vercel.app を見せつつ配信は自宅 wheeebo-server 1系統に寄せる構成に変更。next.config の rewrites(beforeFiles) を NEXT_PUBLIC_PROXY_ORIGIN で有効化(commit a361ca2)、Vercelの全リクエストを media-origin.wheeebo.com へプロキシ。media.wheeebo.com(cloudflared経由)は CF の bot チャレンジで Vercel→自宅 fetch が失敗するため、DNS-only A record→WAN IP→router→nginx :443→Next.js :3011 の直結経路を新設(Let's Encrypt証明書・vhostは /etc/nginx/sites-available/media-origin)。WAN IP は動的なので ddns-update-media-origin.timer が5分毎にargo tokenでAレコードをPATCH追従(config: ~/.config/ddns/media-origin.conf)。停止テストで502(自宅nginx)を確認しプロキシ経路を実証。旧 project-7bhii.vercel.app ドメイン剥離、不要プロジェクト ai-media-prototype 削除済。開発更新は自宅側のみ(git pull→build→restart ai-media.service)。",

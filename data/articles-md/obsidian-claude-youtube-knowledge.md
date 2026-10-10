@@ -22,7 +22,7 @@ ObsidianとClaudeを連携させて、**YouTube制作システムを丸ごと自
 
 ## 編集部より: 「複利の仕組み」は発信業に限らない
 
-この構造、実は当サイトで紹介した[Karpathy式の第二の脳](/ziraku/articles/obsidian-claude-skills-second-brain)と同じ設計です。素材を放り込む場所(raw)・AIが育てる知識(wiki)・成果物(reports)。それをYouTube制作に特化させたのがこの事例だと言えます。
+この構造、実は当サイトで紹介した[Karpathy式の第二の脳](/articles/obsidian-claude-skills-second-brain)と同じ設計です。素材を放り込む場所(raw)・AIが育てる知識(wiki)・成果物(reports)。それをYouTube制作に特化させたのがこの事例だと言えます。
 
 1人社長や副業の発信で重要なのは、個々のコンテンツの出来より**「作るたびに次が楽になる構造」を持っているか**です。
 

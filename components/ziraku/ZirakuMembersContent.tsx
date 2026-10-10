@@ -199,7 +199,7 @@ export default function ZirakuMembersContent() {
           ) : (
             <div className="members__articles">
               {memberArticles.map(a => (
-                <Link key={a.id} href={`/ziraku/articles/${a.slug}`} className="members__article-card">
+                <Link key={a.id} href={`/articles/${a.slug}`} className="members__article-card">
                   <img src={a.thumbnail_url ?? ''} alt="" className="members__article-thumb" />
                   <span className="members__article-body">
                     <strong className="members__article-title"><IconLock size={14} className="title-lock" /> {a.title}</strong>

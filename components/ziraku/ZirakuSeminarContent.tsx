@@ -20,7 +20,7 @@ export default function ZirakuSeminarContent() {
       <ZirakuSiteHeader />
 
       <nav className="article-breadcrumb" aria-label="パンくずリスト">
-        <Link href="/ziraku">ホーム</Link>
+        <Link href="/">ホーム</Link>
         <span aria-hidden>›</span>
         <span className="article-breadcrumb__current">セミナー</span>
       </nav>

@@ -37,7 +37,7 @@ async function getArticles(options?: { limit?: number }): Promise<Article[]> {
 
 // ── 定数 ──────────────────────────────────────────────────────────────────────
 
-const SITE_BASE = (process.env.X_POST_SITE_URL ?? 'https://oceanosfleet.com/Ziraku/ziraku').replace(/\/$/, '')
+const SITE_BASE = (process.env.X_POST_SITE_URL ?? 'https://media.wheeebo.com').replace(/\/$/, '')
 const HISTORY_PATH = 'data/x-article-history.json'
 const DEFAULT_MAX_PER_RUN = 3   // 1回のcronで投稿する最大件数（暴発防止）
 const FETCH_LIMIT = 30          // getArticles の取得件数

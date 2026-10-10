@@ -196,7 +196,7 @@ export default function ZirakuAuthForm({ mode }: { mode: 'login' | 'signup' }) {
               <>すでにアカウントをお持ちの方は <Link href="/ziraku/login">ログイン →</Link></>
             )}
           </p>
-          <p className="auth__back"><Link href="/ziraku">← トップに戻る</Link></p>
+          <p className="auth__back"><Link href="/">← トップに戻る</Link></p>
         </div>
       </main>
       <ZirakuFooter />

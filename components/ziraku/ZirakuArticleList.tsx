@@ -63,7 +63,7 @@ export default function ZirakuArticleList({ category }: Props) {
       <ZirakuSiteHeader />
 
       <nav className="article-breadcrumb" aria-label="パンくずリスト">
-        <Link href="/ziraku">ホーム</Link>
+        <Link href="/">ホーム</Link>
         <span aria-hidden>›</span>
         {category ? (
           <>
@@ -112,7 +112,7 @@ export default function ZirakuArticleList({ category }: Props) {
               <div className="articles-grid articles-grid--home">
                 {filtered.map(a => (
                   <article key={a.id} className="article-card">
-                    <Link href={`/ziraku/articles/${a.slug}`} className="article-card__img-wrap">
+                    <Link href={`/articles/${a.slug}`} className="article-card__img-wrap">
                       <img src={a.thumbnail_url ?? ''} alt={a.title} className="article-card__img" />
                     </Link>
                     <div className="article-card__body">
@@ -120,7 +120,7 @@ export default function ZirakuArticleList({ category }: Props) {
                         <span className={`badge ${BADGE[a.categories.slug] ?? 'badge--blue'}`}>{a.categories.name}</span>
                       )}
                       <h3 className="article-card__title">
-                        <Link href={`/ziraku/articles/${a.slug}`}>{a.title}</Link>
+                        <Link href={`/articles/${a.slug}`}>{a.title}</Link>
                       </h3>
                       <p className="article-card__excerpt">{a.excerpt}</p>
                       <div className="article-card__meta">

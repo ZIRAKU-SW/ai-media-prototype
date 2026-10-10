@@ -21,7 +21,7 @@ import { ensureLocalImage } from './article-media'
 
 const STATE_PATH = 'data/x-browser-state.json'
 const SCREENSHOT_DIR = 'data/x-browser-screenshots'
-const SITE_BASE = process.env.X_POST_SITE_URL ?? 'https://oceanosfleet.com/Ziraku/ziraku'
+const SITE_BASE = process.env.X_POST_SITE_URL ?? 'https://media.wheeebo.com'
 const DELAY_MS = Number(process.env.X_BROWSER_POST_DELAY_MS ?? 90_000)
 
 // ── ログイン失敗ロック ────────────────────────────────────────────────

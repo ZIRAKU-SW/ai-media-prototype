@@ -26,7 +26,7 @@ const LOGO = (
 export default function ZirakuSiteHeader() {
   return (
     <SiteHeader
-      homeHref="/ziraku"
+      homeHref="/"
       navItems={NAV}
       signupLabel="会員登録（無料）"
       logo={LOGO}

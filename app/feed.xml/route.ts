@@ -2,7 +2,7 @@ import { getArticles } from '@/lib/supabase'
 
 export const revalidate = 300
 
-const SITE_BASE = (process.env.X_POST_SITE_URL ?? 'https://oceanosfleet.com/Ziraku/ziraku').replace(/\/$/, '')
+const SITE_BASE = (process.env.X_POST_SITE_URL ?? 'https://media.wheeebo.com').replace(/\/$/, '')
 const FEED_SELF = 'https://oceanosfleet.com/Ziraku/feed.xml'
 
 /** XML エスケープ（URL 属性・本文テキスト用） */

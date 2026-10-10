@@ -8,6 +8,12 @@ const proxyOrigin = (process.env.NEXT_PUBLIC_PROXY_ORIGIN ?? "").replace(/\/$/, 
 const nextConfig: NextConfig = {
   transpilePackages: ["@oceanos/dev-console"],
   ...(basePath ? { basePath } : {}),
+  async redirects() {
+    return [
+      { source: "/ziraku", destination: "/", permanent: true },
+      { source: "/ziraku/:path*", destination: "/:path*", permanent: true },
+    ];
+  },
   ...(proxyOrigin
     ? {
         async rewrites() {

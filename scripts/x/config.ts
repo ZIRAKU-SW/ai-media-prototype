@@ -61,7 +61,7 @@ export const POST_SLOTS: Record<PostSlotId, PostSlot> = {
 
 export const SLOT_IDS = Object.keys(POST_SLOTS) as PostSlotId[]
 
-export const SITE_URL = process.env.X_POST_SITE_URL ?? 'https://project-7bhii.vercel.app/ziraku'
+export const SITE_URL = process.env.X_POST_SITE_URL ?? 'https://media.wheeebo.com'
 export const X_HANDLE = process.env.X_HANDLE ?? '@AIbusinessmedia'
 
 /** RSS / ニュース取得元 */
