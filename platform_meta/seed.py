@@ -24,6 +24,12 @@ CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-10-10",
         "category": "ops",
+        "title": "公開窓口=Vercel・配信=自宅鯖の単一デプロイ構成",
+        "body": "訪問者には ai-business-media.vercel.app を見せつつ配信は自宅 wheeebo-server 1系統に寄せる構成に変更。next.config の rewrites(beforeFiles) を NEXT_PUBLIC_PROXY_ORIGIN で有効化(commit a361ca2)、Vercelの全リクエストを media-origin.wheeebo.com へプロキシ。media.wheeebo.com(cloudflared経由)は CF の bot チャレンジで Vercel→自宅 fetch が失敗するため、DNS-only A record→WAN IP→router→nginx :443→Next.js :3011 の直結経路を新設(Let's Encrypt証明書・vhostは /etc/nginx/sites-available/media-origin)。WAN IP は動的なので ddns-update-media-origin.timer が5分毎にargo tokenでAレコードをPATCH追従(config: ~/.config/ddns/media-origin.conf)。停止テストで502(自宅nginx)を確認しプロキシ経路を実証。旧 project-7bhii.vercel.app ドメイン剥離、不要プロジェクト ai-media-prototype 削除済。開発更新は自宅側のみ(git pull→build→restart ai-media.service)。",
+    },
+    {
+        "entry_date": "2026-10-10",
+        "category": "ops",
         "title": "Vercel再稼働＋自宅wheeebo-server公開（GCP VM代替）",
         "body": "Vercelプロジェクト project-7bhii を ai-business-media に改名し ai-business-media.vercel.app をドメイン追加。ルート404の原因はコミット済み .env.local の NEXT_PUBLIC_BASE_PATH=/Ziraku が Vercel ビルドに混入してアプリ全体が /Ziraku 配下にマウントされていたこと。プロジェクト環境変数 NEXT_PUBLIC_BASE_PATH='' で上書きしルート配信化。ビルド失敗(scripts/x の playwright/@cursor/sdk/rss-parser/twitter-api-v2 が package.json 未収載)は types/vendor.d.ts の ambient module 宣言で解消(台帳 #35, commit 9707da1)。GCP VM 停止の代替として自宅 wheeebo-server にもデプロイ: systemd ai-media.service(next start :3011, Environment=NEXT_PUBLIC_BASE_PATH= で .env.local を実行時上書き ※next start は起動時に config を再評価するため必須) + cloudflared ingress media.wheeebo.com→127.0.0.1:3011。media.oceanosfleet.com の ingress も設定済みだが同ゾーンのDNSは別CFアカウントのため未作成。Supabase(wqlelowutbxplrzforcc)はDNS解決不能で記事取得は現状フォールバック動作。",
     },
