@@ -1,6 +1,22 @@
 {
-  "exported_at": "2026-06-13T04:23:53.325611+00:00",
+  "exported_at": "2026-10-10T12:27:08.225534+00:00",
   "bugs": [
+    {
+      "id": 35,
+      "title": "Vercelデプロイ不可: scripts/x のVM専用依存が型チェックを全滅 + basePath=/Zirakuでルート404",
+      "symptom": "project-7bhii.vercel.app ルートが404。再デプロイすると next build が playwright 等 Cannot find module で失敗",
+      "root_cause": "scripts/x/*.ts が package.json 未収載の VM専用依存(playwright/@cursor/sdk/rss-parser/twitter-api-v2)を import。tsconfig **/*.ts で型チェック対象になり全体失敗。さらにコミット済み .env.local の NEXT_PUBLIC_BASE_PATH=/Ziraku が Vercel ビルドに混入しアプリが /Ziraku 配下にマウントされていた",
+      "fix": "types/vendor.d.ts に ambient module 宣言を追加(9707da1)。Vercel側はプロジェクト環境変数 NEXT_PUBLIC_BASE_PATH='' で .env.local を上書き。自宅鯖 systemd ユニットでも Environment=NEXT_PUBLIC_BASE_PATH= で同様に上書き(next start は起動時に .env.local を再評価するため実行時にも必要)",
+      "affected_themes": "ziraku",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-10-10",
+      "fixed_at": "2026-10-10",
+      "commit_hash": "9707da1",
+      "tags": null,
+      "created_at": "2026-10-10 12:27:08",
+      "updated_at": "2026-10-10 12:27:08"
+    },
     {
       "id": 34,
       "title": "開発コンソールの旧 welcome 文言が残り「ロールバックした?」と誤認",

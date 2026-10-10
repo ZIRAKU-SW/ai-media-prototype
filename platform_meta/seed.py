@@ -22,6 +22,12 @@ EXPORT_PATH = ROOT / "data" / "platform-bugs.json"
 
 CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
+        "entry_date": "2026-10-10",
+        "category": "ops",
+        "title": "Vercel再稼働＋自宅wheeebo-server公開（GCP VM代替）",
+        "body": "Vercelプロジェクト project-7bhii を ai-business-media に改名し ai-business-media.vercel.app をドメイン追加。ルート404の原因はコミット済み .env.local の NEXT_PUBLIC_BASE_PATH=/Ziraku が Vercel ビルドに混入してアプリ全体が /Ziraku 配下にマウントされていたこと。プロジェクト環境変数 NEXT_PUBLIC_BASE_PATH='' で上書きしルート配信化。ビルド失敗(scripts/x の playwright/@cursor/sdk/rss-parser/twitter-api-v2 が package.json 未収載)は types/vendor.d.ts の ambient module 宣言で解消(台帳 #35, commit 9707da1)。GCP VM 停止の代替として自宅 wheeebo-server にもデプロイ: systemd ai-media.service(next start :3011, Environment=NEXT_PUBLIC_BASE_PATH= で .env.local を実行時上書き ※next start は起動時に config を再評価するため必須) + cloudflared ingress media.wheeebo.com→127.0.0.1:3011。media.oceanosfleet.com の ingress も設定済みだが同ゾーンのDNSは別CFアカウントのため未作成。Supabase(wqlelowutbxplrzforcc)はDNS解決不能で記事取得は現状フォールバック動作。",
+    },
+    {
         "entry_date": "2026-06-13",
         "category": "feat",
         "title": "記事公開→自動X投稿を VM cron 方式で実装（Zapier公式X廃止のため方針転換）",
