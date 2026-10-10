@@ -24,3 +24,4 @@ __pycache__/
 data/x-login-lock.json
 data/x-article-history.json
 data/x-articles-cron.log
+.env*
