@@ -22,6 +22,12 @@ EXPORT_PATH = ROOT / "data" / "platform-bugs.json"
 
 CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
+        "entry_date": "2026-10-12",
+        "category": "fix",
+        "title": "記事ページのハング解消（postgrest retryが7s固めていた）",
+        "body": "新着記事カードが「反応しない・飛ばない」症状の原因を特定: Supabase停止中に postgrest-js v2 のデフォルト retry(1s+2s+4s) が全クエリに発動し、記事詳細は generateMetadata+page+membersMeta の直列で16秒、リストも7秒ハングしていた。AbortSignal.timeout はリトライ内部sleepを止められず効かなかった。対策: lib/supabase.ts に supabaseFetch(5s timeout + 失敗後60s circuit open で即エラー) を実装し createClient.global.fetch に適用、全クエリ(getArticles/getArticleBySlug/getPopularArticles/getCategories/subscribeNewsletter/submitInquiry/trackView)に .retry(false) 付与。app/(ziraku)/articles/[slug] は getArticleBySlug/getArticles を Promise.allSettled で並列化、getMembersOnlyMeta も supabaseFetch 化。app/(ziraku)/loading.tsx でナビゲーション中の即時フィードバック追加。残存 /ziraku/* href(ZirakuTopContent等)を /* に置換。記事詳細 16s→0.03s。台帳 #36 #37。",
+    },
+    {
         "entry_date": "2026-10-10",
         "category": "feat",
         "title": "zirakuテーマをルート直下の単一サイト化 + /admin Basic認証",

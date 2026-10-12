@@ -1,6 +1,38 @@
 {
-  "exported_at": "2026-10-10T12:27:08.225534+00:00",
+  "exported_at": "2026-10-12T07:17:02.483989+00:00",
   "bugs": [
+    {
+      "id": 37,
+      "title": "zirakuルート化後も /ziraku/* リンク残存（ヒーロー・ticker・メンバーバナー）",
+      "symptom": "トップの「無料で会員登録する」「一覧を見る」等が旧/zirakuパスを指していた",
+      "root_cause": "前回のsed置換が 'ziraku' をファイル名・内容に含むファイルを検証grepで除外してしまい見落とし",
+      "fix": "ZirakuTopContent.tsx等の残存 /ziraku/* hrefを /* に再置換",
+      "affected_themes": "ziraku",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-10-12",
+      "fixed_at": "2026-10-12",
+      "commit_hash": "HEAD",
+      "tags": null,
+      "created_at": "2026-10-12 07:17:02",
+      "updated_at": "2026-10-12 07:17:02"
+    },
+    {
+      "id": 36,
+      "title": "記事カードが反応しない: postgrest-jsデフォルトリトライが7秒ハングさせていた",
+      "symptom": "トップの新着記事カードを押しても何も反応しない・ページ遷移しないように見える",
+      "root_cause": "Supabase(wqlelowutbxplrzforcc)停止中、postgrest-js v2のデフォルトretry(1s+2s+4s)が全クエリに発動し記事詳細が16秒、記事処理が7秒ハング。クライアントナビゲーションはローディングUIがなく沈黙",
+      "fix": "lib/supabase.ts: supabaseFetchに5sタイムアウト+60sサーキットブレーカー実装・全クエリに.retry(false)。app/(ziraku)/articles/[slug]: getMembersOnlyMetaをsupabaseFetch化+並列化。app/(ziraku)/loading.tsx新設",
+      "affected_themes": "ziraku",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-10-12",
+      "fixed_at": "2026-10-12",
+      "commit_hash": "HEAD",
+      "tags": null,
+      "created_at": "2026-10-12 07:17:02",
+      "updated_at": "2026-10-12 07:17:02"
+    },
     {
       "id": 35,
       "title": "Vercelデプロイ不可: scripts/x のVM専用依存が型チェックを全滅 + basePath=/Zirakuでルート404",
@@ -563,6 +595,30 @@
     }
   ],
   "changelog": [
+    {
+      "id": 25,
+      "entry_date": "2026-10-10",
+      "category": "ops",
+      "title": "Vercel再稼働＋自宅wheeebo-server公開（GCP VM代替）",
+      "body": "Vercelプロジェクト project-7bhii を ai-business-media に改名し ai-business-media.vercel.app をドメイン追加。ルート404の原因はコミット済み .env.local の NEXT_PUBLIC_BASE_PATH=/Ziraku が Vercel ビルドに混入してアプリ全体が /Ziraku 配下にマウントされていたこと。プロジェクト環境変数 NEXT_PUBLIC_BASE_PATH='' で上書きしルート配信化。ビルド失敗(scripts/x の playwright/@cursor/sdk/rss-parser/twitter-api-v2 が package.json 未収載)は types/vendor.d.ts の ambient module 宣言で解消(台帳 #35, commit 9707da1)。GCP VM 停止の代替として自宅 wheeebo-server にもデプロイ: systemd ai-media.service(next start :3011, Environment=NEXT_PUBLIC_BASE_PATH= で .env.local を実行時上書き ※next start は起動時に config を再評価するため必須) + cloudflared ingress media.wheeebo.com→127.0.0.1:3011。media.oceanosfleet.com の ingress も設定済みだが同ゾーンのDNSは別CFアカウントのため未作成。Supabase(wqlelowutbxplrzforcc)はDNS解決不能で記事取得は現状フォールバック動作。",
+      "created_at": "2026-10-12 07:17:02"
+    },
+    {
+      "id": 24,
+      "entry_date": "2026-10-10",
+      "category": "ops",
+      "title": "公開窓口=Vercel・配信=自宅鯖の単一デプロイ構成",
+      "body": "訪問者には ai-business-media.vercel.app を見せつつ配信は自宅 wheeebo-server 1系統に寄せる構成に変更。next.config の rewrites(beforeFiles) を NEXT_PUBLIC_PROXY_ORIGIN で有効化(commit a361ca2)、Vercelの全リクエストを media-origin.wheeebo.com へプロキシ。media.wheeebo.com(cloudflared経由)は CF の bot チャレンジで Vercel→自宅 fetch が失敗するため、DNS-only A record→WAN IP→router→nginx :443→Next.js :3011 の直結経路を新設(Let's Encrypt証明書・vhostは /etc/nginx/sites-available/media-origin)。WAN IP は動的なので ddns-update-media-origin.timer が5分毎にargo tokenでAレコードをPATCH追従(config: ~/.config/ddns/media-origin.conf)。停止テストで502(自宅nginx)を確認しプロキシ経路を実証。旧 project-7bhii.vercel.app ドメイン剥離、不要プロジェクト ai-media-prototype 削除済。開発更新は自宅側のみ(git pull→build→restart ai-media.service)。",
+      "created_at": "2026-10-12 07:17:02"
+    },
+    {
+      "id": 23,
+      "entry_date": "2026-10-10",
+      "category": "feat",
+      "title": "zirakuテーマをルート直下の単一サイト化 + /admin Basic認証",
+      "body": "デザイン比較フェーズ終了に伴い ziraku テーマを本サイト化。テーマ選択ピッカー app/page.tsx 削除、app/(ziraku)/ziraku/* → app/(ziraku)/* へ git mv（/=zirakuトップ、/articles /company /members /login /members /seminar /services /privacy /settings /signup がルート直下）。コード内の /ziraku/* リンク参照は全て /* に置換、旧 /ziraku/:path* は next.config redirects で 301 恒久リダイレクト。proxy.ts(Next16のmiddleware改名規約・export名はproxy)で /admin /api/admin を Basic 認証化: ADMIN_USER/ADMIN_PASSWORD env で有効化、未設定時は従来どおりオープン。systemd ai-media.service に ADMIN_* env 追加済。wired/notion/zapier は /wired 等のパスで残存（ピッカー撤去のため非公開リンク）。X投稿スクリプトの SITE_BASE デフォルトを media.wheeebo.com に更新。",
+      "created_at": "2026-10-12 07:17:02"
+    },
     {
       "id": 22,
       "entry_date": "2026-06-13",

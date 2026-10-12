@@ -3,7 +3,32 @@ import { createClient } from '@supabase/supabase-js'
 const SUPABASE_URL  = process.env.NEXT_PUBLIC_SUPABASE_URL  ?? 'https://wqlelowutbxplrzforcc.supabase.co'
 const SUPABASE_KEY  = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? 'sb_publishable_Ud0Q4YAoo49bAKBNbHnT_g_kyJDgMI3'
 
-export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+// Supabase 停止時にDNS解決待ちでページが数十秒固まるのを防ぐ。
+// 5秒タイムアウト + 失敗後60秒はサーキットオープン（即エラー → フォールバック）。
+const SUPABASE_FETCH_TIMEOUT_MS = 5000
+const SUPABASE_DOWN_BACKOFF_MS = 60_000
+let supabaseDownUntil = 0
+
+export const supabaseFetch: typeof fetch = async (input, init) => {
+  if (Date.now() < supabaseDownUntil) {
+    throw new Error('supabase unavailable (circuit open)')
+  }
+  try {
+    const res = await fetch(input, {
+      ...init,
+      signal: AbortSignal.timeout(SUPABASE_FETCH_TIMEOUT_MS),
+    })
+    supabaseDownUntil = 0
+    return res
+  } catch (e) {
+    supabaseDownUntil = Date.now() + SUPABASE_DOWN_BACKOFF_MS
+    throw e
+  }
+}
+
+export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+  global: { fetch: supabaseFetch },
+})
 
 // ── 型定義 ──────────────────────────────
 export type Article = {
@@ -46,6 +71,7 @@ export async function getArticles(options?: {
     .eq('is_members_only', false)
     .order('published_at', { ascending: false })
     .range(from, from + limit - 1)
+    .retry(false)
 
   if (category) query = query.eq('categories.slug', category)
 
@@ -60,6 +86,7 @@ export async function getArticleBySlug(slug: string) {
     .select('*, categories(name,slug,color)')
     .eq('slug', slug)
     .eq('is_published', true)
+    .retry(false)
     .single()
   if (error) throw error
   return data as Article
@@ -73,6 +100,7 @@ export async function getPopularArticles(limit = 5) {
     .eq('is_members_only', false)
     .order('view_count', { ascending: false })
     .limit(limit)
+    .retry(false)
   if (error) throw error
   return data
 }
@@ -82,6 +110,7 @@ export async function getCategories() {
     .from('categories')
     .select('*')
     .order('name')
+    .retry(false)
   if (error) throw error
   return data as Category[]
 }
@@ -91,6 +120,7 @@ export async function subscribeNewsletter(email: string) {
   const { error } = await supabase
     .from('newsletter_subscribers')
     .insert({ email })
+    .retry(false)
   if (error) throw error
 }
 
@@ -103,10 +133,11 @@ export async function submitInquiry(payload: {
   message: string
 }) {
   const { error } = await supabase.from('inquiries').insert(payload)
+    .retry(false)
   if (error) throw error
 }
 
 // ── 閲覧数カウント ──────────────────────
 export async function trackView(slug: string) {
-  await supabase.rpc('increment_view_count', { article_slug: slug })
+  await supabase.rpc('increment_view_count', { article_slug: slug }).retry(false)
 }

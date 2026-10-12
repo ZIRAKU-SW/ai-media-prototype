@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import ThemeArticlePage from '@/components/pages/ThemeArticlePage'
 import ZirakuMemberArticleGate from '@/components/ziraku/ZirakuMemberArticleGate'
-import { getArticleBySlug, getArticles, type Article } from '@/lib/supabase'
+import { getArticleBySlug, getArticles, supabaseFetch, type Article } from '@/lib/supabase'
 
 export const revalidate = 300
 
@@ -11,9 +11,12 @@ async function getMembersOnlyMeta(slug: string): Promise<{ title: string } | nul
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
   if (!url || !key) return null
   try {
-    const res = await fetch(
+    const res = await supabaseFetch(
       `${url}/rest/v1/articles?slug=eq.${encodeURIComponent(slug)}&is_published=eq.true&is_members_only=eq.true&select=title`,
-      { headers: { apikey: key, Authorization: `Bearer ${key}` }, next: { revalidate: 300 } }
+      {
+        headers: { apikey: key, Authorization: `Bearer ${key}` },
+        next: { revalidate: 300 },
+      }
     )
     const rows = await res.json()
     return Array.isArray(rows) && rows[0]?.title ? { title: rows[0].title } : null
@@ -49,20 +52,14 @@ export async function generateMetadata(
 export default async function ZirakuArticle({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
 
-  let initialArticle: Article | null = null
-  let initialRelated: Article[] = []
-
-  try {
-    initialArticle = await getArticleBySlug(slug)
-  } catch {
-    initialArticle = null
-  }
-
-  try {
-    initialRelated = await getArticles({ limit: 5 })
-  } catch {
-    initialRelated = []
-  }
+  const [articleRes, relatedRes] = await Promise.allSettled([
+    getArticleBySlug(slug),
+    getArticles({ limit: 5 }),
+  ])
+  const initialArticle: Article | null =
+    articleRes.status === 'fulfilled' ? articleRes.value : null
+  const initialRelated: Article[] =
+    relatedRes.status === 'fulfilled' ? relatedRes.value : []
 
   if (initialArticle) {
     return (
