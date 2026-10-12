@@ -67,7 +67,7 @@ export default function ZirakuArticleList({ category }: Props) {
         <span aria-hidden>›</span>
         {category ? (
           <>
-            <Link href="/ziraku/articles">記事一覧</Link>
+            <Link href="/articles">記事一覧</Link>
             <span aria-hidden>›</span>
             <span className="article-breadcrumb__current">{title}</span>
           </>

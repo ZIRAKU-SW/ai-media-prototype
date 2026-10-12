@@ -93,17 +93,17 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
 
           <div className="hero__cta">
             {user ? (
-              <Link href="/ziraku/members" className="btn btn--primary btn--lg btn--pill hero__cta-signup">
+              <Link href="/members" className="btn btn--primary btn--lg btn--pill hero__cta-signup">
                 会員限定コンテンツを見る
                 <span className="hero__cta-badge" aria-hidden>会員<br />特典</span>
               </Link>
             ) : (
-              <Link href="/ziraku/signup" className="btn btn--primary btn--lg btn--pill hero__cta-signup">
+              <Link href="/signup" className="btn btn--primary btn--lg btn--pill hero__cta-signup">
                 無料で会員登録する
                 <span className="hero__cta-badge" aria-hidden>かんたん<br />1分！</span>
               </Link>
             )}
-            <Link href="/ziraku/articles" className="btn btn--outline btn--lg btn--pill">
+            <Link href="/articles" className="btn btn--outline btn--lg btn--pill">
               記事を探す
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
                 <circle cx="11" cy="11" r="7" />
@@ -138,7 +138,7 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
             <Link href={`/articles/${latest.slug}`}>{latest.title}</Link>
           </p>
           <span className="ticker-bar__date">{formatDate(latest.published_at)}</span>
-          <Link href="/ziraku/articles" className="ticker-bar__more">一覧を見る →</Link>
+          <Link href="/articles" className="ticker-bar__more">一覧を見る →</Link>
         </div>
       )}
 
@@ -159,7 +159,7 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
                   </button>
                 ))}
               </div>
-              <Link href="/ziraku/articles" className="link-more">一覧を見る →</Link>
+              <Link href="/articles" className="link-more">一覧を見る →</Link>
             </div>
 
             <div className="articles-grid articles-grid--home">
@@ -253,7 +253,7 @@ export default function ZirakuTopContent({ articles, email, setEmail, subscribed
                 <li><span className="members-banner__check" aria-hidden>✓</span><span>セミナー・イベントに優先ご招待</span></li>
               </ul>
             </div>
-            <Link href={user ? '/ziraku/members' : '/ziraku/signup'} className="btn btn--signup-green btn--pill members-banner__btn">
+            <Link href={user ? '/members' : '/signup'} className="btn btn--signup-green btn--pill members-banner__btn">
               {user ? '会員限定エリアへ' : '無料で会員登録する'}
               <span className="btn__circle" aria-hidden>›</span>
             </Link>

@@ -19,10 +19,10 @@ export default function ZirakuMemberArticleGate({ title }: { title?: string }) {
             すべてご覧いただけます。登録は1分で完了します。
           </p>
           <div className="members__gate-actions">
-            <Link href="/ziraku/signup" className="btn btn--primary btn--lg btn--pill">無料で会員登録する</Link>
-            <Link href="/ziraku/login" className="btn btn--outline btn--lg btn--pill">ログイン</Link>
+            <Link href="/signup" className="btn btn--primary btn--lg btn--pill">無料で会員登録する</Link>
+            <Link href="/login" className="btn btn--outline btn--lg btn--pill">ログイン</Link>
           </div>
-          <p className="members__gate-back"><Link href="/ziraku/articles">← 記事一覧に戻る</Link></p>
+          <p className="members__gate-back"><Link href="/articles">← 記事一覧に戻る</Link></p>
         </div>
       </main>
       <ZirakuFooter />

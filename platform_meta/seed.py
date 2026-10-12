@@ -24,6 +24,18 @@ CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-10-12",
         "category": "fix",
+        "title": "残存 /ziraku/* リンク第2弾を全置換（台帳#38）",
+        "body": "zirakuルート化(#34)時にトップコンポーネントのみ置換し、ヘッダーナビ・フッター・ログインゲート等9ファイル約40箇所が残存していた。components/ziraku/*.tsx + ZirakuTopContent.tsx の href=/ziraku/*・router.push/replace('/ziraku/*') を /* に一括置換。画像アセット /ziraku-*.png は public実ファイルで対象外。トップ記事カード・記事詳細とも公開URLで 200/0.4s台確認。",
+    },
+    {
+        "entry_date": "2026-10-12",
+        "category": "ops",
+        "title": "USB-LAN脱落による内向き全断 → wlp1s0へ.9エイリアスで復旧+自動フェイルオーバー化",
+        "body": "06:40頃 USB-Ethernetアダプタ(enx*・192.168.0.9=ルーターのフォワード先)がカーネルから消失し media-origin への全外部アクセスが不可に。wlp1s0(同一192.168.0.xセグメント)へ192.168.0.9/24 secondaryを付与して肩代わりし即時復旧。lan-failover-alias.timer(30s毎)を常設し enx*復帰時はエイリアス自動除去(競合防止)・不在時は自動付与。残リスク: アダプタ物理故障・抜けの可能性。",
+    },
+    {
+        "entry_date": "2026-10-12",
+        "category": "fix",
         "title": "記事ページのハング解消（postgrest retryが7s固めていた）",
         "body": "新着記事カードが「反応しない・飛ばない」症状の原因を特定: Supabase停止中に postgrest-js v2 のデフォルト retry(1s+2s+4s) が全クエリに発動し、記事詳細は generateMetadata+page+membersMeta の直列で16秒、リストも7秒ハングしていた。AbortSignal.timeout はリトライ内部sleepを止められず効かなかった。対策: lib/supabase.ts に supabaseFetch(5s timeout + 失敗後60s circuit open で即エラー) を実装し createClient.global.fetch に適用、全クエリ(getArticles/getArticleBySlug/getPopularArticles/getCategories/subscribeNewsletter/submitInquiry/trackView)に .retry(false) 付与。app/(ziraku)/articles/[slug] は getArticleBySlug/getArticles を Promise.allSettled で並列化、getMembersOnlyMeta も supabaseFetch 化。app/(ziraku)/loading.tsx でナビゲーション中の即時フィードバック追加。残存 /ziraku/* href(ZirakuTopContent等)を /* に置換。記事詳細 16s→0.03s。台帳 #36 #37。",
     },

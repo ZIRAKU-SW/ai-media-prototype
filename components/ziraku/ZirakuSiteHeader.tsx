@@ -4,11 +4,11 @@ import ZirakuLogoMark from '@/components/ziraku/ZirakuLogoMark'
 import { ZIRAKU_CONTACT_URL } from '@/lib/theme-links'
 
 const NAV = [
-  { label: '記事を探す', href: '/ziraku/articles' },
-  { label: 'カテゴリー ▾', href: '/ziraku#categories' },
-  { label: 'サービス', href: '/ziraku/services' },
-  { label: 'セミナー', href: '/ziraku/seminar' },
-  { label: '会社情報', href: '/ziraku/company' },
+  { label: '記事を探す', href: '/articles' },
+  { label: 'カテゴリー ▾', href: '/#categories' },
+  { label: 'サービス', href: '/services' },
+  { label: 'セミナー', href: '/seminar' },
+  { label: '会社情報', href: '/company' },
 ]
 
 const LOGO = (

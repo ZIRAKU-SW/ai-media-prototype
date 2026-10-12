@@ -208,7 +208,7 @@ export default function ZirakuCompanyContent() {
               <a href={ZIRAKU_CONTACT_URL} target="_blank" rel="noopener noreferrer" className="c2-btn c2-btn--primary">
                 <IconChat size={16} /> 無料で相談する
               </a>
-              <Link href="/ziraku/articles" className="c2-btn c2-btn--ghost">
+              <Link href="/articles" className="c2-btn c2-btn--ghost">
                 記事を読む <IconArrowRight size={14} />
               </Link>
             </div>

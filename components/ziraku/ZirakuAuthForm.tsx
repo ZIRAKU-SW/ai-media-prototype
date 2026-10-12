@@ -40,7 +40,7 @@ export default function ZirakuAuthForm({ mode }: { mode: 'login' | 'signup' }) {
   const { user, ready } = useZirakuUser()
 
   useEffect(() => {
-    if (ready && user) router.replace('/ziraku/members')
+    if (ready && user) router.replace('/members')
   }, [ready, user, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,7 +56,7 @@ export default function ZirakuAuthForm({ mode }: { mode: 'login' | 'signup' }) {
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) { setError(translateError(error.message)); return }
-        router.push('/ziraku/members')
+        router.push('/members')
       } else {
         const { data, error } = await supabase.auth.signUp({
           email,
@@ -73,7 +73,7 @@ export default function ZirakuAuthForm({ mode }: { mode: 'login' | 'signup' }) {
         })
         if (error) { setError(translateError(error.message)); return }
         if (data.session) {
-          router.push('/ziraku/members')
+          router.push('/members')
         } else {
           setNotice('確認メールを送信しました。メール内のリンクをクリックして登録を完了してください。')
         }
@@ -191,9 +191,9 @@ export default function ZirakuAuthForm({ mode }: { mode: 'login' | 'signup' }) {
 
           <p className="auth__switch">
             {isLogin ? (
-              <>アカウントをお持ちでない方は <Link href="/ziraku/signup">会員登録（無料）→</Link></>
+              <>アカウントをお持ちでない方は <Link href="/signup">会員登録（無料）→</Link></>
             ) : (
-              <>すでにアカウントをお持ちの方は <Link href="/ziraku/login">ログイン →</Link></>
+              <>すでにアカウントをお持ちの方は <Link href="/login">ログイン →</Link></>
             )}
           </p>
           <p className="auth__back"><Link href="/">← トップに戻る</Link></p>

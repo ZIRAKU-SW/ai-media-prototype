@@ -90,7 +90,7 @@ export default function ZirakuSettingsContent() {
             <h1 className="members__gate-title">アカウント設定</h1>
             <p className="members__gate-desc">設定の変更にはログインが必要です。</p>
             <div className="members__gate-actions">
-              <Link href="/ziraku/login" className="btn btn--primary btn--lg btn--pill">ログイン</Link>
+              <Link href="/login" className="btn btn--primary btn--lg btn--pill">ログイン</Link>
             </div>
           </div>
         </main>
@@ -173,7 +173,7 @@ export default function ZirakuSettingsContent() {
           </p>
         </section>
 
-        <p className="auth__back"><Link href="/ziraku/members">← 会員限定コンテンツに戻る</Link></p>
+        <p className="auth__back"><Link href="/members">← 会員限定コンテンツに戻る</Link></p>
       </main>
       <ZirakuFooter />
     </>

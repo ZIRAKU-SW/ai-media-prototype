@@ -123,8 +123,8 @@ export default function ZirakuMembersContent() {
               チェックリスト・プロンプト集などの特典をご利用いただけます。
             </p>
             <div className="members__gate-actions">
-              <Link href="/ziraku/signup" className="btn btn--primary btn--lg btn--pill">無料で会員登録する</Link>
-              <Link href="/ziraku/login" className="btn btn--outline btn--lg btn--pill">ログイン</Link>
+              <Link href="/signup" className="btn btn--primary btn--lg btn--pill">無料で会員登録する</Link>
+              <Link href="/login" className="btn btn--outline btn--lg btn--pill">ログイン</Link>
             </div>
           </div>
         </main>
@@ -144,7 +144,7 @@ export default function ZirakuMembersContent() {
               <h1 className="members__title">会員限定コンテンツ</h1>
               <p className="members__lead">ようこそ、{displayName} 様。以下の特典をご利用いただけます。</p>
             </div>
-            <Link href="/ziraku/settings" className="btn btn--ghost btn--pill members__settings-link">
+            <Link href="/settings" className="btn btn--ghost btn--pill members__settings-link">
               <IconSettings size={16} /> アカウント設定
             </Link>
           </div>
@@ -215,7 +215,7 @@ export default function ZirakuMembersContent() {
           <h2 className="members__section-title"><IconCalendar className="section-icon" />セミナー・イベント優先案内</h2>
           <p className="members__section-lead">
             セミナー開催が決まり次第、会員の皆さまへ優先的にご案内します。
-            開催情報は<Link href="/ziraku/seminar" className="members__inline-link">セミナーページ</Link>でもお知らせします。
+            開催情報は<Link href="/seminar" className="members__inline-link">セミナーページ</Link>でもお知らせします。
           </p>
         </section>
 
@@ -232,7 +232,7 @@ export default function ZirakuMembersContent() {
             <a href="https://www.ziraku.co.jp/contact" target="_blank" rel="noopener noreferrer" className="btn btn--primary btn--lg btn--pill">
               <IconChat size={16} /> 無料で相談する
             </a>
-            <Link href="/ziraku/company" className="btn btn--outline btn--lg btn--pill corp-cta__sub">
+            <Link href="/company" className="btn btn--outline btn--lg btn--pill corp-cta__sub">
               運営会社について <IconArrowRight size={14} />
             </Link>
           </div>

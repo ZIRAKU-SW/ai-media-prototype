@@ -23,21 +23,21 @@ export default function ZirakuFooter() {
         <div className="footer__links">
           <div>
             <strong>コンテンツ</strong>
-            <Link href="/ziraku/category/ai-guide">AI活用ガイド</Link>
-            <Link href="/ziraku/category/dx-improvement">DX・業務改善</Link>
-            <Link href="/ziraku/category/lab">実験室</Link>
-            <Link href="/ziraku/category/tools">ツール比較</Link>
+            <Link href="/category/ai-guide">AI活用ガイド</Link>
+            <Link href="/category/dx-improvement">DX・業務改善</Link>
+            <Link href="/category/lab">実験室</Link>
+            <Link href="/category/tools">ツール比較</Link>
           </div>
           <div>
             <strong>サービス</strong>
-            <Link href="/ziraku/services">システム開発</Link>
-            <Link href="/ziraku/services">DX支援</Link>
+            <Link href="/services">システム開発</Link>
+            <Link href="/services">DX支援</Link>
             <a href={ZIRAKU_CONTACT_URL} target="_blank" rel="noopener noreferrer">無料相談</a>
           </div>
           <div>
             <strong>その他</strong>
-            <Link href="/ziraku/company">会社情報</Link>
-            <Link href="/ziraku/privacy">プライバシーポリシー</Link>
+            <Link href="/company">会社情報</Link>
+            <Link href="/privacy">プライバシーポリシー</Link>
             <a href={ZIRAKU_CONTACT_URL} target="_blank" rel="noopener noreferrer">お問い合わせ</a>
           </div>
         </div>
