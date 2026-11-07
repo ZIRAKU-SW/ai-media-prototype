@@ -22,6 +22,12 @@ EXPORT_PATH = ROOT / "data" / "platform-bugs.json"
 
 CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
+        "entry_date": "2026-11-07",
+        "category": "fix",
+        "title": "記事詳細「記事が見つかりません」全滅を修正（台帳#39）",
+        "body": "Supabase停止中、一覧は表示されるのに詳細だけ全件not-found。原因はダミーフォールバックがクライアント一覧コンポーネント(useState初期値)のみで、サーバー側getArticleBySlug/getArticles/getPopularArticles/getCategoriesに無かったこと。lib/supabase.tsの4関数にtry/catch+DUMMY_ARTICLESフォールバック追加。slug一致時のみ返却し不明slugは正しくnot-foundを維持。公開URLで200・正しいタイトル確認。",
+    },
+    {
         "entry_date": "2026-10-12",
         "category": "fix",
         "title": "残存 /ziraku/* リンク第2弾を全置換（台帳#38）",

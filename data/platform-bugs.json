@@ -1,6 +1,22 @@
 {
-  "exported_at": "2026-10-12T07:36:34.390234+00:00",
+  "exported_at": "2026-11-07T11:52:17.058667+00:00",
   "bugs": [
+    {
+      "id": 39,
+      "title": "記事詳細が全件『記事が見つかりません』（サーバー側取得にダミーフォールバック無し）",
+      "symptom": "トップの記事カードをクリックすると全記事で『記事が見つかりません』。一覧は表示されるのに詳細だけ死ぬ",
+      "root_cause": "Supabase停止中、ダミー記事フォールバックがクライアント側の一覧コンポーネント(useState初期値)にしか無く、サーバー側のgetArticleBySlug/getArticles/getPopularArticles/getCategoriesはエラー時throwのみ。詳細ページはinitialArticle=null→not-foundへ",
+      "fix": "lib/supabase.tsの4関数にtry/catch+DUMMY_ARTICLESフォールバック追加（slug一致時のみ返却・不明slugは正しくnot-found）。記事詳細・関連記事・人気記事・カテゴリがSupabase停止中もダミー表示に",
+      "affected_themes": "ziraku",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-11-07",
+      "fixed_at": "2026-11-07",
+      "commit_hash": "pending",
+      "tags": null,
+      "created_at": "2026-11-07 11:52:04",
+      "updated_at": "2026-11-07 11:52:04"
+    },
     {
       "id": 38,
       "title": "zirakuルート化後もサブコンポーネントに /ziraku/* リンク残存（第2弾）",
@@ -611,6 +627,14 @@
     }
   ],
   "changelog": [
+    {
+      "id": 29,
+      "entry_date": "2026-11-07",
+      "category": "fix",
+      "title": "記事詳細「記事が見つかりません」全滅を修正（台帳#39）",
+      "body": "Supabase停止中、一覧は表示されるのに詳細だけ全件not-found。原因はダミーフォールバックがクライアント一覧コンポーネント(useState初期値)のみで、サーバー側getArticleBySlug/getArticles/getPopularArticles/getCategoriesに無かったこと。lib/supabase.tsの4関数にtry/catch+DUMMY_ARTICLESフォールバック追加。slug一致時のみ返却し不明slugは正しくnot-foundを維持。公開URLで200・正しいタイトル確認。",
+      "created_at": "2026-11-07 11:52:16"
+    },
     {
       "id": 28,
       "entry_date": "2026-10-12",

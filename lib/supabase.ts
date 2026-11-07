@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { DUMMY_ARTICLES } from '@/lib/dummy-articles'
 
 const SUPABASE_URL  = process.env.NEXT_PUBLIC_SUPABASE_URL  ?? 'https://wqlelowutbxplrzforcc.supabase.co'
 const SUPABASE_KEY  = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? 'sb_publishable_Ud0Q4YAoo49bAKBNbHnT_g_kyJDgMI3'
@@ -75,44 +76,79 @@ export async function getArticles(options?: {
 
   if (category) query = query.eq('categories.slug', category)
 
-  const { data, error } = await query
-  if (error) throw error
-  return data as Article[]
+  try {
+    const { data, error } = await query
+    if (error) throw error
+    return data as Article[]
+  } catch (e) {
+    let d = DUMMY_ARTICLES.filter(a => a.is_published && !a.is_members_only)
+      .sort((a, b) => (b.published_at ?? '').localeCompare(a.published_at ?? ''))
+    if (category) d = d.filter(a => a.categories?.slug === category)
+    const sliced = d.slice(from, from + limit)
+    if (sliced.length) return sliced
+    throw e
+  }
 }
 
 export async function getArticleBySlug(slug: string) {
-  const { data, error } = await supabase
-    .from('articles')
-    .select('*, categories(name,slug,color)')
-    .eq('slug', slug)
-    .eq('is_published', true)
-    .retry(false)
-    .single()
-  if (error) throw error
-  return data as Article
+  try {
+    const { data, error } = await supabase
+      .from('articles')
+      .select('*, categories(name,slug,color)')
+      .eq('slug', slug)
+      .eq('is_published', true)
+      .retry(false)
+      .single()
+    if (error) throw error
+    return data as Article
+  } catch (e) {
+    const dummy = DUMMY_ARTICLES.find(a => a.slug === slug && a.is_published)
+    if (dummy) return dummy
+    throw e
+  }
 }
 
 export async function getPopularArticles(limit = 5) {
-  const { data, error } = await supabase
-    .from('articles')
-    .select('id,title,slug,view_count,categories(name,color)')
-    .eq('is_published', true)
-    .eq('is_members_only', false)
-    .order('view_count', { ascending: false })
-    .limit(limit)
-    .retry(false)
-  if (error) throw error
-  return data
+  try {
+    const { data, error } = await supabase
+      .from('articles')
+      .select('id,title,slug,view_count,categories(name,color)')
+      .eq('is_published', true)
+      .eq('is_members_only', false)
+      .order('view_count', { ascending: false })
+      .limit(limit)
+      .retry(false)
+    if (error) throw error
+    return data
+  } catch (e) {
+    const d = DUMMY_ARTICLES.filter(a => a.is_published && !a.is_members_only)
+      .sort((a, b) => b.view_count - a.view_count)
+      .slice(0, limit)
+    if (d.length) return d
+    throw e
+  }
 }
 
 export async function getCategories() {
-  const { data, error } = await supabase
-    .from('categories')
-    .select('*')
-    .order('name')
-    .retry(false)
-  if (error) throw error
-  return data as Category[]
+  try {
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .order('name')
+      .retry(false)
+    if (error) throw error
+    return data as Category[]
+  } catch (e) {
+    const seen = new Map<string, Category>()
+    for (const a of DUMMY_ARTICLES) {
+      const c = a.categories
+      if (c && !seen.has(c.slug)) {
+        seen.set(c.slug, { id: c.slug, name: c.name, slug: c.slug, description: null, color: c.color })
+      }
+    }
+    if (seen.size) return [...seen.values()].sort((a, b) => a.name.localeCompare(b.name, 'ja'))
+    throw e
+  }
 }
 
 // ── メルマガ登録 ────────────────────────
