@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import ThemeArticlePage from '@/components/pages/ThemeArticlePage'
 import ZirakuMemberArticleGate from '@/components/ziraku/ZirakuMemberArticleGate'
 import { getArticleBySlug, getArticles, supabaseFetch, type Article } from '@/lib/supabase'
+import { loadArticleMarkdown } from '@/lib/article-content'
 
 export const revalidate = 300
 
@@ -60,6 +61,12 @@ export default async function ZirakuArticle({ params }: { params: Promise<{ slug
     articleRes.status === 'fulfilled' ? articleRes.value : null
   const initialRelated: Article[] =
     relatedRes.status === 'fulfilled' ? relatedRes.value : []
+
+  // contentが空の記事は data/articles-md/<slug>.md から本文を補完
+  // （ダミー記事・Supabase側 content 未入力の両方に効く）
+  if (initialArticle && !initialArticle.content) {
+    initialArticle.content = loadArticleMarkdown(slug)
+  }
 
   if (initialArticle) {
     return (

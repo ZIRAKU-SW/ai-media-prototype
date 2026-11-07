@@ -1,6 +1,22 @@
 {
-  "exported_at": "2026-11-07T11:52:17.058667+00:00",
+  "exported_at": "2026-11-07T12:04:53.054565+00:00",
   "bugs": [
+    {
+      "id": 40,
+      "title": "記事詳細が全件「本文準備中」（contentがnullのまま表示）",
+      "symptom": "詳細ページは開くが全記事の本文が「本文準備中です。」表示。実在記事もスタブ扱いに見えた",
+      "root_cause": "DUMMY_ARTICLESのcontentが全てnullで、正規の本文data/articles-md/<slug>.md（23本存在）を読む経路がどこにも無かった。Supabase死でダミー表示になって以降、本文が欠落",
+      "fix": "新規lib/article-content.ts（server-only, fs読込, slugバリデーション）を作成。app/(ziraku)/articles/[slug]/page.tsx で initialArticle.content が空なら data/articles-md/<slug>.md を読み込む。さらにmd未作成だった8本の古いダミー記事に本文を新規執筆（既存mdと同スタイル）。server-onlyパッケージ追加",
+      "affected_themes": "ziraku",
+      "status": "fixed",
+      "severity": "medium",
+      "occurred_at": "2026-11-07",
+      "fixed_at": "2026-11-07",
+      "commit_hash": "pending",
+      "tags": null,
+      "created_at": "2026-11-07 12:04:39",
+      "updated_at": "2026-11-07 12:04:39"
+    },
     {
       "id": 39,
       "title": "記事詳細が全件『記事が見つかりません』（サーバー側取得にダミーフォールバック無し）",
@@ -627,6 +643,14 @@
     }
   ],
   "changelog": [
+    {
+      "id": 30,
+      "entry_date": "2026-11-07",
+      "category": "fix",
+      "title": "記事詳細「本文準備中」全滅を修正+欠損8本に本文執筆（台帳#40）",
+      "body": "DUMMY_ARTICLESのcontentが全てnullで、正規本文data/articles-md/<slug>.md(23本)を読む経路が無く全詳細が「本文準備中」。lib/article-content.ts(server-only,fs読込,slugバリデーション)を新設し articles/[slug]/page.tsx でcontent空ならmdを補完。md未作成の古いスタブ8本にも本文を新規執筆。server-onlyパッケージ追加。",
+      "created_at": "2026-11-07 12:04:52"
+    },
     {
       "id": 29,
       "entry_date": "2026-11-07",

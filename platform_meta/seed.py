@@ -24,6 +24,12 @@ CHANGELOG_ENTRIES: list[dict[str, str]] = [
     {
         "entry_date": "2026-11-07",
         "category": "fix",
+        "title": "記事詳細「本文準備中」全滅を修正+欠損8本に本文執筆（台帳#40）",
+        "body": "DUMMY_ARTICLESのcontentが全てnullで、正規本文data/articles-md/<slug>.md(23本)を読む経路が無く全詳細が「本文準備中」。lib/article-content.ts(server-only,fs読込,slugバリデーション)を新設し articles/[slug]/page.tsx でcontent空ならmdを補完。md未作成の古いスタブ8本にも本文を新規執筆。server-onlyパッケージ追加。",
+    },
+    {
+        "entry_date": "2026-11-07",
+        "category": "fix",
         "title": "記事詳細「記事が見つかりません」全滅を修正（台帳#39）",
         "body": "Supabase停止中、一覧は表示されるのに詳細だけ全件not-found。原因はダミーフォールバックがクライアント一覧コンポーネント(useState初期値)のみで、サーバー側getArticleBySlug/getArticles/getPopularArticles/getCategoriesに無かったこと。lib/supabase.tsの4関数にtry/catch+DUMMY_ARTICLESフォールバック追加。slug一致時のみ返却し不明slugは正しくnot-foundを維持。公開URLで200・正しいタイトル確認。",
     },
